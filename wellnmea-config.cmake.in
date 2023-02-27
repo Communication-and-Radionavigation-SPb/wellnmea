@@ -1,0 +1,14 @@
+# - Config file for the wellnmea package
+# It defines the following variables
+#  WELLNMEA_FOUND - indicates that the module was found
+#  WELLNMEA_INCLUDE_DIR - include directories
+
+@PACKAGE_INIT@
+set_and_check(WELLNMEA_INCLUDE_DIR "@PACKAGE_INSTALL_INCLUDE_DIR@")
+set(WELLNMEA_FOUND TRUE)
+
+#This is a bit of a hack, but it works well. It also allows continued support of CMake 2.8
+if(${CMAKE_VERSION} VERSION_GREATER 3.0.0 OR ${CMAKE_VERSION} VERSION_EQUAL 3.0.0)
+  add_library(wellnmea::wellnmea INTERFACE IMPORTED)
+  set_target_properties(wellnmea::wellnmea PROPERTIES INTERFACE_INCLUDE_DIRECTORIES "${WELLNMEA_INCLUDE_DIR}")
+endif()
