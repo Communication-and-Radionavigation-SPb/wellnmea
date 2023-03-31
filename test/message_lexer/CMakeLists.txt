@@ -1,7 +1,7 @@
 file (GLOB SOURCE_FILES *.cpp)
 file (GLOB HEADER_FILES *.hpp)
 
-init_target (field_tests)
+init_target (test_msg_lexer)
 
 build_test (${TARGET_NAME} ${SOURCE_FILES} ${HEADER_FILES})
 

@@ -48,6 +48,7 @@ macro (build_executable TARGET_NAME)
     set_target_properties (${TARGET_NAME} PROPERTIES DEBUG_POSTFIX d)
 endmacro ()
 
+
 # Build executable and register as test
 macro (build_test TARGET_NAME)
     build_executable (${TARGET_NAME} ${ARGN})
@@ -60,6 +61,7 @@ macro (build_test TARGET_NAME)
     endif ()
 endmacro ()
 
+
 # Finalize target for all types
 macro (final_target)
     if ("${TARGET_LIB_TYPE}" STREQUAL "EXECUTABLE")
@@ -67,7 +69,6 @@ macro (final_target)
                  RUNTIME DESTINATION "bin"
                  CONFIGURATIONS ${CMAKE_CONFIGURATION_TYPES})
     endif ()
-
     install (DIRECTORY ${CMAKE_SOURCE_DIR}/${TARGET_NAME}
              DESTINATION ${INSTALL_INCLUDE_DIR}/
              FILES_MATCHING PATTERN "*.hpp*")
