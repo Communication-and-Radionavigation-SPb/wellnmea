@@ -7,7 +7,7 @@
 #include <wellnmea/token.hpp>
 #include <wellnmea/exceptions.hpp>
 #include <wellnmea/message.hpp>
-#include <wellnmea/formats_registry.hpp>
+#include <wellnmea/formats/formats_registry.hpp>
 
 namespace wellnmea
 {
@@ -45,7 +45,7 @@ namespace wellnmea
       auto talker = tokens.begin()->slice.substr(0, 2);
       auto formatter = tokens.begin()->slice.substr(2, 3);
 
-      auto format = fmt_registry::getFormat(formatter);
+      // auto format = FormatRegistry::getFormat(formatter);
 
       if (tokens.end()->type == Token::checksum)
       {

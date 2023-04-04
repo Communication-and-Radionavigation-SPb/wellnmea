@@ -4,14 +4,14 @@
 #include <map>
 #include <memory>
 
-#include <wellnmea/params/param.hpp>
+#include <wellnmea/values/null_value.hpp>
 
 namespace wellnmea
 {
   class NmeaMessage
   {
   protected:
-    std::map<std::string, std::shared_ptr<param>> params;
+    std::map<std::string, std::shared_ptr<NullValue>> values;
 
   public:
     std::string talker{};
