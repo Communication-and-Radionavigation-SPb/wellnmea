@@ -1,6 +1,7 @@
 #pragma once
 
 #include <wellnmea/formats/instruction.hpp>
+#include <wellnmea/values/latitude.hpp>
 #include <wellnmea/values/null_value.hpp>
 
 namespace wellnmea
@@ -26,6 +27,26 @@ namespace wellnmea
       virtual Instruction *applyParams(props params)
       {
         return this;
+      }
+
+      virtual value *extract(position it) override
+      {
+        auto cit = it++, dit = it++;
+        if (cit->type == Token::null)
+        {
+          return new values::NullLatitudeValue(name());
+        }
+
+        if (cit->type != Token::number)
+          throw extraction_error("Failed to extract longitude field near `" + it->slice + "`");
+        if (dit->type != Token::symbol)
+          throw extraction_error("Failed to extract longitude direction near`" + it->slice + "`");
+
+        double content = std::stod(cit->slice);
+        values::LatitudeValue::Direction direction =
+            values::LatitudeValue::directionFrom(dit->slice[0]);
+
+        return new values::LatitudeValue(name(), content, direction);
       }
     };
   } // namespace formats

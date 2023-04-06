@@ -1,6 +1,9 @@
 #pragma once
 
 #include <string>
+#include <map>
+#include <variant>
+#include <optional>
 
 namespace wellnmea
 {
@@ -8,6 +11,11 @@ namespace wellnmea
   {
     class NullValue
     {
+    public:
+      using SerializedValue = std::variant<double, long, std::string>;
+      using SerializedProperty = std::map<std::string, SerializedValue>;
+      using SerializedResult = std::optional<SerializedProperty>;
+
     private:
       std::string m_name;
 
@@ -18,7 +26,7 @@ namespace wellnmea
        * @param a_name Name of parameter
        */
       NullValue(const std::string &a_name) : m_name(a_name){};
-      ~NullValue() = default;
+      virtual ~NullValue() = default;
 
     public:
       /**
@@ -30,8 +38,15 @@ namespace wellnmea
       {
         return m_name;
       }
-    };
 
+      virtual SerializedResult serialise() const noexcept = 0;
+
+      template <class ConsiderAs>
+      ConsiderAs *as()
+      {
+        return dynamic_cast<ConsiderAs *>(this);
+      }
+    };
 
   } // namespace params
 

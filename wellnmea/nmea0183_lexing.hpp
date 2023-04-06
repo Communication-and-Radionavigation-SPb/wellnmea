@@ -21,7 +21,7 @@ namespace wellnmea
     State() : m_previous(Token::null) {}
     State(Token::Type previous) : m_previous(previous) {}
 
-    virtual ~State() = 0;
+    virtual ~State(){};
 
     virtual State *on_char(const char &c) = 0;
 
@@ -30,22 +30,22 @@ namespace wellnmea
   protected:
     Token::Type m_previous;
   };
-
-  /**
-   * @brief Initial type detector state
-   *
-   */
-  class NullState : public State
+  class PhraseState : public State
   {
-  protected:
   public:
-    NullState() : State() {}
-    NullState(Token::Type previous) : State(previous) {}
-    ~NullState() {}
+    PhraseState() : State() {}
+    PhraseState(Token::Type previous) : State(previous) {}
+    ~PhraseState() {}
+    Token::Type current() const override { return Token::phrase; }
 
-    Token::Type current() const override { return Token::null; }
-
-    State *on_char(const char &c) override;
+    State *on_char(const char &c) override
+    {
+      if (!std::isalnum(c))
+      {
+        throw parse_error("Invalid symbol in phrase of message found.");
+      }
+      return new PhraseState(current());
+    }
   };
 
   /**
@@ -60,7 +60,18 @@ namespace wellnmea
     ~NumberState() {}
     Token::Type current() const override { return Token::number; }
 
-    State *on_char(const char &c) override;
+    State *on_char(const char &c) override
+    {
+      if (std::isdigit(c) || c == '.')
+      {
+        return new NumberState(current());
+      }
+      if (!std::isalnum(c))
+      {
+        throw parse_error("Invalid symbol in number of message found.");
+      }
+      return new PhraseState(current());
+    }
   };
 
   class ChecksumState : public State
@@ -71,7 +82,19 @@ namespace wellnmea
     ~ChecksumState() {}
     Token::Type current() const override { return Token::checksum; }
 
-    State *on_char(const char &c) override;
+    State *on_char(const char &c) override
+    {
+      // In case if transition have been invalid
+      if (m_previous != Token::null && m_previous != Token::checksum)
+        throw parse_error("Invalid state transition into Checksum state");
+
+      // Check symbol matches checksum grammar
+      if (!std::isxdigit(c))
+        throw parse_error("Invalid symbol in checksum of message found.");
+
+      // Loop back into current state
+      return new ChecksumState(current());
+    }
   };
 
   class SymbolState : public State
@@ -82,90 +105,53 @@ namespace wellnmea
     ~SymbolState() {}
     Token::Type current() const override { return Token::symbol; }
 
-    State *on_char(const char &c) override;
+    State *on_char(const char &c) override
+    {
+      if (!std::isalnum(c) && c != '.' && m_previous != Token::null)
+        throw parse_error("Invalid symbol got from nmea message");
+      return new PhraseState(current());
+    }
   };
-
-  class PhraseState : public State
+  /**
+   * @brief Initial type detector state
+   *
+   */
+  class NullState : public State
   {
+  protected:
   public:
-    PhraseState() : State() {}
-    PhraseState(Token::Type previous) : State(previous) {}
-    ~PhraseState() {}
-    Token::Type current() const override { return Token::phrase; }
+    NullState() : State() {}
+    NullState(Token::Type previous) : State(previous) {}
+    ~NullState() {}
 
-    State *on_char(const char &c) override;
+    Token::Type current() const override { return Token::null; }
+
+    State *on_char(const char &c) override
+    {
+      // In case if transition have been invalid
+      if (m_previous != Token::null)
+        throw parse_error("Invalid null-state transition detected.");
+      if (!std::isalnum(c) && c != '*' && c != '-')
+      {
+        throw parse_error("Invalid starting symbold detected in nmea message field");
+      }
+      // If digit found
+      if (std::isdigit(c) || c == '-' || c == '+')
+        return new NumberState(current());
+
+      // Potential transition into checksum state
+      if (c == '*')
+        return new ChecksumState(current());
+
+      return new SymbolState(Token::symbol);
+    }
   };
 
   /* -------------------------------------------------------------------------- */
   /*                               Implementation                               */
   /* -------------------------------------------------------------------------- */
 
-  State::~State() {}
-
-  State *NullState::on_char(const char &c)
-  {
-    // In case if transition have been invalid
-    if (m_previous != Token::null)
-      throw parse_error("Invalid null-state transition detected.");
-    if (!std::isalnum(c) && c != '*')
-    {
-      throw parse_error("Invalid starting symbold detected in nmea message field");
-    }
-    // If digit found
-    if (std::isdigit(c))
-      return new NumberState(current());
-
-    // Potential transition into checksum state
-    if (c == '*')
-      return new ChecksumState(current());
-
-    return new SymbolState(Token::symbol);
-  }
-
-  State *ChecksumState::on_char(const char &c)
-  {
-    // In case if transition have been invalid
-    if (m_previous != Token::null && m_previous != Token::checksum)
-      throw parse_error("Invalid state transition into Checksum state");
-
-    // Check symbol matches checksum grammar
-    if (!std::isxdigit(c))
-      throw parse_error("Invalid symbol in checksum of message found.");
-
-    // Loop back into current state
-    return new ChecksumState(current());
-  }
-
-  State *SymbolState::on_char(const char &c)
-  {
-    if (!std::isalnum(c) && c != '.' && m_previous != Token::null)
-      throw parse_error("Invalid symbol got from nmea message");
-    return new PhraseState(current());
-  }
-
-  State *NumberState::on_char(const char &c)
-  {
-    if (std::isdigit(c) || c == '.')
-    {
-      return new NumberState(current());
-    }
-    if (!std::isalnum(c))
-    {
-      throw parse_error("Invalid symbol in number of message found.");
-    }
-    return new PhraseState(current());
-  }
-
-  State *PhraseState::on_char(const char &c)
-  {
-    if (!std::isalnum(c))
-    {
-      throw parse_error("Invalid symbol in phrase of message found.");
-    }
-    return new PhraseState(current());
-  }
-
-  class Nmea0183Lexing: public LexingIface
+  class Nmea0183Lexing : public LexingIface
   {
 
   public:

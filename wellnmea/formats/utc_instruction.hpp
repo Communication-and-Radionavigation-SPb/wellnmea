@@ -1,5 +1,10 @@
 #pragma once
 
+#include <cctype>
+#include <string>
+#include <math.h>
+
+#include <wellnmea/exceptions.hpp>
 #include <wellnmea/formats/instruction.hpp>
 #include <wellnmea/values/utc.hpp>
 
@@ -28,10 +33,25 @@ namespace wellnmea
         return this;
       }
 
-      virtual value extract(position it) override
+      virtual value *extract(position it) override
       {
-        auto v = std::make_shared<values::UTCValue>(name());
+        if(it->type == Token::null) {
+          return new values::NullUTCValue(name());
+        }
+        if (it->type != Token::number)
+          throw extraction_error("Failed to extract UTC field near `" + it->slice + "`");
+
+        double content = std::stod(it->slice);
         it++;
+
+        int hours = (int)(content / pow(10, 4)) % 100;
+        int minutes = (int)(content / pow(10, 2)) % 100;
+        int seconds = (int)content % 100;
+        int milliseconds = (int)(content * 1000) % 1000;
+
+        auto v = new values::UTCValue(name(),
+                                      hours, minutes,
+                                      seconds, milliseconds);
         return v;
       }
     };

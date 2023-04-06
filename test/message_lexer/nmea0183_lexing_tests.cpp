@@ -24,7 +24,7 @@ TEST(Suite, CorrectlyDetectsNumbers)
   wellnmea::Token::Type type;
   wellnmea::Nmea0183Lexing interpreter;
 
-  std::list<std::string> numbers{"0.1", "12", "02841.825", "6109.876"};
+  std::list<std::string> numbers{"0.1", "-12", "02841.825", "6109.876"};
 
   for (auto &&slice : numbers)
   {

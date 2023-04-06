@@ -22,8 +22,8 @@ namespace wellnmea
     public:
       /* ---------------------------------- Types --------------------------------- */
 
-      using value = std::shared_ptr<NullValue>;
-      using position = std::list<Token>::iterator&;
+      using value = NullValue;
+      using position = std::list<Token>::iterator &;
       using props = const std::list<std::string>;
       /* ---------------------------------- Data ---------------------------------- */
     protected:
@@ -57,9 +57,7 @@ namespace wellnmea
        * @param it Cursor inside NMEA message represented with Tokens
        * @return value Value for this item
        */
-      virtual value extract(position it) {
-        return std::make_shared<values::NullValue>(name());
-      };
+      virtual value *extract(position it) = 0;
 
       /**
        * @brief Applies new instruction params

@@ -1,5 +1,7 @@
 #pragma once
 
+#include <optional>
+
 #include <wellnmea/values/null_value.hpp>
 
 namespace wellnmea
@@ -7,40 +9,43 @@ namespace wellnmea
   namespace values
   {
     using std::optional;
-    class _LatitudeValue : public NullValue
+
+    class _LongitudeValue : public NullValue
     {
     public:
       enum Direction
       {
-        North,
-        South,
-        Unknown,
+        East,
+        West,
+        Unknown
       };
-    static Direction directionFrom(const char &c) noexcept {
-      if(c == 'N') return Direction::North;
-      if(c == 'S') return Direction::South;
-      return Direction::Unknown;
-    }
-    public:
-      _LatitudeValue(const std::string &name) : NullValue(name) {}
-      virtual ~_LatitudeValue() = default;
-
+      _LongitudeValue(const std::string &name) : NullValue(name) {}
+      virtual ~_LongitudeValue() {}
       virtual optional<double> position() const noexcept = 0;
       virtual optional<Direction> direction() const noexcept = 0;
+      static Direction directionFrom(const char &c) noexcept
+      {
+
+        if (c == 'E')
+          return East;
+        if (c == 'W')
+          return West;
+        return Unknown;
+      }
     };
 
-    class LatitudeValue : public _LatitudeValue
+    class LongitudeValue : public _LongitudeValue
     {
     private:
       double m_coordinate;
       Direction m_direction;
 
     public:
-      LatitudeValue(const std::string &name,
-                    double coordinate,
-                    Direction direction) : m_coordinate(coordinate),
-                                           m_direction(direction),
-                                           _LatitudeValue(name) {}
+      LongitudeValue(const std::string &name,
+                     double coordinate,
+                     Direction direction) : m_coordinate(coordinate),
+                                            m_direction(direction),
+                                            _LongitudeValue(name) {}
 
       optional<double> position() const noexcept override
       {
@@ -58,10 +63,10 @@ namespace wellnmea
       }
     };
 
-    class NullLatitudeValue : public _LatitudeValue
+    class NullLongitudeValue : public _LongitudeValue
     {
     public:
-      NullLatitudeValue(const std::string &name) : _LatitudeValue(name) {}
+      NullLongitudeValue(const std::string &name) : _LongitudeValue(name) {}
 
       optional<double> position() const noexcept override
       {
