@@ -2,7 +2,7 @@
 
 #include <memory>
 
-#include <wellnmea/formats_registry.hpp>
+#include <wellnmea/formats/formats_registry.hpp>
 #include <wellnmea/formats/format.hpp>
 #include "fake_format.h"
 
