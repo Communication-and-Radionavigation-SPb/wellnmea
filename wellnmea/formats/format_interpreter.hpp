@@ -111,7 +111,7 @@ namespace wellnmea
 
           // * Interpret field
 
-          // Find field border
+          // Find field border with uninterested matches in mind
           auto fieldBorder = util::border_sign(';', {{'[', ']'}}, it, end);
           // Separate field section
           std::string field = std::string(it, fieldBorder);

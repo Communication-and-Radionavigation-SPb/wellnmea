@@ -1,21 +1,23 @@
 #include <gtest/gtest.h>
 
 #include <wellnmea/parser.hpp>
-#include <wellnmea/formats_registry.hpp>
+#include <wellnmea/nmea0183_lexing.hpp>
+#include <wellnmea/formats/formats_registry.hpp>
 
 #define Suite Parser
 
 TEST(Suite, InstantiatesWithoutExceptions)
 {
   EXPECT_NO_THROW({
-    wellnmea::Parser parser({});
+    auto lex = std::make_shared<wellnmea::Nmea0183Lexing>();
+    wellnmea::Parser parser(lex, {});
   });
 }
 
-
 TEST(Suite, ReturnsCorrectParsedMessage)
 {
-  wellnmea::Parser parser({});
+  auto lex = std::make_shared<wellnmea::Nmea0183Lexing>();
+  wellnmea::Parser parser(lex, {});
 
   wellnmea::NmeaMessage msg = parser.parse("$TEDTM,W84,,,,,,,*17");
 
