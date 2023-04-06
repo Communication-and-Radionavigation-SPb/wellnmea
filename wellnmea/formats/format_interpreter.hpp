@@ -51,7 +51,7 @@ namespace wellnmea
             auto sub = interpret(repetitionPart);
             // Create repetition lexem
             auto lex = new Lexem(Lexem::repetition, repetitionPart, sub);
-
+            // Add lexem to local result
             result.emplace_back(lex);
             // Move iterator to the end of repeated part
             it = repetitionEnd;
