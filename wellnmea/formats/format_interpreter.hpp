@@ -40,6 +40,24 @@ namespace wellnmea
             continue;
           }
 
+          // * If repetition start sign detected
+          if (*it == '[')
+          {
+            // Find iterator at the end of repetition section
+            auto repetitionEnd = extract_between('[', ']', it, end);
+            // Separate repeated part
+            std::string repetitionPart = std::string(it + 1, repetitionEnd);
+            // Execute interpretion for repeated part
+            auto sub = interpret(repetitionPart);
+            // Create repetition lexem
+            auto lex = new Lexem(Lexem::repetition, repetitionPart, sub);
+            // Add lexem to local result
+            result.emplace_back(lex);
+            // Move iterator to the end of repeated part
+            it = repetitionEnd;
+            continue;
+          }
+
           if ((*it) == ',' || (*it) == '|' || std::isspace(*it))
           {
             continue;
@@ -86,25 +104,6 @@ namespace wellnmea
           // * Skip formatting signs
           if (std::isspace(*it))
             continue;
-
-
-          // * If repetition start sign detected
-          if (*it == '[')
-          {
-            // Find iterator at the end of repetition section
-            auto repetitionEnd = extract_between('[', ']', it, end);
-            // Separate repeated part
-            std::string repetitionPart = std::string(it + 1, repetitionEnd);
-            // Execute interpretion for repeated part
-            auto sub = interpret(repetitionPart);
-            // Create repetition lexem
-            auto lex = new Lexem(Lexem::repetition, repetitionPart, sub);
-
-            result.emplace_back(lex);
-            // Move iterator to the end of repeated part
-            it = repetitionEnd;
-            continue;
-          }
           
           // Skip delimeter signs
           if (std::ispunct(*it))
