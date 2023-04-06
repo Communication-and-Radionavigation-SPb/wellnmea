@@ -1,35 +1,70 @@
 #pragma once
 
 #include <cctype>
-#include <stack>
 #include <string>
+#include <stack>
+#include <list>
+#include <utility>
 #include <algorithm>
 
 namespace wellnmea
 {
   namespace util
   {
-    std::string to_lower(std::string &source) noexcept
+    using namespace std;
+    using Enclosures = list<pair<char, char>>;
+
+    inline string to_lower(string &source) noexcept
     {
-      std::string clone(source);
-      std::transform(source.begin(), source.end(), clone.begin(), [](unsigned char c)
-                     { return std::tolower(c); });
+      string clone(source);
+      transform(source.begin(), source.end(), clone.begin(), [](unsigned char c)
+                { return tolower(c); });
       return clone;
     }
 
-    std::string::const_iterator extract_between(
+    inline string::const_iterator
+    border_sign(const char &symbol,
+                Enclosures enclosures,
+                string::const_iterator start,
+                string::const_iterator end) noexcept
+    {
+      stack<Enclosures::iterator> st;
+      for (auto it = start; it != end; it++)
+      {
+        auto o = find_if(enclosures.begin(), enclosures.end(), [it](const pair<char, char> &p)
+                         { return p.first == *it; });
+        if (o != enclosures.end())
+        {
+          st.push(o);
+        }
+        else if (!st.empty() && st.top()->second == *it)
+        {
+          st.pop();
+        }
+        else if (st.empty() && *it == symbol)
+          return it;
+      }
+      return end;
+    }
+
+    inline string::const_iterator
+    extract_between(
         const char &opening,
         const char &closing,
-        std::string::const_iterator start,
-        std::string::const_iterator end) noexcept
+        string::const_iterator start,
+        string::const_iterator end) noexcept
     {
       int st = 0;
       for (auto it = start; it != end; it++)
       {
-        if(*it == opening) {
+        if (*it == opening)
+        {
           st++;
-        } else if (*it == closing) {
-          if(--st == 0) {
+        }
+        else if (*it == closing)
+        {
+          if (--st == 0)
+          {
             return it;
           }
         }

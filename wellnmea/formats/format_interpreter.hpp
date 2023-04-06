@@ -63,7 +63,8 @@ namespace wellnmea
             continue;
           }
 
-          if(std::ispunct(*it)) {
+          if (std::ispunct(*it))
+          {
             throw std::invalid_argument("Invalid symbol meet in field declaration");
           }
 
@@ -111,8 +112,7 @@ namespace wellnmea
           // * Interpret field
 
           // Find field border
-          auto fieldBorder = find_if(it, end, [](const char &c)
-                                     { return c == ';'; });
+          auto fieldBorder = util::border_sign(';', {{'[', ']'}}, it, end);
           // Separate field section
           std::string field = std::string(it, fieldBorder);
 
