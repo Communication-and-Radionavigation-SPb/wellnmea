@@ -42,10 +42,11 @@ TEST(Suite, MovesIteratorForwardWhenExtractCalled)
 
   std::list<Token> tokens = lex.splitTokens(source);
   auto pos = tokens.begin();
+  auto end = tokens.end();
   pos++;
 
   UTCInstruction instr("name");
-  instr.extract(pos);
+  instr.extract(pos, end);
   EXPECT_EQ(pos, tokens.end());
 }
 
@@ -56,10 +57,11 @@ TEST(Suite, ReturnsUtcParamWhenExtracted)
 
   std::list<Token> tokens = lex.splitTokens(source);
   auto pos = tokens.begin();
+  auto end = tokens.end();
   pos++;
 
   UTCInstruction instr("name");
-  auto value = instr.extract(pos)->as<_UTCValue>();
+  auto value = instr.extract(pos, end)->as<_UTCValue>();
 
   EXPECT_EQ(value->name(), "name");
 
@@ -76,11 +78,12 @@ TEST(Suite, TestOtherUTCTimestampExtracted)
 
   std::list<Token> tokens = lex.splitTokens(source);
   auto pos = tokens.begin();
+  auto end = tokens.end();
   pos++;
 
   UTCInstruction instr("name");
-  auto value = instr.extract(pos)->as<_UTCValue>();
-  auto nextvalue = instr.extract(pos)->as<_UTCValue>();
+  auto value = instr.extract(pos, end)->as<_UTCValue>();
+  auto nextvalue = instr.extract(pos, end)->as<_UTCValue>();
 
   EXPECT_EQ(value->name(), "name");
   EXPECT_THAT(value->as<UTCValue>(), ::testing::NotNull());

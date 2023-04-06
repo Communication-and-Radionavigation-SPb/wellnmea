@@ -42,10 +42,11 @@ TEST(Suite, MovesIteratorForwardWhenExtractCalled)
 
   std::list<Token> tokens = lex.splitTokens(source);
   auto pos = tokens.begin();
+auto end = tokens.end();
   pos++;
 
   LongitudeInstruction instr("name");
-  instr.extract(pos);
+  instr.extract(pos,end);
   EXPECT_EQ(pos, tokens.end());
 }
 
@@ -56,10 +57,11 @@ TEST(Suite, ReturnsLongitudeParamWhenExtracted)
 
   std::list<Token> tokens = lex.splitTokens(source);
   auto pos = tokens.begin();
+auto end = tokens.end();
   pos++;
 
   LongitudeInstruction instr("name");
-  auto value = instr.extract(pos)->as<_LongitudeValue>();
+  auto value = instr.extract(pos,end)->as<_LongitudeValue>();
 
   EXPECT_EQ(value->name(), "name");
   EXPECT_THAT(value->as<LongitudeValue>(), ::testing::NotNull());
@@ -75,10 +77,11 @@ TEST(Suite, DoReturnsNullValueOnEmptyField)
 
   std::list<Token> tokens = lex.splitTokens(source);
   auto pos = tokens.begin();
+auto end = tokens.end();
   pos++;
 
   LongitudeInstruction instr("name");
-  auto value = instr.extract(pos)->as<_LongitudeValue>();
+  auto value = instr.extract(pos,end)->as<_LongitudeValue>();
 
   EXPECT_EQ(value->name(), "name");
   EXPECT_THAT(value->as<NullLongitudeValue>(), ::testing::NotNull());

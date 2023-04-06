@@ -42,10 +42,11 @@ TEST(Suite, MovesIteratorForwardWhenExtractCalled)
 
   std::list<Token> tokens = lex.splitTokens(source);
   auto pos = tokens.begin();
+  auto end = tokens.end();
   pos++;
 
   LatitudeInstruction instr("name");
-  instr.extract(pos);
+  instr.extract(pos, end);
   EXPECT_EQ(pos, tokens.end());
 }
 TEST(Suite, ReturnsLongitudeParamWhenExtracted)
@@ -55,10 +56,11 @@ TEST(Suite, ReturnsLongitudeParamWhenExtracted)
 
   std::list<Token> tokens = lex.splitTokens(source);
   auto pos = tokens.begin();
+  auto end = tokens.end();
   pos++;
 
   LatitudeInstruction instr("name");
-  auto value = instr.extract(pos)->as<LatitudeValue>();
+  auto value = instr.extract(pos, end)->as<LatitudeValue>();
 
   EXPECT_EQ(value->name(), "name");
   EXPECT_THAT(value, ::testing::A<LatitudeValue *>());
@@ -74,10 +76,11 @@ TEST(Suite, CanRecognizeSouthDirection)
 
   std::list<Token> tokens = lex.splitTokens(source);
   auto pos = tokens.begin();
+  auto end = tokens.end();
   pos++;
 
   LatitudeInstruction instr("name");
-  auto value = instr.extract(pos)->as<LatitudeValue>();
+  auto value = instr.extract(pos, end)->as<LatitudeValue>();
 
   EXPECT_EQ(value->name(), "name");
   EXPECT_THAT(value, ::testing::A<LatitudeValue *>());
@@ -94,10 +97,11 @@ TEST(Suite, DoNotFailsOnInvalidDirectionSymbol)
 
   std::list<Token> tokens = lex.splitTokens(source);
   auto pos = tokens.begin();
+  auto end = tokens.end();
   pos++;
 
   LatitudeInstruction instr("name");
-  auto value = instr.extract(pos)->as<LatitudeValue>();
+  auto value = instr.extract(pos, end)->as<LatitudeValue>();
 
   EXPECT_EQ(value->name(), "name");
   EXPECT_THAT(value, ::testing::A<LatitudeValue *>());
@@ -113,10 +117,11 @@ TEST(Suite, DoReturnsNullValueWhenTokenIsEmpty)
 
   std::list<Token> tokens = lex.splitTokens(source);
   auto pos = tokens.begin();
+  auto end = tokens.end();
   pos++;
 
   LatitudeInstruction instr("name");
-  auto value = instr.extract(pos)->as<_LatitudeValue>();
+  auto value = instr.extract(pos, end)->as<_LatitudeValue>();
 
   EXPECT_THAT(value->as<NullLatitudeValue>(), ::testing::NotNull());
   EXPECT_EQ(value->as<NullLatitudeValue>()->direction(), std::nullopt);

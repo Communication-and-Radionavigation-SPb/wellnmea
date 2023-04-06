@@ -27,12 +27,7 @@ namespace wellnmea
         return new DegreesInstruction(name);
       }
 
-      Instruction *applyParams(props params) override
-      {
-        return this;
-      }
-
-      value *extract(position it) override
+      value *extract(position it, const_position end) override
       {
         auto dit = it++, cit = it++;
         if (dit->type == Token::null || cit->type == Token::null)

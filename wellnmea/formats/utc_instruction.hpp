@@ -28,12 +28,7 @@ namespace wellnmea
         return new UTCInstruction(name);
       }
 
-      virtual Instruction *applyParams(props params)
-      {
-        return this;
-      }
-
-      virtual value *extract(position it) override
+      virtual value *extract(position it, const_position end) override
       {
         if(it->type == Token::null) {
           return new values::NullUTCValue(name());

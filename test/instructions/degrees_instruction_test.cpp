@@ -43,11 +43,12 @@ TEST(Suite, MovesIteratorForwardWhenExtractCalled)
 
   std::list<Token> tokens = lex.splitTokens(source);
   auto pos = tokens.begin();
+  auto end = tokens.end();
   pos++;
 
   DegreesInstruction instr("name");
 
-  instr.extract(pos);
+  instr.extract(pos, end);
 
   EXPECT_EQ(pos, tokens.end());
 }
@@ -59,10 +60,11 @@ TEST(Suite, ReturnsDegreesParamWhenExtracted)
 
   std::list<Token> tokens = lex.splitTokens(source);
   auto pos = tokens.begin();
+  auto end = tokens.end();
   pos++;
 
   DegreesInstruction instr("name");
-  auto value = instr.extract(pos)->as<DegreesValue>();
+  auto value = instr.extract(pos, end)->as<DegreesValue>();
 
   EXPECT_EQ(value->name(), "name");
   EXPECT_THAT(value, ::testing::A<DegreesValue*>());
@@ -77,10 +79,11 @@ TEST(Suite, CanRecognizeMagneticMeasure) {
 
   std::list<Token> tokens = lex.splitTokens(source);
   auto pos = tokens.begin();
+  auto end = tokens.end();
   pos++;
 
   DegreesInstruction instr("name");
-  auto value = instr.extract(pos)->as<_DegreesValue>();
+  auto value = instr.extract(pos, end)->as<_DegreesValue>();
 
   EXPECT_EQ(value->cursor(), 51.9);
   EXPECT_EQ(value->measure(), DegreesValue::Magnetic);
@@ -92,10 +95,11 @@ TEST(Suite, DoReturnsNullValueWhenDigitalTokenIsEmpty) {
 
   auto tokens = lex.splitTokens(source);
   auto pos = tokens.begin();
+  auto end = tokens.end();
   pos++;
 
   DegreesInstruction instr("name");
-  auto value = instr.extract(pos)->as<_DegreesValue>();
+  auto value = instr.extract(pos, end)->as<_DegreesValue>();
 
   EXPECT_EQ(value->cursor(), std::nullopt);
   EXPECT_EQ(value->measure(), std::nullopt);
@@ -107,10 +111,11 @@ TEST(Suite, DoReturnsNullValueWhenMeasureTokenIsEmtpy) {
 
   auto tokens = lex.splitTokens(source);
   auto pos = tokens.begin();
+  auto end = tokens.end();
   pos++;
 
   DegreesInstruction instr("name");
-  auto value = instr.extract(pos)->as<_DegreesValue>();
+  auto value = instr.extract(pos, end)->as<_DegreesValue>();
   
   EXPECT_EQ(value->cursor(), std::nullopt);
   EXPECT_EQ(value->measure(), std::nullopt);

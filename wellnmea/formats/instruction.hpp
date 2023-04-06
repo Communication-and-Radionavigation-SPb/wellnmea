@@ -24,6 +24,7 @@ namespace wellnmea
 
       using value = NullValue;
       using position = std::list<Token>::iterator &;
+      using const_position = const std::list<Token>::const_iterator &;
       using props = const std::list<std::string>;
       /* ---------------------------------- Data ---------------------------------- */
     protected:
@@ -57,7 +58,7 @@ namespace wellnmea
        * @param it Cursor inside NMEA message represented with Tokens
        * @return value Value for this item
        */
-      virtual value *extract(position it) = 0;
+      virtual value *extract(position it, const_position end) = 0;
 
       /**
        * @brief Applies new instruction params
@@ -69,7 +70,10 @@ namespace wellnmea
        * not be applied to this instruction
        * @return Current object reference
        */
-      virtual Instruction *applyParams(props params) = 0;
+      virtual Instruction *applyParams(props params) 
+      {
+        return this;
+      }
 
       /**
        * @brief Clones this Instruction

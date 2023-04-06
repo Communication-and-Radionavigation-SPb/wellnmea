@@ -24,12 +24,8 @@ namespace wellnmea
         return new LatitudeInstruction(name);
       }
 
-      virtual Instruction *applyParams(props params)
-      {
-        return this;
-      }
 
-      virtual value *extract(position it) override
+      virtual value *extract(position it, const_position end) override
       {
         auto cit = it++, dit = it++;
         if (cit->type == Token::null)
