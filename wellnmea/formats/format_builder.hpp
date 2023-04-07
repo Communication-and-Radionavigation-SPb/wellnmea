@@ -41,16 +41,16 @@ namespace wellnmea
       virtual void validateRepetitionLexem(Lexem *lex) const
       {
         auto sub = lex->sublexems;
-        if (sub.size() < 1)
+        if (sub.size() < 2)
           throw configuration_error("Invalid configuration provided."
                                     " Repeated part can not be empty.");
         for (auto &&l : sub)
         {
-          if (l->type != Lexem::field)
+          if (l->type != Lexem::field && l->type != Lexem::word)
           {
             throw configuration_error("Invalid configuration provided. "
                                       "Repeated part can contain only field instructions but `" +
-                                      lex->slice +
+                                      l->slice +
                                       "` provided.");
           }
         }
@@ -99,31 +99,7 @@ namespace wellnmea
       }
 
     public:
-      std::shared_ptr<Format> build(const std::vector<Lexem *> &lexems) const
-      {
-        Format::Items items{};
-
-        for (auto it = lexems.begin(); it < lexems.end(); it++)
-        {
-          if ((*it)->type == Lexem::field)
-          {
-            auto ptr = onField(*it);
-            items.push_back(ptr);
-            continue;
-          }
-          if ((*it)->type == Lexem::repetition)
-          {
-            auto ptr = onRepetition(*it);
-            items.push_back(ptr);
-            continue;
-          }
-
-          throw configuration_error("Invalid configuration provided. Error occured at `" +
-                                    (*it)->slice + "`.");
-        }
-
-        return std::make_shared<Format>(items);
-      }
+      virtual std::shared_ptr<Format> build(const std::vector<Lexem *> &lexems) const = 0;
     };
   } // namespace formats
 

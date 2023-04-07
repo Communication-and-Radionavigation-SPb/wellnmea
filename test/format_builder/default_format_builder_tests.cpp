@@ -122,7 +122,7 @@ TEST(Suite, ThrowsOnEmptyRepetition)
 {
   wellnmea::DefaultFormatBuilder builder;
 
-  auto lexems = FormatInterpreter::interpret("[]");
+  auto lexems = FormatInterpreter::interpret("name[]");
 
   EXPECT_THROW({
     try
@@ -131,7 +131,8 @@ TEST(Suite, ThrowsOnEmptyRepetition)
     }
     catch (const std::exception &e)
     {
-      EXPECT_STREQ(e.what(), "Invalid configuration provided. Repeated part can not be empty.");
+      EXPECT_STREQ(e.what(), "Invalid configuration provided."
+                             " Repeated part can not be empty.");
       throw;
     }
   },
@@ -142,7 +143,7 @@ TEST(Suite, RepeatedPartCanContainOnlyFieldLexems)
 {
   wellnmea::DefaultFormatBuilder builder;
 
-  auto lexems = FormatInterpreter::interpret("[[field|utc]]");
+  auto lexems = FormatInterpreter::interpret("one[two[field|utc]]");
 
   EXPECT_THROW({
     try
@@ -153,7 +154,7 @@ TEST(Suite, RepeatedPartCanContainOnlyFieldLexems)
     {
       EXPECT_STREQ(e.what(), "Invalid configuration provided. "
                              "Repeated part can contain only field instructions but "
-                             "`[field|utc]` provided.");
+                             "`two[field|utc]` provided.");
       throw;
     }
   },
@@ -178,7 +179,8 @@ TEST(Suite, CanProduceUtcInstruction)
   EXPECT_EQ(fmt->count(), 2);
 }
 
-TEST(Suite, CanProduceLatitudeInstruction) {
+TEST(Suite, CanProduceLatitudeInstruction)
+{
 
   auto latitude = std::make_shared<LatitudeInstruction>("");
 
@@ -196,8 +198,8 @@ TEST(Suite, CanProduceLatitudeInstruction) {
   EXPECT_EQ(fmt->count(), 1);
 }
 
-
-TEST(Suite, CanProduceLongitudeInstruction) {
+TEST(Suite, CanProduceLongitudeInstruction)
+{
 
   auto instr = std::make_shared<LongitudeInstruction>("");
 
@@ -209,6 +211,24 @@ TEST(Suite, CanProduceLongitudeInstruction) {
   wellnmea::DefaultFormatBuilder builder;
 
   auto lexems = FormatInterpreter::interpret("field_name|longitude");
+
+  auto fmt = builder.build(lexems);
+
+  EXPECT_EQ(fmt->count(), 1);
+}
+
+TEST(Suite, CanProduceRepetitionInstruction) {
+  auto instr = std::make_shared<LongitudeInstruction>("");
+
+  InstructionsRegistry::add(instr);
+
+
+  ASSERT_TRUE(InstructionsRegistry::contains("longitude"));
+  ASSERT_EQ(instr->which(), "longitude");
+
+   wellnmea::DefaultFormatBuilder builder;
+
+  auto lexems = FormatInterpreter::interpret("longs[field_name|longitude]");
 
   auto fmt = builder.build(lexems);
 

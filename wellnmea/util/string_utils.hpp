@@ -23,6 +23,22 @@ namespace wellnmea
     }
 
     inline string::const_iterator
+    punct_position(list<char> enclosures,
+                   string::const_iterator start, string::const_iterator end) noexcept
+    {
+      for (auto it = start; it < end; it++)
+      {
+        auto o = find_if(enclosures.begin(), enclosures.end(), [it](const char &p)
+                         { return p == *it; });
+        if (o != enclosures.end())
+        {
+          return it;
+        }
+      }
+      return end;
+    }
+
+    inline string::const_iterator
     border_sign(const char &symbol,
                 Enclosures enclosures,
                 string::const_iterator start,

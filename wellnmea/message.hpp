@@ -8,6 +8,7 @@
 
 namespace wellnmea
 {
+  using wellnmea::values::NullValue;
   class NmeaMessage
   {
   protected:
