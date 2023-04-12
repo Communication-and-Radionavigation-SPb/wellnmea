@@ -21,7 +21,7 @@ namespace wellnmea
     public:
       RepeatedInstruction(const std::string &name,
                           const list<Subfield> &subfields) : m_subfields(subfields),
-                                                      Instruction(name) {}
+                                                             Instruction(name) {}
 
     public:
       std::string which() const noexcept override
@@ -45,7 +45,7 @@ namespace wellnmea
 
       value *extract(position it, const_position end) override
       {
-        RepeatedValue::Subvalues l{};
+        RepeatedValue::GroupList l{};
 
         while (it != end && it->type != Token::checksum)
         {
@@ -54,14 +54,18 @@ namespace wellnmea
 
         return new values::RepeatedValue(name(), l);
       }
+
     protected:
-      void subextract(position it, const_position end, RepeatedValue::Subvalues &l) {
-        NullValue* v = nullptr;
+      void subextract(position it, const_position end, RepeatedValue::GroupList &l)
+      {
+        RepeatedValue::Group *g = new RepeatedValue::Group;
+        NullValue *v = nullptr;
         for (auto &&i : m_subfields)
         {
           v = i->extract(it, end);
-          l.push_back(v);
+          g->push_back(v);
         }
+        l.push_back(g);
       }
     };
   } // namespace formats

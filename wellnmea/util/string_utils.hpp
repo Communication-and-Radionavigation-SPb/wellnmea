@@ -22,6 +22,22 @@ namespace wellnmea
       return clone;
     }
 
+    inline int checksum0183(const std::string &source)
+    {
+      if (source.empty())
+        return 0;
+
+      int crc = 0;
+      int length = source.length() - 3;
+
+      for (int i = 1; i < length; i++)
+      {
+        crc ^= source[i];
+      }
+
+      return crc;
+    }
+
     inline string::const_iterator
     punct_position(list<char> enclosures,
                    string::const_iterator start, string::const_iterator end) noexcept

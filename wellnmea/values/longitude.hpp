@@ -19,10 +19,6 @@ namespace wellnmea
         West,
         Unknown
       };
-      _LongitudeValue(const std::string &name) : NullValue(name) {}
-      virtual ~_LongitudeValue() {}
-      virtual optional<double> position() const noexcept = 0;
-      virtual optional<Direction> direction() const noexcept = 0;
       static Direction directionFrom(const char &c) noexcept
       {
 
@@ -31,6 +27,27 @@ namespace wellnmea
         if (c == 'W')
           return West;
         return Unknown;
+      }
+      static std::string directionToString(Direction d)
+      {
+        if (d == East)
+          return "East";
+        if (d == West)
+          return "West";
+        return "Unknown";
+      }
+
+    public:
+      _LongitudeValue(const std::string &name) : NullValue(name) {}
+      virtual ~_LongitudeValue() {}
+      virtual optional<double> position() const noexcept = 0;
+      virtual optional<Direction> direction() const noexcept = 0;
+
+      virtual void accept(visitor_base &v) const noexcept
+      {
+        using value_visitor = visitor<_LongitudeValue>;
+        if (value_visitor *ev = dynamic_cast<value_visitor *>(&v))
+          ev->visit(this);
       }
     };
 
@@ -56,11 +73,6 @@ namespace wellnmea
       {
         return m_direction;
       }
-
-      SerializedResult serialise() const noexcept override
-      {
-        return SerializedProperty({});
-      }
     };
 
     class NullLongitudeValue : public _LongitudeValue
@@ -74,11 +86,6 @@ namespace wellnmea
       }
 
       optional<Direction> direction() const noexcept override
-      {
-        return std::nullopt;
-      }
-
-      SerializedResult serialise() const noexcept override
       {
         return std::nullopt;
       }

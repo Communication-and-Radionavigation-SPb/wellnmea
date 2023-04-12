@@ -51,7 +51,6 @@ TEST(Suite, MovesIteratorForwardWhenExtractCalled)
 
 TEST(Suite, ReturnsRepeatedParamsWhenExtracted)
 {
-
   auto subfield = std::make_shared<DegreesInstruction>("degrees");
   auto instr = RepeatedInstruction("directions", {subfield});
 
@@ -63,10 +62,10 @@ TEST(Suite, ReturnsRepeatedParamsWhenExtracted)
   auto end = tokens.end();
   pos++;
 
-  auto value = instr.extract(pos, end)->as<RepeatedValue>();
+  auto groups = instr.extract(pos, end)->as<RepeatedValue>();
 
-  EXPECT_THAT(value, ::testing::NotNull());
-  EXPECT_EQ(value->size(), 3);
+  EXPECT_THAT(groups, ::testing::NotNull());
+  EXPECT_EQ(groups->size(), 3);
 
   std::vector<std::optional<double>> valuesC{4917.24, 5917.24, std::nullopt};
   std::vector<std::optional<DegreesValue::Measure>> valuesM{
@@ -77,12 +76,12 @@ TEST(Suite, ReturnsRepeatedParamsWhenExtracted)
   auto itc = valuesC.begin();
   auto itm = valuesM.begin();
 
-  for (auto it = value->begin(); it != value->end(); it++, itc++, itm++)
+  for (auto it = groups->begin(); it != groups->end(); it++)
   {
-    auto subv = it->as<_DegreesValue>();
+    auto subv = it->at(0)->as<_DegreesValue>();
     auto cursor = subv->cursor();
     auto measure = subv->measure();
-    EXPECT_EQ(measure, *itm);
-    EXPECT_EQ(cursor, *itc);
+    EXPECT_EQ(measure, *itm++);
+    EXPECT_EQ(cursor, *itc++);
   }
 }

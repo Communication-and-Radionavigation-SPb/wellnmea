@@ -3,6 +3,7 @@
 #include <string>
 #include <memory>
 #include <list>
+#include <vector>
 #include <wellnmea/exceptions.hpp>
 #include <wellnmea/token.hpp>
 #include <wellnmea/values/null_value.hpp>
@@ -25,7 +26,7 @@ namespace wellnmea
       using value = NullValue;
       using position = std::list<Token>::iterator &;
       using const_position = const std::list<Token>::const_iterator &;
-      using props = const std::list<std::string>;
+      using props = const std::vector<std::string>;
       /* ---------------------------------- Data ---------------------------------- */
     protected:
       std::string m_name;

@@ -7,7 +7,10 @@
 #include <wellnmea/token.hpp>
 #include <wellnmea/exceptions.hpp>
 #include <wellnmea/message.hpp>
+#include <wellnmea/formats/format_builder.hpp>
 #include <wellnmea/formats/formats_registry.hpp>
+
+using namespace wellnmea::formats;
 
 namespace wellnmea
 {
@@ -32,7 +35,7 @@ namespace wellnmea
      * @param source Source string containing
      * @return NmeaMessage Parsed message
      */
-    NmeaMessage parse(const std::string &source)
+    std::shared_ptr<Message> parse(const std::string &source)
     {
       auto tokens = m_lexing->splitTokens(source);
       auto it = tokens.begin();
@@ -45,18 +48,14 @@ namespace wellnmea
       auto talker = tokens.begin()->slice.substr(0, 2);
       auto formatter = tokens.begin()->slice.substr(2, 3);
 
-      // auto format = FormatRegistry::getFormat(formatter);
+      auto format = FormatRegistry::getFormat(formatter);
 
-      if (tokens.end()->type == Token::checksum)
-      {
-      }
+      auto parsed = format->parse(++it, tokens.end());
 
-      auto msg = NmeaMessage();
 
-      msg.formatter = formatter;
-      msg.talker = talker;
+      auto msg = std::make_shared<Message>(talker, formatter, parsed);
 
-      return NmeaMessage();
+      return msg;
     }
   };
 } // namespace wellnmea

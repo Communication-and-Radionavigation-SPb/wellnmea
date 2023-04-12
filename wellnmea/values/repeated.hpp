@@ -3,6 +3,7 @@
 #include <iterator>
 #include <cstddef>
 #include <list>
+#include <vector>
 #include <wellnmea/values/null_value.hpp>
 
 namespace wellnmea
@@ -10,26 +11,31 @@ namespace wellnmea
   namespace values
   {
     using std::list;
+    using std::vector;
     using std::optional;
 
     class RepeatedValue : public NullValue
     {
     public:
-      using Subvalues = list<NullValue *>;
+      using Group = vector<NullValue *>;
+      using GroupList = list<Group *>;
+
       struct Iterator
       {
         using iterator_category = std::bidirectional_iterator_tag;
         using difference_type = std::ptrdiff_t;
-        using value_type = NullValue;
+        using value_type = Group;
         using pointer = value_type *;
         using reference = value_type &;
-        using base = Subvalues::iterator;
+        using base = GroupList::const_iterator;
 
         Iterator(base ptr) : m_ptr(ptr) {}
 
         reference operator*() const { return **m_ptr; }
 
-        pointer operator->() { return &**m_ptr; }
+        pointer operator->() { 
+          return &**m_ptr; 
+        }
 
         Iterator &operator++()
         {
@@ -52,41 +58,44 @@ namespace wellnmea
       };
 
     protected:
-      Subvalues m_values;
+      GroupList m_groups;
 
     public:
       RepeatedValue(const std::string &name,
-                    const Subvalues &values) : m_values(values),
+                    const GroupList &values) : m_groups(values),
                                                NullValue(name) {}
       ~RepeatedValue()
       {
-        std::for_each(
-            m_values.begin(),
-            m_values.end(),
-            [](NullValue *ptr)
-            {
-              delete ptr;
-            });
+        auto itemdeletion = [](NullValue *ptr)
+        {
+          delete ptr;
+        };
+        for (auto &&group : m_groups)
+        {
+          std::for_each(group->begin(), group->end(), itemdeletion);
+        }
       }
 
-      Iterator begin()
+      Iterator begin() const
       {
-        return Iterator(m_values.begin());
+        return Iterator(m_groups.begin());
       }
 
-      Iterator end()
+      Iterator end() const
       {
-        return Iterator(m_values.end());
+        return Iterator(m_groups.end());
       }
 
-      int size()
+      int size() const
       {
-        return m_values.size();
+        return m_groups.size();
       }
 
-      virtual SerializedResult serialise() const noexcept override
+      virtual void accept(visitor_base &v) const noexcept
       {
-        return std::nullopt;
+        using value_visitor = visitor<RepeatedValue>;
+        if (value_visitor *ev = dynamic_cast<value_visitor *>(&v))
+          ev->visit(this);
       }
     };
   } // namespace values

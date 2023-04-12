@@ -15,6 +15,7 @@ namespace wellnmea
       using ItemPtr = std::shared_ptr<Instruction>;
       using Items = std::list<ItemPtr>;
       using ValuePtr = std::shared_ptr<values::NullValue>;
+
     private:
       Items m_items;
 
@@ -22,14 +23,20 @@ namespace wellnmea
       Format(const Items &items) : m_items(items) {}
 
     public:
-      std::map<std::string,ValuePtr>
-          parse(std::list<Token>::iterator start,
-                 std::list<Token>::iterator end) const
+      std::list<ValuePtr>
+      parse(std::list<Token>::iterator it, std::list<Token>::iterator end) const
       {
-        return std::map<std::string,ValuePtr>();
+        std::list<ValuePtr> result;
+        for (auto &&instr : m_items)
+        {
+          auto value = instr->extract(it, end);
+          result.emplace_back(value);
+        }
+        return result;
       }
 
-      size_t count() const {
+      size_t count() const
+      {
         return m_items.size();
       }
     };

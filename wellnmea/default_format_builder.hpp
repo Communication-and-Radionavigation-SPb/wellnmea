@@ -2,12 +2,14 @@
 
 #include <wellnmea/formats/lexem.hpp>
 #include <wellnmea/formats/instruction.hpp>
+#include <wellnmea/formats/repeated_instruction.hpp>
 #include <wellnmea/formats/instructions_registry.hpp>
 #include <wellnmea/formats/format_builder.hpp>
 
 using wellnmea::formats::Format;
 using wellnmea::formats::FormatBuilder;
 using wellnmea::formats::Instruction;
+using wellnmea::formats::RepeatedInstruction;
 using wellnmea::formats::Lexem;
 
 namespace wellnmea
@@ -25,12 +27,16 @@ namespace wellnmea
       auto name = lex->sublexems[0]->slice;
       auto formatter = lex->sublexems[1]->slice;
 
-      std::list<std::string> params{};
+      std::vector<std::string> params{};
       if (lex->sublexems.size() > 2)
       {
-        for (auto &&p : lex->sublexems[2]->sublexems)
+        params = std::vector<std::string>(lex->sublexems[2]->sublexems.size());
+        auto it = lex->sublexems[2]->sublexems.begin();
+        auto size = params.size();
+        for (int i = 0; i < size; i++)
         {
-          params.push_back(p->slice);
+          params[i] = (*it)->slice;
+          ++it;
         }
       }
 
@@ -41,7 +47,15 @@ namespace wellnmea
     std::shared_ptr<Instruction> onRepetition(Lexem *lex) const override
     {
       FormatBuilder::validateRepetitionLexem(lex);
-      return std::shared_ptr<Instruction>(nullptr);
+      auto name = lex->sublexems[0]->slice;
+      std::list<RepeatedInstruction::Subfield> subfields{};
+      
+      for (auto it = ++(lex->sublexems.begin()); it < lex->sublexems.end(); it++)
+      {
+        subfields.emplace_back(onField(*it));
+      }
+
+      return std::make_shared<RepeatedInstruction>(name, subfields);
     }
 
   public:

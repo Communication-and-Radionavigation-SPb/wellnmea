@@ -1,9 +1,8 @@
 #pragma once
 
 #include <string>
-#include <map>
-#include <variant>
-#include <optional>
+#include <wellnmea/types_def.hpp>
+#include <wellnmea/values/value_visitor.hpp>
 
 namespace wellnmea
 {
@@ -11,21 +10,18 @@ namespace wellnmea
   {
     class NullValue
     {
-    public:
-      using SerializedValue = std::variant<double, long, std::string>;
-      using SerializedProperty = std::map<std::string, SerializedValue>;
-      using SerializedResult = std::optional<SerializedProperty>;
-
     private:
       std::string m_name;
 
-    public:
+    protected:
       /**
        * @brief Construct a new BaseValue object
        *
        * @param a_name Name of parameter
        */
       NullValue(const std::string &a_name) : m_name(a_name){};
+
+    public:
       virtual ~NullValue() = default;
 
     public:
@@ -39,12 +35,29 @@ namespace wellnmea
         return m_name;
       }
 
-      virtual SerializedResult serialise() const noexcept = 0;
+      virtual void accept(visitor_base &v) const noexcept
+      {
+        using value_visitor = visitor<NullValue>;
+        if (value_visitor *ev = dynamic_cast<value_visitor *>(&v))
+          ev->visit(this);
+      }
 
       template <class ConsiderAs>
       ConsiderAs *as()
       {
         return dynamic_cast<ConsiderAs *>(this);
+      }
+      /**
+       * @brief Dynamic casting to consider object
+       * as desired type
+       *
+       * @tparam ConsiderAs Type to cast this object to
+       * @return ConsiderAs* Casted object pointer with ConsiderAs type
+       */
+      template <class ConsiderAs>
+      const ConsiderAs *as() const
+      {
+        return dynamic_cast<const ConsiderAs *>(this);
       }
     };
 

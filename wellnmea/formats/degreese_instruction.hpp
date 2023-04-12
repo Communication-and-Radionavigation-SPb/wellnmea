@@ -5,6 +5,7 @@
 #include <wellnmea/exceptions.hpp>
 #include <wellnmea/formats/instruction.hpp>
 #include <wellnmea/values/degrees.hpp>
+#include <wellnmea/util/token_t_utils.hpp>
 
 namespace wellnmea
 {
@@ -30,12 +31,15 @@ namespace wellnmea
       value *extract(position it, const_position end) override
       {
         auto dit = it++, cit = it++;
-        if (dit->type == Token::null || cit->type == Token::null)
-          return new values::NullDegreesValue(name());
-        if (dit->type != Token::number || cit->type != Token::symbol)
+
+        if (!util::token::isNullNum(dit->type) || !util::token::isNullSym(cit->type))
           throw extraction_error("Failed to extract degrees value near `" + it->slice + "`");
 
+        if (util::token::isNull(dit->type) || util::token::isNull(cit->type))
+          return new values::NullDegreesValue(name());
+
         double cursor = std::stod(dit->slice);
+
         values::DegreesValue::Measure measure = values::DegreesValue::typeFrom(cit->slice[0]);
 
         return new values::DegreesValue(name(), cursor, measure);

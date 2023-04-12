@@ -26,12 +26,29 @@ namespace wellnmea
         return Unknown;
       }
 
+      static std::string typeToString(Measure m) noexcept
+      {
+        if (m == Magnetic)
+          return "Magnetic";
+        if (m == True)
+          return "True";
+        return "Unknown";
+      }
+
     public:
       _DegreesValue(const std::string &name) : NullValue(name) {}
       virtual ~_DegreesValue() = default;
 
       virtual optional<double> cursor() const noexcept = 0;
       virtual optional<Measure> measure() const noexcept = 0;
+
+      virtual void accept(visitor_base &v) const noexcept override
+      {
+        using value_visitor = visitor<_DegreesValue>;
+        value_visitor *ev = dynamic_cast<value_visitor *>(&v);
+        if (ev != nullptr)
+          ev->visit(this);
+      }
     };
 
     class DegreesValue : public _DegreesValue
@@ -55,11 +72,6 @@ namespace wellnmea
       {
         return m_measure;
       }
-
-      SerializedResult serialise() const noexcept override
-      {
-        return SerializedProperty({});
-      }
     };
 
     class NullDegreesValue : public _DegreesValue
@@ -73,11 +85,6 @@ namespace wellnmea
       }
 
       optional<Measure> measure() const noexcept override
-      {
-        return std::nullopt;
-      }
-
-      SerializedResult serialise() const noexcept override
       {
         return std::nullopt;
       }

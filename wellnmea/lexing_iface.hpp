@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <list>
 #include <wellnmea/token.hpp>
 
 namespace wellnmea

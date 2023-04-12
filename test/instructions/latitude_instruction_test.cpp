@@ -126,5 +126,4 @@ TEST(Suite, DoReturnsNullValueWhenTokenIsEmpty)
   EXPECT_THAT(value->as<NullLatitudeValue>(), ::testing::NotNull());
   EXPECT_EQ(value->as<NullLatitudeValue>()->direction(), std::nullopt);
   EXPECT_EQ(value->as<NullLatitudeValue>()->position(), std::nullopt);
-  EXPECT_EQ(value->as<NullLatitudeValue>()->serialise(), std::nullopt);
 }

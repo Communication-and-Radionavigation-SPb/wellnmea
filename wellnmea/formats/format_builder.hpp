@@ -44,6 +44,10 @@ namespace wellnmea
         if (sub.size() < 2)
           throw configuration_error("Invalid configuration provided."
                                     " Repeated part can not be empty.");
+        if (sub[0]->type != Lexem::word || sub[0]->slice.empty())
+          throw configuration_error("Invalid configuration provided. "
+                                    "Repeated part must have name but `" +
+                                    lex->slice + "` provided.");
         for (auto &&l : sub)
         {
           if (l->type != Lexem::field && l->type != Lexem::word)

@@ -16,6 +16,14 @@ namespace wellnmea
       virtual std::optional<int> minutes() const noexcept = 0;
       virtual std::optional<int> seconds() const noexcept = 0;
       virtual std::optional<int> milliseconds() const noexcept = 0;
+
+
+      virtual void accept(visitor_base &v) const noexcept
+      {
+        using value_visitor = visitor<_UTCValue>;
+        if (value_visitor *ev = dynamic_cast<value_visitor *>(&v))
+          ev->visit(this);
+      }
     };
     class UTCValue : public _UTCValue
     {
@@ -53,11 +61,6 @@ namespace wellnmea
       {
         return m_milliseconds;
       }
-
-      SerializedResult serialise() const noexcept
-      {
-        return SerializedProperty({});
-      }
     };
 
     class NullUTCValue : public _UTCValue
@@ -81,11 +84,6 @@ namespace wellnmea
       }
 
       std::optional<int> milliseconds() const noexcept override
-      {
-        return std::nullopt;
-      }
-
-      SerializedResult serialise() const noexcept
       {
         return std::nullopt;
       }
