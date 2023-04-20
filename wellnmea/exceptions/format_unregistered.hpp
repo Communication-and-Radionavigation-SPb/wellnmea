@@ -11,7 +11,7 @@ namespace wellnmea
     std::string m_requested;
 
   public:
-    format_unregistered(const std::string &fmtname) : exception(), m_requested(fmtname) {}
+    format_unregistered(const std::string &fmtname) : m_requested(fmtname) {}
 
     const char *what() const noexcept override
     {
