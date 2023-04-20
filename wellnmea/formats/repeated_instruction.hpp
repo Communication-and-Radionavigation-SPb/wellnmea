@@ -10,6 +10,15 @@ namespace wellnmea
   {
     using std::list;
     using namespace wellnmea::values;
+
+
+    /**
+     * @brief Internal instruction for variadic part of NMEA message
+     * 
+     * Internal instruction for variadic part of NMEA message
+     * should not be registered.
+     * 
+     */
     class RepeatedInstruction : public Instruction
     {
     public:
