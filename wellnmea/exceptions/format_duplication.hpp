@@ -11,7 +11,7 @@ namespace wellnmea
     std::string m_format_name;
 
   public:
-    format_duplication(std::string fmt) : m_format_name(fmt), exception() {}
+    format_duplication(std::string fmt) : m_format_name(fmt) {}
 
     const char *what() const noexcept override
     {
