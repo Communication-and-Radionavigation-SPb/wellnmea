@@ -15,8 +15,7 @@ namespace wellnmea
     public:
       ChecksumInstruction(
           const std::string &name,
-          bool required = false) : m_required(required),
-                                   Instruction(name) {}
+          bool required = false) : Instruction(name), m_required(required) {}
 
     private:
       bool validate(position it, const_position end) const
@@ -67,7 +66,7 @@ namespace wellnmea
         if (!util::token::isChecksum(it->type))
           throw extraction_error("Failed to extract checksum value near `" + it->slice + "`");
         int checksum = 0;
-        string significant = it->slice.substr(1,2);
+        string significant = it->slice.substr(1, 2);
         try
         {
           checksum = (int)std::stol(significant, NULL, 16);

@@ -20,8 +20,8 @@ namespace wellnmea
 
     public:
       RepeatedInstruction(const std::string &name,
-                          const list<Subfield> &subfields) : m_subfields(subfields),
-                                                             Instruction(name) {}
+                          const list<Subfield> &subfields) : Instruction(name),
+                                                             m_subfields(subfields) {}
 
     public:
       std::string which() const noexcept override
