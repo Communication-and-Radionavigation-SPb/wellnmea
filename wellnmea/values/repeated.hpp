@@ -11,8 +11,8 @@ namespace wellnmea
   namespace values
   {
     using std::list;
-    using std::vector;
     using std::optional;
+    using std::vector;
 
     class RepeatedValue : public NullValue
     {
@@ -33,8 +33,9 @@ namespace wellnmea
 
         reference operator*() const { return **m_ptr; }
 
-        pointer operator->() { 
-          return &**m_ptr; 
+        pointer operator->()
+        {
+          return &**m_ptr;
         }
 
         Iterator &operator++()
@@ -62,8 +63,10 @@ namespace wellnmea
 
     public:
       RepeatedValue(const std::string &name,
-                    const GroupList &values) : m_groups(values),
-                                               NullValue(name) {}
+                    const GroupList &values) : NullValue(name),
+                                               m_groups(values)
+      {
+      }
       ~RepeatedValue()
       {
         auto itemdeletion = [](NullValue *ptr)

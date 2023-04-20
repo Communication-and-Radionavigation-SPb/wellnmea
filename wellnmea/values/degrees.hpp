@@ -60,9 +60,9 @@ namespace wellnmea
     public:
       DegreesValue(const std::string &name,
                    double cursor,
-                   Measure measure) : m_cursor(cursor),
-                                      m_measure(measure),
-                                      _DegreesValue(name) {}
+                   Measure measure) : _DegreesValue(name),
+                                      m_cursor(cursor),
+                                      m_measure(measure) {}
 
       optional<double> cursor() const noexcept override
       {

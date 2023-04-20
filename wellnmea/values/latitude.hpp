@@ -58,9 +58,11 @@ namespace wellnmea
     public:
       LatitudeValue(const std::string &name,
                     double coordinate,
-                    Direction direction) : m_coordinate(coordinate),
-                                           m_direction(direction),
-                                           _LatitudeValue(name) {}
+                    Direction direction) : _LatitudeValue(name),
+                                           m_coordinate(coordinate),
+                                           m_direction(direction)
+      {
+      }
 
       optional<double> position() const noexcept override
       {

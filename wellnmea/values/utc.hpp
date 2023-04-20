@@ -17,7 +17,6 @@ namespace wellnmea
       virtual std::optional<int> seconds() const noexcept = 0;
       virtual std::optional<int> milliseconds() const noexcept = 0;
 
-
       virtual void accept(visitor_base &v) const noexcept
       {
         using value_visitor = visitor<_UTCValue>;
@@ -38,9 +37,9 @@ namespace wellnmea
                int hours,
                int minutes,
                int seconds,
-               int milliseconds) : m_hours(hours), m_minutes(minutes), m_seconds(seconds),
-                                   m_milliseconds(milliseconds),
-                                   _UTCValue(name) {}
+               int milliseconds) : _UTCValue(name),
+                                   m_hours(hours), m_minutes(minutes), m_seconds(seconds),
+                                   m_milliseconds(milliseconds) {}
 
       std::optional<int> hours() const noexcept override
       {

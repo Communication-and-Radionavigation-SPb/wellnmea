@@ -60,9 +60,9 @@ namespace wellnmea
     public:
       LongitudeValue(const std::string &name,
                      double coordinate,
-                     Direction direction) : m_coordinate(coordinate),
-                                            m_direction(direction),
-                                            _LongitudeValue(name) {}
+                     Direction direction) : _LongitudeValue(name),
+                                            m_coordinate(coordinate),
+                                            m_direction(direction) {}
 
       optional<double> position() const noexcept override
       {
