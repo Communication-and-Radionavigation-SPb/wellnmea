@@ -29,7 +29,7 @@ namespace wellnmea
       {
         if (d == North)
           return "North";
-        if (d = South)
+        if (d == South)
           return "South";
         return "Unknown";
       }

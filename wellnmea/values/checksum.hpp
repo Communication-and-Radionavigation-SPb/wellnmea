@@ -39,7 +39,7 @@ namespace wellnmea
       int _value;
 
     public:
-      ChecksumValue(const string &name, int checksum) : _value(checksum), _ChecksumValue(name) {}
+      ChecksumValue(const string &name, int checksum) :_ChecksumValue(name), _value(checksum) {}
 
     public:
       optional<int> value() const noexcept override
