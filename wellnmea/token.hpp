@@ -19,6 +19,6 @@ namespace wellnmea
     Type type;
     std::string slice;
 
-    Token(Type type, const string &slice) : type(type), slice(slice) {}
+    Token(Type a_type, const string &a_slice) : type(a_type), slice(a_slice) {}
   };
 } // namespace wellnmea
