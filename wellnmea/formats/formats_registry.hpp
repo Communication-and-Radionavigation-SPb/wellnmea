@@ -80,7 +80,6 @@ namespace wellnmea
           retval += it->first;
           retval += "|";
         }
-        retval = retval.substr(0, retval.size() - 1);
         
         return retval;
       }
