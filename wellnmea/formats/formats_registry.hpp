@@ -72,6 +72,18 @@ namespace wellnmea
 
         return m_registry.find(util::to_lower(fmt_name))->second;
       }
+
+      static string dumpRegistered() noexcept {
+        string retval = "";
+        for (auto it = m_registry.begin(); it != m_registry.end(); it++)
+        {
+          retval += it->first;
+          retval += "|";
+        }
+        retval = retval.substr(0, retval.size() - 1);
+        
+        return retval;
+      }
     };
   }
 } // namespace wellnmea
