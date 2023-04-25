@@ -33,7 +33,7 @@ namespace wellnmea
         params = std::vector<std::string>(lex->sublexems[2]->sublexems.size());
         auto it = lex->sublexems[2]->sublexems.begin();
         auto size = params.size();
-        for (int i = 0; i < size; i++)
+        for (size_t i = 0; i < size; i++)
         {
           params[i] = (*it)->slice;
           ++it;
