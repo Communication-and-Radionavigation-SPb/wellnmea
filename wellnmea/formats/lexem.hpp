@@ -30,15 +30,15 @@ namespace wellnmea
       std::vector<Lexem *> sublexems;
 
     public:
-      Lexem(Type type,
-            const std::string &slice) : type(type),
-                                        slice(slice),
+      Lexem(Type a_type,
+            const std::string &a_slice) : type(a_type),
+                                        slice(a_slice),
                                         sublexems({}) {}
-      Lexem(Type type,
-            const std::string &slice,
-            std::vector<Lexem *> &sub) : type(type),
-                                         slice(slice),
-                                         sublexems(sub) {}
+      Lexem(Type a_type,
+            const std::string &a_slice,
+            std::vector<Lexem *> &a_sub) : type(a_type),
+                                         slice(a_slice),
+                                         sublexems(a_sub) {}
 
       ~Lexem()
       {
