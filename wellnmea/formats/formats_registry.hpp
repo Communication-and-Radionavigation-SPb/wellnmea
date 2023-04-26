@@ -1,6 +1,6 @@
 #pragma once
 
-#include <map>
+#include <unordered_map>
 #include <string>
 #include <memory>
 #include <wellnmea/exceptions.hpp>
@@ -18,7 +18,7 @@ namespace wellnmea
       using reg_record = std::shared_ptr<Format>;
 
     private:
-      inline static std::map<std::string, reg_record> m_registry;
+      inline static std::unordered_map<std::string, reg_record> m_registry;
 
     public:
       FormatRegistry() = delete;

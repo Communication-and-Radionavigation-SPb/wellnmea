@@ -1,6 +1,6 @@
 #pragma once
 
-#include <map>
+#include <unordered_map>
 #include <string>
 
 #include <wellnmea/exceptions.hpp>
@@ -18,7 +18,7 @@ namespace wellnmea
       InstructionsRegistry() = delete;
 
     private:
-      inline static std::map<std::string, record_item> m_registry;
+      inline static std::unordered_map<std::string, record_item> m_registry;
 
     public:
       /**

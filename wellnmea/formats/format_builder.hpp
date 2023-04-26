@@ -36,6 +36,20 @@ namespace wellnmea
        * @return Format::ItemPtr Constructed Instruction pointer
        */
       virtual Format::ItemPtr onField(Lexem *lex) const = 0;
+      /**
+       * @brief Repeated instruction construction out from Lexem
+       * 
+       * Rules to construct RepeatedInstruction with
+       * contained concrete instructions inside
+       * 
+       * @throws If provided lexem can not be considered as
+       * valid repetition lexem. It could happen if `lex->sublexems.size()`
+       * is less than 2. Or first sublexem is not word which represents
+       * name of repeated part.
+       * 
+       * @param lex Lexem containing Repeated instruction configuration
+       * @return Format::ItemPtr Constructed repeated instruction pointer
+       */
       virtual Format::ItemPtr onRepetition(Lexem *lex) const = 0;
 
       virtual void validateRepetitionLexem(Lexem *lex) const
@@ -103,6 +117,13 @@ namespace wellnmea
       }
 
     public:
+      /**
+       * @brief Creates Format from provided lexems set
+       * 
+       * @param lexems Sequence of lexems which represents format
+       * parsing rules
+       * @return std::shared_ptr<Format> Created format containing parsing instructions
+       */
       virtual std::shared_ptr<Format> build(const std::vector<Lexem *> &lexems) const = 0;
     };
   } // namespace formats
