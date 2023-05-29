@@ -7,6 +7,7 @@
 #include <wellnmea/values/degrees.hpp>
 #include <wellnmea/values/repeated.hpp>
 #include <wellnmea/values/latitude.hpp>
+#include <wellnmea/values/longitude.hpp>
 #include <wellnmea/values/utc.hpp>
 
 using namespace wellnmea::values;
