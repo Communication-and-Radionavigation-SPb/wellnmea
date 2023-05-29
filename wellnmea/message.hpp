@@ -21,9 +21,11 @@ namespace wellnmea
     Message(const std::string &talker,
             const std::string formatter,
             const std::list<std::shared_ptr<NullValue>> values)
-        : m_talker(talker),
-          m_formatter(formatter),
-          m_values(values) {}
+        : m_values(values),
+          m_talker(talker),
+          m_formatter(formatter)
+    {
+    }
 
     const std::string &talker() const noexcept
     {
