@@ -48,6 +48,12 @@ namespace wellnmea
       auto talker = tokens.begin()->slice.substr(0, 2);
       auto formatter = tokens.begin()->slice.substr(2, 3);
 
+      auto findit = std::find(m_formats.begin(), m_formats.end(), formatter);
+
+      if(findit == m_formats.end()) {
+        throw parse_error("Format of type " + formatter + " is unsupported by this parser instance");   
+      }
+
       auto format = FormatRegistry::getFormat(formatter);
 
       auto parsed = format->parse(++it, tokens.end());

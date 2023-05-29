@@ -92,7 +92,7 @@ TEST(Suite, CorrectlyDetectsInvalidTokens)
   }
 }
 
-TEST(Suite, ThrowsOn$Apsent)
+TEST(Suite, ThrowsOnNmeaStartSimbolApsent)
 {
 
   wellnmea::Nmea0183Lexing interpreter;

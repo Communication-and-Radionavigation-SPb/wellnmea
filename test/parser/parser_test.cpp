@@ -44,7 +44,7 @@ TEST(Suite, ThrowsOnInvalidMessageFormat)
 
   FormatRegistry::connect("DTM", fmt);
 
-  wellnmea::Parser parser(lex, {});
+  wellnmea::Parser parser(lex, {"DTM"});
 
   EXPECT_THROW({ parser.parse("$TEDTM,W84,,,,,,,*17"); }, wellnmea::extraction_error);
 }
@@ -69,7 +69,7 @@ TEST(Suite, ReturnsCorrectParsedMessage)
 
   FormatRegistry::connect("DTM", fmt);
 
-  wellnmea::Parser parser(lex, {});
+  wellnmea::Parser parser(lex, {"DTM"});
 
   std::shared_ptr<Message> msg = parser.parse("$TEDTM,84,M,98.9,E,54.9,T,55.9,W*17");
 
@@ -100,7 +100,7 @@ TEST(Suite, MapSerializerReturnsRightValueForDegrees)
 
   FormatRegistry::connect("DTM", fmt);
 
-  wellnmea::Parser parser(lex, {});
+  wellnmea::Parser parser(lex, {"DTM"});
 
   std::shared_ptr<Message> msg = parser.parse("$TEDTM,84,M");
   EXPECT_EQ(msg->talker(), "TE");
@@ -150,7 +150,7 @@ TEST(Suite, default_map_message_serializer_returns_right_value)
 
   FormatRegistry::connect("DTM", fmt);
 
-  wellnmea::Parser parser(lex, {});
+  wellnmea::Parser parser(lex, {"DTM"});
 
   std::shared_ptr<Message> msg = parser.parse("$TEDTM,84,M,54.9,T*17");
 
