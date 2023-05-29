@@ -16,7 +16,10 @@ namespace wellnmea
 {
   class Parser
   {
+  public:
     using lexing_ptr = std::shared_ptr<LexingIface>;
+
+  private:
     lexing_ptr m_lexing;
     std::list<std::string> m_formats;
 
@@ -50,14 +53,14 @@ namespace wellnmea
 
       auto findit = std::find(m_formats.begin(), m_formats.end(), formatter);
 
-      if(findit == m_formats.end()) {
-        throw parse_error("Format of type " + formatter + " is unsupported by this parser instance");   
+      if (findit == m_formats.end())
+      {
+        throw parse_error("Format of type " + formatter + " is unsupported by this parser instance");
       }
 
       auto format = FormatRegistry::getFormat(formatter);
 
       auto parsed = format->parse(++it, tokens.end());
-
 
       auto msg = std::make_shared<Message>(talker, formatter, parsed);
 
