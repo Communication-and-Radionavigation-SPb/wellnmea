@@ -96,7 +96,7 @@ public:
     {
       vector<SerializedProperty> gresult(group->size());
       NullValue *value = nullptr;
-      for (int i = 0; i < group->size(); ++i)
+      for (size_t i = 0; i < group->size(); ++i)
       {
         value = group->at(i);
         value->accept(*this);
