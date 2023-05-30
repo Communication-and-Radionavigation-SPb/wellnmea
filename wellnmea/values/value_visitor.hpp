@@ -1,7 +1,5 @@
 #pragma once
 
-#include <wellnmea/types_def.hpp>
-
 namespace wellnmea
 {
   namespace values

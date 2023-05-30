@@ -5,7 +5,6 @@
 #include <memory>
 
 #include <wellnmea/values/null_value.hpp>
-#include <wellnmea/types_def.hpp>
 
 namespace wellnmea
 {

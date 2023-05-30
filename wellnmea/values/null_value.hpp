@@ -1,7 +1,6 @@
 #pragma once
 
 #include <string>
-#include <wellnmea/types_def.hpp>
 #include <wellnmea/values/value_visitor.hpp>
 
 namespace wellnmea
