@@ -198,7 +198,7 @@ namespace wellnmea
         throw parse_error("Invalid message format");
 
       std::size_t last_delimeter_position = 0, index = 1; // skip $ sign
-      const int mes_length = source.length();
+      const size_t mes_length = source.length();
 
       while (index <= mes_length)
       {
