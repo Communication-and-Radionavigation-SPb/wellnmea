@@ -60,11 +60,16 @@ namespace wellnmea
 
       auto format = FormatRegistry::getFormat(formatter);
 
-      auto parsed = format->parse(++it, tokens.end());
-
-      auto msg = std::make_shared<Message>(talker, formatter, parsed);
-
-      return msg;
+      try
+      {
+        auto parsed = format->parse(++it, tokens.end());
+        auto msg = std::make_shared<Message>(talker, formatter, parsed);
+        return msg;
+      }
+      catch (const std::exception &e)
+      {
+        throw parse_error("Failed to parse message `" + source + "` with format `" + formatter + "`:" + e.what());
+      }
     }
   };
 } // namespace wellnmea
