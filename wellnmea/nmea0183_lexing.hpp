@@ -88,6 +88,9 @@ namespace wellnmea
       if (m_previous != Token::null && m_previous != Token::checksum)
         throw parse_error("Invalid state transition into Checksum state");
 
+      if (c == '\r' || c == '\n')
+        return new ChecksumState(current());
+
       // Check symbol matches checksum grammar
       if (!std::isxdigit(c))
         throw parse_error("Invalid symbol in checksum of message found.");

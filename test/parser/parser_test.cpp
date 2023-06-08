@@ -6,6 +6,7 @@
 #include <wellnmea/nmea0183_lexing.hpp>
 #include <wellnmea/formats/degreese_instruction.hpp>
 #include <wellnmea/formats/longitude_instruction.hpp>
+#include <wellnmea/formats/checksum_instruction.hpp>
 #include <wellnmea/formats/instructions_registry.hpp>
 #include <wellnmea/formats/format_interpreter.hpp>
 #include <wellnmea/default_format_builder.hpp>
@@ -45,7 +46,7 @@ TEST(Suite, ThrowsOnInvalidMessageFormat)
 
   wellnmea::Parser parser(lex, {"DTM"});
 
-  EXPECT_THROW({ parser.parse("$TEDTM,W84,,,,,,,*17"); }, wellnmea::extraction_error);
+  EXPECT_THROW({ parser.parse("$TEDTM,W84,,,,,,,*17"); }, wellnmea::parse_error);
 }
 
 TEST(Suite, ReturnsCorrectParsedMessage)
@@ -58,11 +59,14 @@ TEST(Suite, ReturnsCorrectParsedMessage)
   auto dgrs = std::make_shared<DegreesInstruction>("");
   auto lng = std::make_shared<LongitudeInstruction>("");
 
+  auto chk = std::make_shared<ChecksumInstruction>("");
+
   InstructionsRegistry::add(dgrs);
   InstructionsRegistry::add(lng);
+  InstructionsRegistry::add(chk);
 
   wellnmea::DefaultFormatBuilder builder;
-  auto lexems = FormatInterpreter::interpret("block[direction|degrees;position|longitude;];");
+  auto lexems = FormatInterpreter::interpret("block[direction|degrees;position|longitude;];chk|checksum");
 
   auto fmt = builder.build(lexems);
 
@@ -70,12 +74,38 @@ TEST(Suite, ReturnsCorrectParsedMessage)
 
   wellnmea::Parser parser(lex, {"DTM"});
 
-  std::shared_ptr<Message> msg = parser.parse("$TEDTM,84,M,98.9,E,54.9,T,55.9,W*17");
+  std::shared_ptr<Message> msg = parser.parse("$TEDTM,84,M,98.9,E,54.9,T,55.9,W*17\r\n");
 
   EXPECT_EQ(msg->talker(), "TE");
   EXPECT_EQ(msg->formatter(), "DTM");
-  EXPECT_EQ(msg->values().size(), 1);
+  EXPECT_EQ(msg->values().size(), 2);
   auto values = msg->values();
   auto pos = values.begin()->get()->as<RepeatedValue>();
-  auto it = pos->begin();
+
+  auto it = values.begin();
+  auto checksum = (++it)->get()->as<_ChecksumValue>();
+
+  EXPECT_EQ(checksum->name(), "chk");
+  std::cout << checksum->value().value_or(-1) << std::endl;
+  EXPECT_EQ(checksum->value(), 23) << "Invalid checksum parsed";
+
+  auto group = pos->begin();
+
+  auto degress = group->at(0)->as<_DegreesValue>();
+  auto longitude = group->at(1)->as<_LongitudeValue>();
+
+  EXPECT_EQ(degress->name(), "direction");
+  EXPECT_EQ(degress->cursor(), 84);
+  EXPECT_EQ(longitude->name(), "position");
+  EXPECT_EQ(longitude->position(), 98.9);
+
+  group++;
+
+  degress = group->at(0)->as<_DegreesValue>();
+  longitude = group->at(1)->as<_LongitudeValue>();
+
+  EXPECT_EQ(degress->name(), "direction");
+  EXPECT_EQ(degress->cursor(), 54.9);
+  EXPECT_EQ(longitude->name(), "position");
+  EXPECT_EQ(longitude->position(), 55.9);
 }

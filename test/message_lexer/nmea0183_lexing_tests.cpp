@@ -115,6 +115,14 @@ TEST(Suite, ReturnsCorrectListOfTokens)
 {
   wellnmea::Nmea0183Lexing interpreter;
 
-  auto tokens = interpreter.splitTokens("$TEDTM,W84,,,,,,,*17");
-  
+  auto tokens = interpreter.splitTokens("$TEDTM,W84,12,,hello*17\r\n");
+
+  ASSERT_EQ(tokens.size(), 6);
+  auto it = tokens.begin();
+  EXPECT_EQ(it++->type, wellnmea::Token::phrase);
+  EXPECT_EQ(it++->type, wellnmea::Token::phrase);
+  EXPECT_EQ(it++->type, wellnmea::Token::number);
+  EXPECT_EQ(it++->type, wellnmea::Token::null);
+  EXPECT_EQ(it++->type, wellnmea::Token::phrase);
+  EXPECT_EQ(it++->type, wellnmea::Token::checksum);
 }
