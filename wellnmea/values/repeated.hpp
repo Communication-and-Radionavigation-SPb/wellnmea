@@ -1,6 +1,7 @@
 #pragma once
 
 #include <iterator>
+#include <optional>
 #include <cstddef>
 #include <list>
 #include <vector>

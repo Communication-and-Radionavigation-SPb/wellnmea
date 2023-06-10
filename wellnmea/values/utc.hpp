@@ -1,5 +1,6 @@
 #pragma once
 
+#include <optional>
 #include <wellnmea/values/null_value.hpp>
 
 namespace wellnmea
