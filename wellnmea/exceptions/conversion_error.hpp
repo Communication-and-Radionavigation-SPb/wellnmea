@@ -15,15 +15,18 @@ namespace wellnmea
   {
   private:
     std::string requested_format;
+    const char* error;
 
   public:
-    conversion_error(const std::string &f) : requested_format(f) {}
+    conversion_error(const std::string &f) : requested_format(f) {
+      error = ("Failed to convert context_value into requested format: " + requested_format).c_str();
+    }
     ~conversion_error(){};
 
   public:
     const char *what() const noexcept override
     {
-      return ("Failed to convert context_value into requested format: " + requested_format).c_str();
+      return error;
     }
   };
 } // namespace wellnmea
