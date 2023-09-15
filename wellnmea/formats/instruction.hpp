@@ -34,6 +34,8 @@ namespace wellnmea
     public:
       Instruction(const std::string &name) : m_name(name) {}
 
+      virtual ~Instruction() = default;
+
       /* -------------------------------- Interface ------------------------------- */
     public:
       /**

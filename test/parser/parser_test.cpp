@@ -10,7 +10,6 @@
 #include <wellnmea/formats/instructions_registry.hpp>
 #include <wellnmea/formats/format_interpreter.hpp>
 #include <wellnmea/default_format_builder.hpp>
-#include <wellnmea/formats/formats_registry.hpp>
 
 #define Suite Parser
 
@@ -22,7 +21,7 @@ TEST(Suite, InstantiatesWithoutExceptions)
 {
   EXPECT_NO_THROW({
     auto lex = std::make_shared<wellnmea::Nmea0183Lexing>();
-    wellnmea::Parser parser(lex, {});
+    wellnmea::Parser parser(lex);
   });
 }
 
@@ -42,17 +41,15 @@ TEST(Suite, ThrowsOnInvalidMessageFormat)
 
   auto fmt = builder.build(lexems);
 
-  FormatRegistry::connect("DTM", fmt);
+  wellnmea::Parser parser(lex);
+  parser.connect("DTM", fmt);
 
-  wellnmea::Parser parser(lex, {"DTM"});
 
   EXPECT_THROW({ parser.parse("$TEDTM,W84,,,,,,,*17"); }, wellnmea::parse_error);
 }
 
 TEST(Suite, ReturnsCorrectParsedMessage)
 {
-
-  FormatRegistry::clear();
 
   auto lex = std::make_shared<wellnmea::Nmea0183Lexing>();
 
@@ -70,9 +67,9 @@ TEST(Suite, ReturnsCorrectParsedMessage)
 
   auto fmt = builder.build(lexems);
 
-  FormatRegistry::connect("DTM", fmt);
+  wellnmea::Parser parser(lex);
+  parser.connect("DTM", fmt);
 
-  wellnmea::Parser parser(lex, {"DTM"});
 
   std::shared_ptr<Message> msg = parser.parse("$TEDTM,84,M,98.9,E,54.9,T,55.9,W*17\r\n");
 

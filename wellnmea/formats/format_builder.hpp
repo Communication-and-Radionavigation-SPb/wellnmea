@@ -6,7 +6,6 @@
 #include <wellnmea/formats/lexem.hpp>
 #include <wellnmea/formats/format.hpp>
 #include <wellnmea/formats/instruction.hpp>
-#include <wellnmea/formats/formats_registry.hpp>
 #include <wellnmea/formats/instructions_registry.hpp>
 
 namespace wellnmea
