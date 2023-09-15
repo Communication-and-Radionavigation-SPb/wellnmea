@@ -7,6 +7,5 @@
 #include "formats/format.hpp"
 #include "formats/lexem.hpp"
 #include "formats/format_interpreter.hpp"
-#include "formats/formats_registry.hpp"
 #include "default_format_builder.hpp"
 #include "parser.hpp"
