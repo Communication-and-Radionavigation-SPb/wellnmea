@@ -7,7 +7,6 @@
 #include <wellnmea/token.hpp>
 #include <wellnmea/exceptions.hpp>
 #include <wellnmea/message.hpp>
-#include <wellnmea/formats/format_builder.hpp>
 #include <wellnmea/formats/formats_registry.hpp>
 
 using namespace wellnmea::formats;
