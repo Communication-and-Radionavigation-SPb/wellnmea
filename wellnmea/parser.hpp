@@ -11,7 +11,6 @@
 #include <wellnmea/exceptions.hpp>
 #include <wellnmea/message.hpp>
 #include <wellnmea/formats/format.hpp>
-#include <wellnmea/formats/format_builder.hpp>
 
 using namespace wellnmea::formats;
 
