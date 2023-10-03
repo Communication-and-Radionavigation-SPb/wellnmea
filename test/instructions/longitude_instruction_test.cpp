@@ -42,31 +42,31 @@ TEST(Suite, MovesIteratorForwardWhenExtractCalled)
 
   std::list<Token> tokens = lex.splitTokens(source);
   auto pos = tokens.begin();
-auto end = tokens.end();
+  auto end = tokens.end();
   pos++;
 
   LongitudeInstruction instr("name");
-  instr.extract(pos,end);
+  instr.extract(pos, end);
   EXPECT_EQ(pos, tokens.end());
 }
 
 TEST(Suite, ReturnsLongitudeParamWhenExtracted)
 {
-  const std::string source = "$TERMB,12309.57,W";
+  const std::string source = "$TERMB,49.2,W";
   wellnmea::Nmea0183Lexing lex;
 
   std::list<Token> tokens = lex.splitTokens(source);
   auto pos = tokens.begin();
-auto end = tokens.end();
+  auto end = tokens.end();
   pos++;
 
   LongitudeInstruction instr("name");
-  auto value = instr.extract(pos,end)->as<_LongitudeValue>();
+  auto value = instr.extract(pos, end)->as<_LongitudeValue>();
 
   EXPECT_EQ(value->name(), "name");
   EXPECT_THAT(value->as<LongitudeValue>(), ::testing::NotNull());
 
-  EXPECT_EQ(value->position(), 12309.57);
+  EXPECT_EQ(value->position(), 49.2);
   EXPECT_EQ(value->direction(), LongitudeValue::West);
 }
 
@@ -77,11 +77,11 @@ TEST(Suite, DoReturnsNullValueOnEmptyField)
 
   std::list<Token> tokens = lex.splitTokens(source);
   auto pos = tokens.begin();
-auto end = tokens.end();
+  auto end = tokens.end();
   pos++;
 
   LongitudeInstruction instr("name");
-  auto value = instr.extract(pos,end)->as<_LongitudeValue>();
+  auto value = instr.extract(pos, end)->as<_LongitudeValue>();
 
   EXPECT_EQ(value->name(), "name");
   EXPECT_THAT(value->as<NullLongitudeValue>(), ::testing::NotNull());

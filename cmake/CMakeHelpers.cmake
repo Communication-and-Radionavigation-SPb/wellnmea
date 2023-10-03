@@ -61,7 +61,9 @@ macro (build_test TARGET_NAME)
     endif ()
 endmacro ()
 
-
+macro(link_benchmark)
+    target_link_libraries(${TARGET_NAME} PUBLIC benchmark::benchmark benchmark::benchmark_main)
+endmacro(link_benchmark)
 # Finalize target for all types
 macro (final_target)
     if ("${TARGET_LIB_TYPE}" STREQUAL "EXECUTABLE")
