@@ -21,6 +21,36 @@ namespace wellnmea
                 { return tolower(c); });
       return clone;
     }
+    /**
+     * @brief Checks if passed string contains non alpha-numeric characters
+     *
+     * @param txt sting to check
+     * @return true If string has non alpha numeric characters
+     * @return false If string has only alpha numeric characters
+     */
+    inline bool hasNonAlphaNumeric(std::string_view txt)
+    {
+      for (const char &c : txt)
+      {
+        if (!isalnum(c))
+          return true;
+      }
+      return false;
+    }
+
+
+    inline bool hasInvalidFieldChars(std::string_view txt)
+    {
+      for (const char &c : txt)
+      {
+        if (isalnum(c))
+          continue;
+        if (c != '-' && c != '.')
+          return true;
+      }
+      return false;
+    }
+    
 
     inline int checksum0183(const std::string &source)
     {
