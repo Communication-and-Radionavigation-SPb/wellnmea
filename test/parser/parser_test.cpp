@@ -83,7 +83,7 @@ TEST(Suite, adds_empty_field_when_only_name_and_comma) {
   EXPECT_EQ(sentence.formatter, "HDT");
 
   ASSERT_EQ(sentence.fields.size(), 1);
-  EXPECT_EQ(sentence.fields[0], "");
+  EXPECT_EQ(*sentence.fields.begin(), "");
 }
 
 TEST(Suite, adds_fields_of_sentence) {
@@ -100,10 +100,11 @@ TEST(Suite, adds_fields_of_sentence) {
   
 
   ASSERT_EQ(sentence.fields.size(), 4);
-  EXPECT_EQ(sentence.fields[0], "127.0");
-  EXPECT_EQ(sentence.fields[1], "T");
-  EXPECT_EQ(sentence.fields[2], "");
-  EXPECT_EQ(sentence.fields[3], "");
+  auto itr = sentence.fields.begin();
+  EXPECT_EQ(*itr, "127.0");
+  EXPECT_EQ(*(++itr), "T");
+  EXPECT_EQ(*(++itr), "");
+  EXPECT_EQ(*(itr++), "");
 }
 
 TEST(Suite, adds_fields_when_no_trailing_comma) {
@@ -119,8 +120,9 @@ TEST(Suite, adds_fields_when_no_trailing_comma) {
   }
 
   ASSERT_EQ(sentence.fields.size(), 2);
-  EXPECT_EQ(sentence.fields[0], "127.0");
-  EXPECT_EQ(sentence.fields[1], "T");
+  auto itr = sentence.fields.begin();
+  EXPECT_EQ(*itr, "127.0");
+  EXPECT_EQ(*(++itr), "T");
 }
 
 TEST(Suite, recognized_checksum) {

@@ -4,7 +4,7 @@
 #include <string>
 #include <optional>
 #include <algorithm>
-#include <vector>
+#include <list>
 #include <stdexcept>
 
 namespace wellnmea
@@ -25,7 +25,8 @@ namespace wellnmea
     /// @brief parsed checksum field content
     std::string_view checksumField;
 
-    std::vector<std::string_view> fields;
+    /// @brief List of parsed fields
+    std::list<std::string_view> fields; // list + string_view choosed by results of benchmark/list_to_vector
 
     /// @brief calculated checksum of text property
     uint8_t payloadChecksum;
