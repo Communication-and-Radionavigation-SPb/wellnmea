@@ -29,7 +29,7 @@ namespace wellnmea
   namespace util
   {
 
-    double toDouble(const std::string &s)
+    inline double toDouble(const std::string &s)
     {
       char *p;
       double d = std::strtod(s.c_str(), &p);
@@ -43,7 +43,7 @@ namespace wellnmea
       return d;
     }
 
-    int64_t toInt(const std::string &s, int radix = 10)
+    inline int64_t toInt(const std::string &s, int radix = 10)
     {
       char *p;
       int64_t d = std::strtoll(s.c_str(), &p, radix);

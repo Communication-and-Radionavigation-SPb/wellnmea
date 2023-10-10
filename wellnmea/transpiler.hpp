@@ -1,13 +1,12 @@
 #pragma once
 
+#include <memory>
 #include <list>
 #include <unordered_map>
 #include <string>
 
 #include <wellnmea/util/string_utils.hpp>
 
-#include <wellnmea/lexing_iface.hpp>
-#include <wellnmea/token.hpp>
 #include <wellnmea/exceptions.hpp>
 #include <wellnmea/message.hpp>
 #include <wellnmea/formats/format.hpp>
@@ -19,17 +18,13 @@ namespace wellnmea
   class Transpiler
   {
   public:
-    using lexing_ptr = std::shared_ptr<LexingIface>;
-    using fmt_record = std::shared_ptr<Format>;
+    using FmtPtr = std::shared_ptr<Format>;
 
   private:
-    lexing_ptr m_lexing;
-    std::unordered_map<std::string, fmt_record> m_registry;
+    std::unordered_map<std::string, FmtPtr> m_registry;
 
   public:
-    Transpiler(
-        lexing_ptr lexer) : m_lexing(lexer),
-                            m_registry({}) {}
+    Transpiler() : m_registry({}) {}
 
   public:
     /**
@@ -48,9 +43,9 @@ namespace wellnmea
      * @return true If parsed has registered format
      * @return false otherwise
      */
-    bool contains(std::string fmt_name) const noexcept
+    bool contains(const std::string &fmt_name) const noexcept
     {
-      return m_registry.find(util::to_lower(fmt_name)) != m_registry.end();
+      return m_registry.find(fmt_name) != m_registry.end();
     }
     /* -------------------------------------------------------------------------- */
     /**
@@ -64,7 +59,7 @@ namespace wellnmea
      * part of NMEA message
      * @param fmt Format object
      */
-    void connect(std::string fmt_name, fmt_record fmt)
+    void connect(std::string fmt_name, FmtPtr fmt)
     {
       if (contains(fmt_name))
       {
@@ -80,15 +75,15 @@ namespace wellnmea
      * Returns format rules for format name.
      *
      * @param fmt_name Name of format
-     * @return fmt_record Shared pointer to format rules object
+     * @return FmtPtr Shared pointer to format rules object
      */
-    fmt_record getFormat(std::string fmt_name)
+    FmtPtr getFormat(std::string fmt_name)
     {
       if (!contains(fmt_name))
       {
         throw format_unregistered(fmt_name);
       }
-      return m_registry.find(util::to_lower(fmt_name))->second;
+      return m_registry.at(fmt_name);
     }
 
     /* -------------------------------------------------------------------------- */
@@ -134,20 +129,18 @@ namespace wellnmea
      * @param source Source string containing
      * @return NmeaMessage Parsed message
      */
-    std::shared_ptr<Message> parse(const Sentence &source)
+    std::shared_ptr<Message> parse(Sentence &source)
     {
+      auto formatter =
+          util::to_lower(std::string{source.formatter.begin(), source.formatter.end()});
 
-      auto format = this->getFormat(formatter);
-      throw std::runtime_error("Not implemented");
-      try
-      {
-        auto msg = std::make_shared<Message>(talker, formatter, parsed);
-        return msg;
-      }
-      catch (const std::exception &e)
-      {
-        throw parse_error("Failed to parse message `" + source + "` with format `" + formatter + "`:" + e.what());
-      }
+      auto fmt = getFormat(formatter);
+
+      auto parsed = fmt->parse(source);
+
+      auto talker = std::string{source.talker.begin(), source.talker.end()};
+
+      return std::shared_ptr<Message>(new Message(talker, formatter, parsed));
     }
   };
 } // namespace wellnmea

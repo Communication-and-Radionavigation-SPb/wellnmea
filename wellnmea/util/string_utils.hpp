@@ -14,7 +14,7 @@ namespace wellnmea
     using namespace std;
     using Enclosures = list<pair<char, char>>;
 
-    inline string to_lower(string &source) noexcept
+    inline string to_lower(const string &source) noexcept
     {
       string clone(source);
       transform(source.begin(), source.end(), clone.begin(), [](unsigned char c)
@@ -38,6 +38,40 @@ namespace wellnmea
       return false;
     }
 
+    /**
+     * @brief Checks if passed string contains non alpha characters
+     * 
+     * @param txt strin to check
+     * @return true If string has non alpha characters
+     * @return false If string contains only alpha characters
+     */
+    inline bool hasNonAlpha(std::string_view txt)
+    {
+      for (const char &c : txt)
+      {
+        if (!isalpha(c))
+          return true;
+      }
+      return false;
+    }
+
+    /**
+     * @brief Checks if passed string contains non numeric characters
+     *
+     * @param txt string to check
+     * @return true If string contains non numeric characters
+     * @return false If string has only numeric characters
+     */
+    inline bool hasNonNumeric(std::string_view txt)
+    {
+      for (const char &c : txt)
+      {
+        if (!isdigit(c))
+          return true;
+      }
+
+      return false;
+    }
 
     inline bool hasInvalidFieldChars(std::string_view txt)
     {
@@ -50,7 +84,6 @@ namespace wellnmea
       }
       return false;
     }
-    
 
     inline int checksum0183(const std::string &source)
     {

@@ -1,4 +1,3 @@
-#include <wellnmea/wellnmea.hpp>
 #include <wellnmea/formats/degreese_instruction.hpp>
 #include <wellnmea/formats/utc_instruction.hpp>
 #include <wellnmea/formats/longitude_instruction.hpp>

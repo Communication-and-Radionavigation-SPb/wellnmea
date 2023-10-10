@@ -1,81 +1,184 @@
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
 
-#include <wellnmea/formats/symbol_instruction.hpp>
-#include <wellnmea/nmea0183_lexing.hpp>
-#include <wellnmea/values/letter.hpp>
+#include <wellnmea/sentence.hpp>
+#include <wellnmea/parser.hpp>
 
-#define Suite TestLetterInstruction
+#include <wellnmea/instructions/symbol_instruction.hpp>
 
-using wellnmea::Token;
-using namespace wellnmea::formats;
-using namespace wellnmea::values;
+#define Suite SymbolInstructionTest
 
-TEST(Suite, can_be_managed)
+TEST(Suite, can_be_instantiated)
 {
-  auto instr = new SymbolInstruction<NullLetterValue, LetterValue>("heading");
-  delete instr;
+  EXPECT_NO_THROW({
+    wellnmea::instructions::SymbolInstruction instr("direction");
+  });
 }
 
-TEST(Suite, stores_name)
+TEST(Suite, which_returns_correct_value)
 {
-  auto instr = SymbolInstruction<NullLetterValue, LetterValue>("heading");
-  EXPECT_EQ(instr.name(), "heading");
+  wellnmea::instructions::SymbolInstruction instr("direction");
+
+  EXPECT_EQ(instr.which(), "char");
 }
 
-TEST(Suite, can_be_cloned_correctly)
+TEST(Suite, stores_name_correctly)
 {
-  SymbolInstruction<NullLetterValue, LetterValue> *instr = new SymbolInstruction<NullLetterValue, LetterValue>("heading");
+  wellnmea::instructions::SymbolInstruction direction("direction");
+  wellnmea::instructions::SymbolInstruction movement("movement");
 
-  auto clone = instr->clone("clone");
-
-  ASSERT_THAT(clone, ::testing::NotNull());
-  EXPECT_EQ(clone->name(), "clone");
-
-  delete instr;
-  delete clone;
+  EXPECT_EQ(direction.name(), "direction");
+  EXPECT_EQ(movement.name(), "movement");
 }
 
-TEST(Suite, throws_on_invalid_symbol_met)
+TEST(Suite, can_be_cloned)
 {
-  const std::string source = "$TSTST,T";
+  wellnmea::instructions::SymbolInstruction *instr = new wellnmea::instructions::SymbolInstruction("direction");
 
-  wellnmea::Nmea0183Lexing lex;
+  auto clone = instr->clone("movement");
 
-  auto tokens = lex.splitTokens(source);
-  auto pos = tokens.begin();
-  auto end = tokens.end();
-  ++pos;
+  ASSERT_NE(clone, nullptr);
+  EXPECT_NE(clone, instr);
 
-  SymbolInstruction<NullLetterValue, LetterValue> instr("heading", {'M', 'R'});
+  EXPECT_EQ(clone->name(), "movement");
+}
 
+TEST(Suite, moves_iterator_forward)
+{
+  wellnmea::instructions::SymbolInstruction instr("direction");
+
+  wellnmea::Sentence sentence;
+
+  std::string field_value = "T";
+  sentence.fields.push_back(std::string_view{field_value.c_str(), field_value.size()});
+
+  auto it = sentence.fields.begin();
+
+  instr.extract(it, sentence.fields.end());
+
+  EXPECT_NE(it, sentence.fields.begin());
+}
+
+TEST(Suite, extract_returns_non_nullable_object)
+{
+  wellnmea::instructions::SymbolInstruction instr("direction");
+
+  wellnmea::Sentence sentence;
+
+  std::string field_value = "T";
+  sentence.fields.push_back(std::string_view{field_value.c_str(), field_value.size()});
+
+  auto it = sentence.fields.begin();
+
+  auto value = instr.extract(it, sentence.fields.end());
+
+  EXPECT_NE(value, nullptr);
+}
+
+TEST(Suite, assigns_instruction_name_to_value)
+{
+  wellnmea::instructions::SymbolInstruction direction("direction");
+  wellnmea::instructions::SymbolInstruction movement("movement");
+
+  wellnmea::Sentence sentence;
+
+  std::string field_value = "T";
+  sentence.fields.push_back(field_value);
+
+  auto dit = sentence.fields.begin();
+  auto mit = sentence.fields.begin();
+
+  auto direction_value = direction.extract(dit, sentence.fields.end());
+  auto movement_value = movement.extract(mit, sentence.fields.end());
+
+  EXPECT_EQ(direction_value->name(), "direction");
+  EXPECT_EQ(movement_value->name(), "movement");
+}
+
+TEST(Suite, extracts_field_value)
+{
+  wellnmea::instructions::SymbolInstruction instr("direction");
+
+  wellnmea::Sentence sentence;
+
+  std::string field_value = "T";
+  sentence.fields.push_back(field_value);
+
+  auto it = sentence.fields.begin();
+
+  auto value = instr.extract(it, sentence.fields.end());
+
+  ASSERT_NE(value->as<wellnmea::instructions::CharacterValue>(), nullptr);
+  ASSERT_TRUE(value->as<wellnmea::instructions::CharacterValue>()->value.has_value());
+}
+
+TEST(Suite, extracts_correct_field_value)
+{
+  wellnmea::instructions::SymbolInstruction instr("direction");
+
+  wellnmea::Sentence sentence;
+
+  std::string field_value = "T";
+  std::string field_value_second = "V";
+  sentence.fields.push_back(field_value);
+  sentence.fields.push_back(field_value_second);
+
+  auto it = sentence.fields.begin();
+
+  auto tvalue = instr.extract(it, sentence.fields.end());
+  auto vvalue = instr.extract(it, sentence.fields.end());
+
+  EXPECT_EQ(tvalue->as<wellnmea::instructions::CharacterValue>()->value.value(), 'T');
+  EXPECT_EQ(vvalue->as<wellnmea::instructions::CharacterValue>()->value.value(), 'V');
+}
+
+TEST(Suite, throws_when_field_content_is_not_valid_for_character)
+{
+  wellnmea::instructions::SymbolInstruction instr("direction");
+
+  wellnmea::Sentence sentence;
+
+  std::string field_value = "3";
+
+  sentence.fields.push_back(field_value);
+
+  auto it = sentence.fields.begin();
   EXPECT_THROW({
-    instr.extract(pos, end);
+    instr.extract(it, sentence.fields.end());
   },
                wellnmea::extraction_error);
 }
 
-TEST(Suite, returns_symbol_value)
+TEST(Suite, throws_when_field_content_is_not_single_character)
 {
-  const std::string source = "$TSTST,T";
+  wellnmea::instructions::SymbolInstruction instr("direction");
 
-  wellnmea::Nmea0183Lexing lex;
+  wellnmea::Sentence sentence;
 
-  auto tokens = lex.splitTokens(source);
-  auto pos = tokens.begin();
-  auto end = tokens.end();
-  ++pos;
+  std::string field_value = "TT";
 
-  SymbolInstruction<NullLetterValue, LetterValue> instr("heading", {'T'});
+  sentence.fields.push_back(field_value);
 
-  auto value = instr.extract(pos, end)->as<_LetterValue>();
+  auto it = sentence.fields.begin();
+  EXPECT_THROW({
+    instr.extract(it, sentence.fields.end());
+  },
+               wellnmea::extraction_error);
+}
 
-  ASSERT_THAT(value, ::testing::NotNull());
+TEST(Suite, throws_when_not_in_allowed_chars)
+{
+  wellnmea::instructions::SymbolInstruction instr("direction", {'T', 'M'});
 
-  EXPECT_EQ(value->name(), "heading");
-  ASSERT_TRUE(value->value().has_value()) << "Char not extracted";
+  wellnmea::Sentence sentence;
 
-  EXPECT_EQ(value->value(), 'T');
+  std::string field_value = "E";
 
-  delete value;
+  sentence.fields.push_back(field_value);
+
+  auto it = sentence.fields.begin();
+  EXPECT_THROW({
+    instr.extract(it, sentence.fields.end());
+  },
+               wellnmea::extraction_error);
 }

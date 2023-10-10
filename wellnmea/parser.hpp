@@ -2,6 +2,8 @@
 
 #include <iostream>
 #include <string>
+#include <unordered_map>
+#include <functional>
 #include <wellnmea/sentence.hpp>
 #include <wellnmea/util/string_utils.hpp>
 #include <wellnmea/util/number_utils.hpp>
@@ -11,6 +13,9 @@ namespace wellnmea
 
   class Parser
   {
+  private:
+    std::unordered_map<std::string, std::function<void(Sentence)>> handlingTable;
+
   protected:
     void sanitize(std::string &source)
     {
@@ -121,18 +126,32 @@ namespace wellnmea
 
       // Validate parsed fields
       bool foundInvalid = false;
-      for (const std::string_view& field : sentence.fields)
+      for (const std::string_view &field : sentence.fields)
       {
         foundInvalid = foundInvalid && util::hasInvalidFieldChars(field);
-        if(foundInvalid) break;
+        if (foundInvalid)
+          break;
       }
-      if(!foundInvalid) sentence.markValid();
+      if (!foundInvalid)
+        sentence.markValid();
     }
 
     void parse(const std::string &source)
     {
       wellnmea::Sentence sentence;
       parseInto(sentence, source);
+
+      std::function<void(const Sentence &)> handler = handlingTable[std::string(sentence.formatter.begin(), sentence.formatter.end())];
+      if (handler)
+      {
+        handler(sentence);
+      }
+    }
+
+    void registerHandler(std::string &formatter, std::function<void(const Sentence &)> handler)
+    {
+      handlingTable.erase(formatter);
+      handlingTable.insert({formatter, handler});
     }
   };
 

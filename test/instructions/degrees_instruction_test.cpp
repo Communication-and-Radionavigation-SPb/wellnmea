@@ -1,122 +1,119 @@
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
 
+#include <wellnmea/parser.hpp>
+#include <wellnmea/sentence.hpp>
+#include <wellnmea/instructions/degrees_instruction.hpp>
+
 #define Suite DegreesInstructionTest
 
-#include <wellnmea/token.hpp>
-#include <wellnmea/nmea0183_lexing.hpp>
-#include <wellnmea/formats/degreese_instruction.hpp>
-#include <wellnmea/values/degrees.hpp>
-
-using wellnmea::Token;
-using namespace wellnmea::formats;
-using namespace wellnmea::values;
-
-TEST(Suite, CanBeInstantiatedWithoutExceptions)
+TEST(Suite, can_be_instantiated)
 {
-  DegreesInstruction instr("name");
+  EXPECT_NO_THROW({
+    wellnmea::instructions::DegreesInstruction instr("");
+  });
 }
 
-TEST(Suite, CorrectlyStoresName)
+TEST(Suite, can_be_cloned)
 {
-  DegreesInstruction instr("name");
-  EXPECT_EQ(instr.name(), "name");
-}
+  wellnmea::instructions::DegreesInstruction *instr = new wellnmea::instructions::DegreesInstruction("base");
 
-TEST(Suite, CanBeCorrectlyCloned)
-{
-  DegreesInstruction *instr = new DegreesInstruction("name");
+  auto clone = instr->clone("clone");
 
-  auto n_instr = instr->clone("other");
-
-  EXPECT_EQ(n_instr->name(), "other");
-  EXPECT_NE(n_instr, instr) << "Clone method should return new allocated object";
+  EXPECT_EQ(clone->name(), "clone");
+  EXPECT_NE(clone, instr);
 
   delete instr;
-  delete n_instr;
+  delete clone;
 }
 
-TEST(Suite, MovesIteratorForwardWhenExtractCalled)
+TEST(Suite, which_expects_to_be_correct)
 {
-  const std::string source = "$TERMB,051.9,T";
-  wellnmea::Nmea0183Lexing lex;
-
-  std::list<Token> tokens = lex.splitTokens(source);
-  auto pos = tokens.begin();
-  auto end = tokens.end();
-  pos++;
-
-  DegreesInstruction instr("name");
-
-  instr.extract(pos, end);
-
-  EXPECT_EQ(pos, tokens.end());
+  wellnmea::instructions::DegreesInstruction instr("name");
+  EXPECT_EQ(instr.which(), "degrees");
 }
 
-TEST(Suite, ReturnsDegreesParamWhenExtracted)
+TEST(Suite, moves_iterator_forward)
 {
-  const std::string source = "$TERMB,051.9,T";
-  wellnmea::Nmea0183Lexing lex;
+  wellnmea::instructions::DegreesInstruction instr("name");
 
-  std::list<Token> tokens = lex.splitTokens(source);
-  auto pos = tokens.begin();
-  auto end = tokens.end();
-  pos++;
+  wellnmea::Sentence sentence;
+  wellnmea::Parser parser;
 
-  DegreesInstruction instr("name");
-  auto value = instr.extract(pos, end)->as<DegreesValue>();
+  parser.parseInto(sentence, "$GPHDT,127.0");
 
-  EXPECT_EQ(value->name(), "name");
-  EXPECT_THAT(value, ::testing::A<DegreesValue*>());
+  auto it = sentence.fields.begin();
+  auto end = sentence.fields.end();
 
-  EXPECT_EQ(value->cursor(), 51.9);
-  EXPECT_EQ(value->measure(), DegreesValue::True);
+  instr.extract(it, end);
+
+  EXPECT_NE(it, sentence.fields.begin()) << "Instruction do not moves iterator forward";
 }
 
-TEST(Suite, CanRecognizeMagneticMeasure) {
-  const std::string source = "$TERMB,051.9,M";
-  wellnmea::Nmea0183Lexing lex;
+TEST(Suite, extract_returns_non_nullable_object)
+{
+  wellnmea::instructions::DegreesInstruction instr("name");
 
-  std::list<Token> tokens = lex.splitTokens(source);
-  auto pos = tokens.begin();
-  auto end = tokens.end();
-  pos++;
+  wellnmea::Sentence sentence;
+  wellnmea::Parser parser;
 
-  DegreesInstruction instr("name");
-  auto value = instr.extract(pos, end)->as<_DegreesValue>();
+  parser.parseInto(sentence, "$GPHDT,127.0");
 
-  EXPECT_EQ(value->cursor(), 51.9);
-  EXPECT_EQ(value->measure(), DegreesValue::Magnetic);
+  auto it = sentence.fields.begin();
+  auto end = sentence.fields.end();
+
+  auto value = instr.extract(it, end);
+
+  ASSERT_NE(value, nullptr);
+  delete value;
 }
 
-TEST(Suite, DoReturnsNullValueWhenDigitalTokenIsEmpty) {
-  const std::string source = "$TERMB,,M";
-  wellnmea::Nmea0183Lexing lex;
+TEST(Suite, extracted_value_has_correct_name)
+{
+  wellnmea::instructions::DegreesInstruction instr("name");
 
-  auto tokens = lex.splitTokens(source);
-  auto pos = tokens.begin();
-  auto end = tokens.end();
-  pos++;
+  wellnmea::Sentence sentence;
+  wellnmea::Parser parser;
 
-  DegreesInstruction instr("name");
-  auto value = instr.extract(pos, end)->as<_DegreesValue>();
+  parser.parseInto(sentence, "$GPHDT,127.02");
 
-  EXPECT_EQ(value->cursor(), std::nullopt);
-  EXPECT_EQ(value->measure(), std::nullopt);
+  auto it = sentence.fields.begin();
+
+  auto value = instr.extract(it, sentence.fields.end());
+
+  EXPECT_EQ(value->name(), "degrees");
 }
 
-TEST(Suite, DoReturnsNullValueWhenMeasureTokenIsEmtpy) {
-  const std::string source = "$TERMB,51.0,";
-  wellnmea::Nmea0183Lexing lex;
+TEST(Suite, extracts_correct_value_from_sentence)
+{
+  wellnmea::instructions::DegreesInstruction instr("name");
 
-  auto tokens = lex.splitTokens(source);
-  auto pos = tokens.begin();
-  auto end = tokens.end();
-  pos++;
+  wellnmea::Sentence sentence;
+  wellnmea::Parser parser;
 
-  DegreesInstruction instr("name");
-  auto value = instr.extract(pos, end)->as<_DegreesValue>();
-  
-  EXPECT_EQ(value->cursor(), std::nullopt);
-  EXPECT_EQ(value->measure(), std::nullopt);
+  parser.parseInto(sentence, "$GPHDT,127.0");
+
+  auto it = sentence.fields.begin();
+
+  auto value = instr.extract(it, sentence.fields.end());
+
+  EXPECT_EQ(value->as<wellnmea::instructions::DegreesValue>()->value.has_value(), true) << "Instruction do not fills resulting value";
+  EXPECT_EQ(value->as<wellnmea::instructions::DegreesValue>()->value.value(), 127.0) << "Instruction do not fills resulting value";
+}
+
+TEST(Suite, throws_on_invalid_field_content)
+{
+  wellnmea::instructions::DegreesInstruction instr("name");
+
+  wellnmea::Sentence sentence;
+  wellnmea::Parser parser;
+
+  parser.parseInto(sentence, "$GPHDT,error_content");
+
+  auto it = sentence.fields.begin();
+
+  EXPECT_THROW({
+    instr.extract(it, sentence.fields.end());
+  },
+               wellnmea::NumberDecodeError);
 }
