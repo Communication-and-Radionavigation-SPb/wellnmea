@@ -57,7 +57,6 @@ macro (build_test TARGET_NAME)
         message(WARNING "CMake too old to register ${TARGET_NAME} as a test")
     else ()
         include(GoogleTest)
-        gtest_discover_tests(${TARGET_NAME})
     endif ()
 endmacro ()
 
@@ -77,6 +76,10 @@ endmacro ()
 macro (link_gtest)
     target_link_libraries(${TARGET_NAME} PUBLIC GTest::gtest_main GTest::gmock_main)
 endmacro ()
+
+macro(link_benchmark)
+    target_link_libraries(${TARGET_NAME} PUBLIC benchmark::benchmark benchmark::benchmark_main)
+endmacro(link_benchmark)
 
 macro (link_openssl)
     target_link_libraries (${TARGET_NAME} ${OPENSSL_SSL_LIBRARY} ${OPENSSL_CRYPTO_LIBRARY})

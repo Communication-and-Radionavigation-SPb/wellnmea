@@ -4,11 +4,11 @@
 #include <list>
 #include <memory>
 
-#include <wellnmea/values/null_value.hpp>
+#include <wellnmea/instructions/instruction.hpp>
 
 namespace wellnmea
 {
-  using wellnmea::values::NullValue;
+  using wellnmea::instructions::NullValue;
   class Message
   {
   protected:
@@ -18,20 +18,20 @@ namespace wellnmea
 
   public:
     Message(const std::string &talker,
-            const std::string formatter,
-            const std::list<std::shared_ptr<NullValue>> values)
+            const std::string& formatter,
+            const std::list<std::shared_ptr<NullValue>>& values)
         : m_values(values),
           m_talker(talker),
           m_formatter(formatter)
     {
     }
 
-    const std::string &talker() const noexcept
+    const std::string talker() const noexcept
     {
       return m_talker;
     }
 
-    const std::string &formatter() const noexcept
+    const std::string formatter() const noexcept
     {
       return m_formatter;
     }

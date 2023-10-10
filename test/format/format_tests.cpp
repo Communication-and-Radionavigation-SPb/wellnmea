@@ -1,37 +1,48 @@
 #include <gtest/gtest.h>
 
-#include <wellnmea/formats/instruction.hpp>
-#include <wellnmea/formats/degreese_instruction.hpp>
-#include <wellnmea/formats/longitude_instruction.hpp>
-#include <wellnmea/formats/instructions_registry.hpp>
-#include <wellnmea/default_format_builder.hpp>
-#include <wellnmea/formats/format_interpreter.hpp>
-#include <wellnmea/nmea0183_lexing.hpp>
+#include <wellnmea/instructions/instruction.hpp>
+#include <wellnmea/instructions/degrees_instruction.hpp>
+#include <wellnmea/instructions/symbol_instruction.hpp>
+#include <wellnmea/formats/format.hpp>
+
+#include <wellnmea/sentence.hpp>
 
 #define Suite FormatTest
 
-using namespace wellnmea::formats;
-using namespace wellnmea::values;
-using wellnmea::Nmea0183Lexing;
-
-TEST(Suite, FormatCanParseInARightWay)
+namespace wn
 {
-  auto dgrs = std::make_shared<DegreesInstruction>("");
-  auto lng = std::make_shared<LongitudeInstruction>("");
+  using namespace wellnmea;
+  using namespace wellnmea::instructions;
+}
 
-  InstructionsRegistry::add(dgrs);
-  InstructionsRegistry::add(lng);
+TEST(Suite, throws_when_empty_instructions_list_passed)
+{
+  EXPECT_DEATH({
+    wn::formats::Format({});
+  },
+               "");
+}
 
-  Nmea0183Lexing tokenizer;
-  auto tokens = tokenizer.splitTokens("$TEHDT,49.6,M,566,W");
+TEST(Suite, uses_passed_instructions)
+{
 
-  wellnmea::DefaultFormatBuilder builder;
-  auto lexems = FormatInterpreter::interpret("block[direction|degrees;position|longitude;];");
+  wn::Sentence sentence;
+  sentence.fields.push_back("49.5");
+  sentence.fields.push_back("M");
 
-    auto fmt = builder.build(lexems);
-  auto begin = ++tokens.begin();
+  auto fmt = wn::formats::Format({new wn::DegreesInstruction("direction"),
+                                  new wn::SymbolInstruction("heading", {'M', 'T'})});
 
-  auto result = fmt->parse(begin, tokens.end()); // Skipped talker and formatter token
+  auto result = fmt.parse(sentence);
 
-  EXPECT_EQ(result.size(), 1);
+  ASSERT_EQ(result.size(), 2);
+
+  auto it = result.begin();
+  EXPECT_NE((*it)->as<wn::DegreesValue>(), nullptr);
+  EXPECT_EQ((*it)->as<wn::DegreesValue>()->value.value(), 49.5);
+
+  it++;
+
+  EXPECT_NE((*it)->as<wn::CharacterValue>(), nullptr);
+  EXPECT_EQ((*it)->as<wn::CharacterValue>()->value.value(), 'M');
 }

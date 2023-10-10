@@ -90,6 +90,8 @@ if (BUILD_TESTS OR BUILD_EXAMPLES)
     )
     set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
     FetchContent_MakeAvailable(googletest)
+
+    find_package(benchmark CONFIG REQUIRED)
 endif()
 
 ############ Add projects
@@ -105,6 +107,7 @@ endif ()
 # Add tests
 if (BUILD_TESTS)
     include_subdirs ("test")
+    include_subdirs ("benchmark")
 endif ()
 
 print_used_build_config()

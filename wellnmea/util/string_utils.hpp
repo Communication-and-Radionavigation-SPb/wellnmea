@@ -14,12 +14,75 @@ namespace wellnmea
     using namespace std;
     using Enclosures = list<pair<char, char>>;
 
-    inline string to_lower(string &source) noexcept
+    inline string to_lower(const string &source) noexcept
     {
       string clone(source);
       transform(source.begin(), source.end(), clone.begin(), [](unsigned char c)
                 { return tolower(c); });
       return clone;
+    }
+    /**
+     * @brief Checks if passed string contains non alpha-numeric characters
+     *
+     * @param txt sting to check
+     * @return true If string has non alpha numeric characters
+     * @return false If string has only alpha numeric characters
+     */
+    inline bool hasNonAlphaNumeric(std::string_view txt)
+    {
+      for (const char &c : txt)
+      {
+        if (!isalnum(c))
+          return true;
+      }
+      return false;
+    }
+
+    /**
+     * @brief Checks if passed string contains non alpha characters
+     * 
+     * @param txt strin to check
+     * @return true If string has non alpha characters
+     * @return false If string contains only alpha characters
+     */
+    inline bool hasNonAlpha(std::string_view txt)
+    {
+      for (const char &c : txt)
+      {
+        if (!isalpha(c))
+          return true;
+      }
+      return false;
+    }
+
+    /**
+     * @brief Checks if passed string contains non numeric characters
+     *
+     * @param txt string to check
+     * @return true If string contains non numeric characters
+     * @return false If string has only numeric characters
+     */
+    inline bool hasNonNumeric(std::string_view txt)
+    {
+      for (const char &c : txt)
+      {
+        if (!isdigit(c))
+          return true;
+      }
+
+      return false;
+    }
+
+    inline bool hasInvalidFieldChars(std::string_view txt)
+    {
+      for (const char &c : txt)
+      {
+        if (isalnum(c))
+          continue;
+        if (c != '-' && c != '.')
+          return true;
+      }
+      return false;
     }
 
     inline int checksum0183(const std::string &source)

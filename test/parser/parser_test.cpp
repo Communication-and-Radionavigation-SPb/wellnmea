@@ -2,107 +2,145 @@
 #include <gmock/gmock.h>
 
 #include <wellnmea/parser.hpp>
-#include <wellnmea/message.hpp>
-#include <wellnmea/nmea0183_lexing.hpp>
-#include <wellnmea/formats/degreese_instruction.hpp>
-#include <wellnmea/formats/longitude_instruction.hpp>
-#include <wellnmea/formats/checksum_instruction.hpp>
-#include <wellnmea/formats/instructions_registry.hpp>
-#include <wellnmea/formats/format_interpreter.hpp>
-#include <wellnmea/default_format_builder.hpp>
+#include <wellnmea/sentence.hpp>
+#include <wellnmea/util/number_utils.hpp>
+#include <iostream>
 
 #define Suite Parser
 
-using wellnmea::Message;
-using namespace wellnmea::formats;
-using namespace wellnmea::values;
-
-TEST(Suite, InstantiatesWithoutExceptions)
+TEST(Suite, can_be_instantiated)
 {
   EXPECT_NO_THROW({
-    auto lex = std::make_shared<wellnmea::Nmea0183Lexing>();
-    wellnmea::Parser parser(lex);
+    wellnmea::Parser parser;
   });
 }
 
-TEST(Suite, ThrowsOnInvalidMessageFormat)
+TEST(Suite, sanitizes_sentence_text)
 {
+  wellnmea::Parser parser;
+  wellnmea::Sentence sentence;
 
-  auto lex = std::make_shared<wellnmea::Nmea0183Lexing>();
+  parser.parseInto(sentence, "$ GPHDT,\t127.0* 3\t1\r\n");
 
-  auto dgrs = std::make_shared<DegreesInstruction>("");
-  auto lng = std::make_shared<LongitudeInstruction>("");
-
-  InstructionsRegistry::add(dgrs);
-  InstructionsRegistry::add(lng);
-
-  wellnmea::DefaultFormatBuilder builder;
-  auto lexems = FormatInterpreter::interpret("block[direction|degrees;position|longitude;];");
-
-  auto fmt = builder.build(lexems);
-
-  wellnmea::Parser parser(lex);
-  parser.connect("DTM", fmt);
-
-
-  EXPECT_THROW({ parser.parse("$TEDTM,W84,,,,,,,*17"); }, wellnmea::parse_error);
+  EXPECT_EQ(sentence.text, "$GPHDT,127.0*31");
 }
 
-TEST(Suite, ReturnsCorrectParsedMessage)
+TEST(Suite, returns_invalid_sentence_when_no_dollar)
 {
+  wellnmea::Parser parser;
+  wellnmea::Sentence sentence;
 
-  auto lex = std::make_shared<wellnmea::Nmea0183Lexing>();
+  parser.parseInto(sentence, "GPHDT,127.0*31\r\n");
+  EXPECT_EQ(sentence.isValid(), false);
+}
 
-  auto dgrs = std::make_shared<DegreesInstruction>("");
-  auto lng = std::make_shared<LongitudeInstruction>("");
+TEST(Suite, payload_checksum_is_empty_by_default) {
+wellnmea::Parser parser;
+  wellnmea::Sentence sentence;
+  parser.parseInto(sentence, "$GPHDT,127.0");
 
-  auto chk = std::make_shared<ChecksumInstruction>("");
+  EXPECT_EQ(sentence.payloadChecksum, 0);
+}
 
-  InstructionsRegistry::add(dgrs);
-  InstructionsRegistry::add(lng);
-  InstructionsRegistry::add(chk);
+TEST(Suite, assigns_checksum_of_payload)
+{
+  wellnmea::Parser parser;
+  wellnmea::Sentence sentence;
 
-  wellnmea::DefaultFormatBuilder builder;
-  auto lexems = FormatInterpreter::interpret("block[direction|degrees;position|longitude;];chk|checksum");
+  parser.parseInto(sentence, "$GPHDT,127.0*49");
 
-  auto fmt = builder.build(lexems);
+  EXPECT_EQ(sentence.payloadChecksum, (uint8_t)wellnmea::util::toInt("49", 16));
+}
 
-  wellnmea::Parser parser(lex);
-  parser.connect("DTM", fmt);
+TEST(Suite, assigns_talker) {
+  wellnmea::Parser parser;
+  wellnmea::Sentence sentence;
 
+  parser.parseInto(sentence, "$GPHDT,127.0*49");
+  EXPECT_EQ(sentence.talker, "GP");
 
-  std::shared_ptr<Message> msg = parser.parse("$TEDTM,84,M,98.9,E,54.9,T,55.9,W*17\r\n");
+  parser.parseInto(sentence, "$HEHDT,127.0*49");
+  EXPECT_EQ(sentence.talker, "HE");
+}
 
-  EXPECT_EQ(msg->talker(), "TE");
-  EXPECT_EQ(msg->formatter(), "DTM");
-  EXPECT_EQ(msg->values().size(), 2);
-  auto values = msg->values();
-  auto pos = values.begin()->get()->as<RepeatedValue>();
+TEST(Suite, assigns_formatter) {
+  wellnmea::Parser parser;
+  wellnmea::Sentence sentence;
 
-  auto it = values.begin();
-  auto checksum = (++it)->get()->as<_ChecksumValue>();
+  parser.parseInto(sentence, "$GPHDT,127.0*49");
+  EXPECT_EQ(sentence.formatter, "HDT");
 
-  EXPECT_EQ(checksum->name(), "chk");
-  std::cout << checksum->value().value_or(-1) << std::endl;
-  EXPECT_EQ(checksum->value(), 23) << "Invalid checksum parsed";
+  parser.parseInto(sentence, "$HEROT,127.0*49");
+  EXPECT_EQ(sentence.formatter, "ROT");
+}
 
-  auto group = pos->begin();
+TEST(Suite, adds_empty_field_when_only_name_and_comma) {
+  wellnmea::Parser parser;
+  wellnmea::Sentence sentence;
+  parser.parseInto(sentence, "$GPHDT,*63");
 
-  auto degress = group->at(0)->as<_DegreesValue>();
-  auto longitude = group->at(1)->as<_LongitudeValue>();
+  EXPECT_EQ(sentence.talker, "GP");
+  EXPECT_EQ(sentence.formatter, "HDT");
 
-  EXPECT_EQ(degress->name(), "direction");
-  EXPECT_EQ(degress->cursor(), 84);
-  EXPECT_EQ(longitude->name(), "position");
-  EXPECT_EQ(longitude->position(), 98.9);
+  ASSERT_EQ(sentence.fields.size(), 1);
+  EXPECT_EQ(*sentence.fields.begin(), "");
+}
 
-  group++;
+TEST(Suite, adds_fields_of_sentence) {
+  wellnmea::Parser parser;
+  wellnmea::Sentence sentence;
 
-  degress = group->at(0)->as<_DegreesValue>();
-  longitude = group->at(1)->as<_LongitudeValue>();
+  parser.parseInto(sentence, "$GPHDT,127.0,T,,*31");
 
-  EXPECT_EQ(degress->name(), "direction");
-  EXPECT_EQ(degress->cursor(), 54.9);
-  EXPECT_EQ(longitude->name(), "position");
-  EXPECT_EQ(longitude->position(), 55.9);
+  std::cout << "Params: " << std::endl;
+  for (auto &&p : sentence.fields)
+  {
+    std::cout << p << std::endl;
+  }
+  
+
+  ASSERT_EQ(sentence.fields.size(), 4);
+  auto itr = sentence.fields.begin();
+  EXPECT_EQ(*itr, "127.0");
+  EXPECT_EQ(*(++itr), "T");
+  EXPECT_EQ(*(++itr), "");
+  EXPECT_EQ(*(itr++), "");
+}
+
+TEST(Suite, adds_fields_when_no_trailing_comma) {
+  wellnmea::Parser parser;
+  wellnmea::Sentence sentence;
+
+  parser.parseInto(sentence, "$GPHDT,127.0,T*31");
+
+  std::cout << "Params: " << std::endl;
+  for (auto &&p : sentence.fields)
+  {
+    std::cout << p << std::endl;
+  }
+
+  ASSERT_EQ(sentence.fields.size(), 2);
+  auto itr = sentence.fields.begin();
+  EXPECT_EQ(*itr, "127.0");
+  EXPECT_EQ(*(++itr), "T");
+}
+
+TEST(Suite, recognized_checksum) {
+  wellnmea::Parser parser;
+  wellnmea::Sentence sentence;
+
+  parser.parseInto(sentence, "$GPHDT,127.0,T*31");
+
+  EXPECT_EQ(sentence.parsedChecksum, (uint32_t)wellnmea::util::toInt("31", 16));
+}
+
+TEST(Suite, final_sentence_is_vaid) {
+  wellnmea::Parser parser;
+  wellnmea::Sentence sentence;
+  
+  parser.parseInto(sentence, "$GPGSV,2,1,08,02,74,042,45,04,18,190,36,07,67,279,42,12,29,323,36*77");
+
+  EXPECT_EQ(sentence.fields.size(), 19);
+  EXPECT_TRUE(sentence.integrity());
+  EXPECT_TRUE(sentence.isValid());
 }
