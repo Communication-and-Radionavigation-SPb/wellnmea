@@ -43,6 +43,12 @@ namespace wellnmea
       return d;
     }
 
+    inline double toDouble(const std::string_view &s)
+    {
+      std::string str = std::string(s.begin(), s.end());
+      return toDouble(str);
+    }
+
     inline int64_t toInt(const std::string &s, int radix = 10)
     {
       char *p;

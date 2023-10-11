@@ -71,7 +71,7 @@ namespace wellnmea
 
         value->value = c;
 
-        it++;
+        ++it;
         return value;
       }
 
