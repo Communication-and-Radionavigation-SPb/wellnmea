@@ -52,7 +52,7 @@ namespace wellnmea
        *
        * @return std::string_view
        */
-      std::string_view name() const noexcept
+      virtual std::string_view name() const noexcept
       {
         return m_name;
       }

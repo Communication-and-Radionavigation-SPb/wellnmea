@@ -38,10 +38,9 @@ TEST(Suite, moves_iterator_forward)
   auto it = sentence.fields.begin();
   auto end = sentence.fields.end();
 
-  EXPECT_NE(it, end);
   instr.extract(it, end);
 
-  EXPECT_EQ(it, end);
+  EXPECT_EQ(it, ++sentence.fields.begin());
 }
 
 TEST(Suite, returns_non_null_value)
@@ -112,19 +111,28 @@ TEST(Suite, correctly_parses_value)
 TEST(Suite, coordinate_value_returns_correct_degrees) {
   wellnmea::instructions::CoordinateValue value("");
 
-  value.setValue(4807.038);
+  value.setBase(4807.038);
   EXPECT_THAT(value.degrees().value(), ::testing::Eq(48));
 
-  value.setValue(7.038);
+  value.setBase(7.038);
   EXPECT_THAT(value.degrees().value(), ::testing::Eq(0));
 }
 
 TEST(Suite, coordinate_value_returns_correct_minutes) {
   wellnmea::instructions::CoordinateValue value("");
 
-  value.setValue(8.0);
+  value.setBase(8.0);
   EXPECT_THAT(value.minutes().value(), ::testing::DoubleNear(8.0, 0));
   
-  value.setValue(4800.0);
+  value.setBase(4800.0);
   EXPECT_THAT(value.minutes().value(), ::testing::DoubleNear(0.0, 0));
+}
+
+TEST(Suite, coordinate_value_understands_negative_base) {
+  wellnmea::instructions::CoordinateValue value("");
+
+  value.setBase(-4807.035);
+
+  EXPECT_THAT(value.degrees().value(), ::testing::Eq(-48));
+  EXPECT_THAT(value.minutes().value(), ::testing::DoubleNear(-7.035, 0.001));
 }

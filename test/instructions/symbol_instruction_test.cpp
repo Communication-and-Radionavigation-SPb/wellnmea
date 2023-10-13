@@ -109,7 +109,7 @@ TEST(Suite, extracts_field_value)
   auto value = instr.extract(it, sentence.fields.end());
 
   ASSERT_NE(value->as<wellnmea::instructions::CharacterValue>(), nullptr);
-  ASSERT_TRUE(value->as<wellnmea::instructions::CharacterValue>()->value.has_value());
+  ASSERT_TRUE(value->as<wellnmea::instructions::CharacterValue>()->symbol().has_value());
 }
 
 TEST(Suite, extracts_correct_field_value)
@@ -128,8 +128,8 @@ TEST(Suite, extracts_correct_field_value)
   auto tvalue = instr.extract(it, sentence.fields.end());
   auto vvalue = instr.extract(it, sentence.fields.end());
 
-  EXPECT_EQ(tvalue->as<wellnmea::instructions::CharacterValue>()->value.value(), 'T');
-  EXPECT_EQ(vvalue->as<wellnmea::instructions::CharacterValue>()->value.value(), 'V');
+  EXPECT_EQ(tvalue->as<wellnmea::instructions::CharacterValue>()->symbol().value(), 'T');
+  EXPECT_EQ(vvalue->as<wellnmea::instructions::CharacterValue>()->symbol().value(), 'V');
 }
 
 TEST(Suite, throws_when_field_content_is_not_valid_for_character)

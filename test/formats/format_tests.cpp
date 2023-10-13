@@ -44,5 +44,5 @@ TEST(Suite, uses_passed_instructions)
   it++;
 
   EXPECT_NE((*it)->as<wn::CharacterValue>(), nullptr);
-  EXPECT_EQ((*it)->as<wn::CharacterValue>()->value.value(), 'M');
+  EXPECT_EQ((*it)->as<wn::CharacterValue>()->symbol().value(), 'M');
 }
