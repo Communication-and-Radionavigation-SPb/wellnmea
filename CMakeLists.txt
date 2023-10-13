@@ -94,6 +94,17 @@ if (BUILD_TESTS OR BUILD_EXAMPLES)
     find_package(benchmark CONFIG REQUIRED)
 endif()
 
+if(BUILD_TESTS)
+  include(FetchContent)
+  FetchContent_Declare(
+    json
+    GIT_REPOSITORY https://github.com/nlohmann/json.git
+    GIT_TAG v3.11.2
+  )
+  FetchContent_MakeAvailable(json)
+endif(BUILD_TESTS)
+
+
 ############ Add projects
 
 # Add main library

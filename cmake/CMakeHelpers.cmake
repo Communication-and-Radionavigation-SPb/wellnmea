@@ -77,6 +77,10 @@ macro (link_gtest)
     target_link_libraries(${TARGET_NAME} PUBLIC GTest::gtest_main GTest::gmock_main)
 endmacro ()
 
+macro(link_json)
+    target_link_libraries(${TARGET_NAME} PUBLIC nlohmann_json::nlohmann_json)
+endmacro()
+
 macro(link_benchmark)
     target_link_libraries(${TARGET_NAME} PUBLIC benchmark::benchmark benchmark::benchmark_main)
 endmacro(link_benchmark)

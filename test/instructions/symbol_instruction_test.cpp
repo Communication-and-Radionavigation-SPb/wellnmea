@@ -49,14 +49,14 @@ TEST(Suite, moves_iterator_forward)
 
   wellnmea::Sentence sentence;
 
-  std::string field_value = "T";
-  sentence.fields.push_back(std::string_view{field_value.c_str(), field_value.size()});
+  sentence.fields.push_back("T");
 
   auto it = sentence.fields.begin();
+  auto end = sentence.fields.end();
 
-  instr.extract(it, sentence.fields.end());
+  instr.extract(it, end);
 
-  EXPECT_NE(it, sentence.fields.begin());
+  EXPECT_EQ(it, end);
 }
 
 TEST(Suite, extract_returns_non_nullable_object)
@@ -109,7 +109,7 @@ TEST(Suite, extracts_field_value)
   auto value = instr.extract(it, sentence.fields.end());
 
   ASSERT_NE(value->as<wellnmea::instructions::CharacterValue>(), nullptr);
-  ASSERT_TRUE(value->as<wellnmea::instructions::CharacterValue>()->value.has_value());
+  ASSERT_TRUE(value->as<wellnmea::instructions::CharacterValue>()->symbol().has_value());
 }
 
 TEST(Suite, extracts_correct_field_value)
@@ -128,8 +128,8 @@ TEST(Suite, extracts_correct_field_value)
   auto tvalue = instr.extract(it, sentence.fields.end());
   auto vvalue = instr.extract(it, sentence.fields.end());
 
-  EXPECT_EQ(tvalue->as<wellnmea::instructions::CharacterValue>()->value.value(), 'T');
-  EXPECT_EQ(vvalue->as<wellnmea::instructions::CharacterValue>()->value.value(), 'V');
+  EXPECT_EQ(tvalue->as<wellnmea::instructions::CharacterValue>()->symbol().value(), 'T');
+  EXPECT_EQ(vvalue->as<wellnmea::instructions::CharacterValue>()->symbol().value(), 'V');
 }
 
 TEST(Suite, throws_when_field_content_is_not_valid_for_character)
