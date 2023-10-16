@@ -31,6 +31,11 @@ namespace wellnmea
     public:
       virtual void accept(visitor_base &v) const noexcept override
       {
+        using value_visitor = visitor<UtcValue>;
+        if(value_visitor *ev = dynamic_cast<value_visitor*>(&v))
+        {
+          ev->visit(this);
+        }
       }
 
       void reset() noexcept {
