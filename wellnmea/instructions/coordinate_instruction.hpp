@@ -36,6 +36,10 @@ class CoordinateValue : public NullValue {
 
   virtual void reset() noexcept { base = std::nullopt; }
 
+  virtual bool has_value() const noexcept {
+    return base.has_value();
+  }
+
   std::optional<double> decimal() const {
     if (base.has_value()) {
       return degrees_ + minutes_ / 60.0;
