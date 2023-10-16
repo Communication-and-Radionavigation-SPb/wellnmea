@@ -22,6 +22,11 @@ class CoordinateValue : public NullValue {
   CoordinateValue(const std::string& name) : NullValue(name) {}
 
  public:
+  virtual void accept(visitor_base& v) const noexcept override {
+    using value_visitor = visitor<CoordinateValue>;
+    if (value_visitor* ev = dynamic_cast<value_visitor*>(&v))
+      ev->visit(this);
+  }
   virtual void setBase(std::optional<double> value) noexcept {
     base = value;
     if (!base.has_value())
@@ -36,9 +41,7 @@ class CoordinateValue : public NullValue {
 
   virtual void reset() noexcept { base = std::nullopt; }
 
-  virtual bool has_value() const noexcept {
-    return base.has_value();
-  }
+  virtual bool has_value() const noexcept { return base.has_value(); }
 
   std::optional<double> decimal() const {
     if (base.has_value()) {
@@ -79,7 +82,8 @@ class CoordinateInstruction : public Instruction {
         coordinate->setBase(value);
       } catch (const NumberDecodeError& e) {
         std::stringstream ss;
-        ss << "Could not decode coordinate from " << (*it) << " : " << e.message;
+        ss << "Could not decode coordinate from " << (*it) << " : "
+           << e.message;
         throw NumberDecodeError(ss.str());
       }
     }

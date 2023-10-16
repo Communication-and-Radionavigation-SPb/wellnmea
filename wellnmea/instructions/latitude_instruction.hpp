@@ -21,6 +21,13 @@ namespace wellnmea
       LatitudeValue(const std::string &name) : CoordinateValue(name) {}
 
     public:
+
+      void accept(visitor_base &v) const noexcept override {
+        using value_visitor = visitor<LatitudeValue>;
+        if(value_visitor *ev = dynamic_cast<value_visitor*>(&v))
+          ev->visit(this);
+      }
+
       void setBase(std::optional<double> value) noexcept override
       {
         if (value.has_value() && direction_.value_or('x') == 'S')
