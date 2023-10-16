@@ -37,7 +37,7 @@ namespace wellnmea
         timestamp = std::nullopt;
       }
 
-      std::optional<double> getTimestamp() noexcept
+      std::optional<double> getTimestamp() const noexcept
       {
         return timestamp;
       }
