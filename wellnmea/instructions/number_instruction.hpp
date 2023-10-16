@@ -19,7 +19,7 @@ class NumberValue : public NullValue {
   NumberValue(const std::string& name) : NullValue(name) {}
 
  public:
-  virtual void accept(visitor_base& v) const noexcept {
+  virtual void accept(visitor_base& v) const noexcept override {
     using value_visitor = visitor<NumberValue>;
     if (value_visitor* ev = dynamic_cast<value_visitor*>(&v))
       ev->visit(this);
