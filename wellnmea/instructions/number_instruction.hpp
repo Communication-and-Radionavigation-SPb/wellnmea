@@ -19,6 +19,12 @@ class NumberValue : public NullValue {
   NumberValue(const std::string& name) : NullValue(name) {}
 
  public:
+  virtual void accept(visitor_base& v) const noexcept {
+    using value_visitor = visitor<NumberValue>;
+    if (value_visitor* ev = dynamic_cast<value_visitor*>(&v))
+      ev->visit(this);
+  }
+
   void setValue(std::optional<double> value) { value_ = value; }
 
   std::optional<double> getValue() const noexcept { return value_; }
@@ -45,13 +51,10 @@ class NumberInstruction : public Instruction {
     auto value = new NumberValue(name());
 
     if (!it->empty()) {
-      try
-      {
+      try {
         auto num = util::toDouble(*it);
         value->setValue(num);
-      }
-      catch(const std::exception& e)
-      {
+      } catch (const std::exception& e) {
         std::stringstream ss;
         ss << "Could not decode number field" << *it << ": " << e.what();
         throw NumberDecodeError(ss.str());
