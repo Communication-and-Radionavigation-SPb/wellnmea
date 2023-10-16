@@ -26,11 +26,16 @@ namespace wellnmea
       int milliseconds = 0;
 
     public:
-      UtcValue() : NullValue("utc") {}
+      UtcValue(const std::string& name) : NullValue(name) {}
 
     public:
       virtual void accept(visitor_base &v) const noexcept override
       {
+        using value_visitor = visitor<UtcValue>;
+        if(value_visitor *ev = dynamic_cast<value_visitor*>(&v))
+        {
+          ev->visit(this);
+        }
       }
 
       void reset() noexcept {
@@ -107,7 +112,7 @@ namespace wellnmea
 
       value *extract(position it, const_position end) override
       {
-        auto value = new UtcValue();
+        auto value = new UtcValue(name());
 
         if (!it->empty())
         {
