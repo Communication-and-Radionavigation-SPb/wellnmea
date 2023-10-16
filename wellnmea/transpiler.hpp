@@ -117,7 +117,7 @@ namespace wellnmea
         dump += it->first;
         dump += "|";
       }
-      return std::move(dump);
+      return dump;
     }
 
     /* -------------------------------------------------------------------------- */
