@@ -90,7 +90,7 @@ TEST(Suite, extracts_correct_value_from_sentence)
 
 TEST(Suite, utc_value_returns_nullopt_when_do_not_have_timestamp)
 {
-  wellnmea::instructions::UtcValue value;
+  wellnmea::instructions::UtcValue value("");
 
   EXPECT_EQ(value.getHours(), std::nullopt);
   EXPECT_EQ(value.getSeconds(), std::nullopt);
@@ -100,7 +100,7 @@ TEST(Suite, utc_value_returns_nullopt_when_do_not_have_timestamp)
 
 TEST(Suite, utc_value_returns_hours)
 {
-  wellnmea::instructions::UtcValue value;
+  wellnmea::instructions::UtcValue value("");
 
   value.setTimestamp(123211.623);
   EXPECT_EQ(value.getHours(), 12);
@@ -112,7 +112,7 @@ TEST(Suite, utc_value_returns_hours)
 
 TEST(Suite, utc_value_returns_minutes)
 {
-  wellnmea::instructions::UtcValue value;
+  wellnmea::instructions::UtcValue value("");
 
   value.setTimestamp(3211.623);
   EXPECT_EQ(value.getMinutes(), 32);
@@ -128,7 +128,7 @@ TEST(Suite, utc_value_returns_minutes)
 }
 
 TEST(Suite, utc_value_returns_seconds) {
-  wellnmea::instructions::UtcValue value;
+  wellnmea::instructions::UtcValue value("");
 
   value.setTimestamp(11.623);
   EXPECT_EQ(value.getSeconds(), 11);
@@ -141,7 +141,7 @@ TEST(Suite, utc_value_returns_seconds) {
 }
 
 TEST(Suite, utc_value_returns_milliseconds) {
-  wellnmea::instructions::UtcValue value;
+  wellnmea::instructions::UtcValue value("");
 
   value.setTimestamp(0.625);
 
