@@ -1,0 +1,1154 @@
+[
+  {
+    "raw": "$WIMWV,80.8,R,40.5,N,A,*22",
+    "angle": 80.8,
+    "reference": "R",
+    "speed": 40.5,
+    "units": "N",
+    "status": "A",
+    "checksum": "*22"
+  },
+  {
+    "raw": "$WIMWV,85.6,R,40.1,N,A,*2D",
+    "angle": 85.6,
+    "reference": "R",
+    "speed": 40.1,
+    "units": "N",
+    "status": "A",
+    "checksum": "*2D"
+  },
+  {
+    "raw": "$WIMWV,88.6,R,33.0,N,A,*25",
+    "angle": 88.6,
+    "reference": "R",
+    "speed": 33.0,
+    "units": "N",
+    "status": "A",
+    "checksum": "*25"
+  },
+  {
+    "raw": "$WIMWV,92.2,R,27.1,N,A,*2E",
+    "angle": 92.2,
+    "reference": "R",
+    "speed": 27.1,
+    "units": "N",
+    "status": "A",
+    "checksum": "*2E"
+  },
+  {
+    "raw": "$WIMWV,99.4,R,32.1,N,A,*27",
+    "angle": 99.4,
+    "reference": "R",
+    "speed": 32.1,
+    "units": "N",
+    "status": "A",
+    "checksum": "*27"
+  },
+  {
+    "raw": "$WIMWV,95.6,R,39.1,N,A,*22",
+    "angle": 95.6,
+    "reference": "R",
+    "speed": 39.1,
+    "units": "N",
+    "status": "A",
+    "checksum": "*22"
+  },
+  {
+    "raw": "$WIMWV,90.7,R,39.6,N,A,*21",
+    "angle": 90.7,
+    "reference": "R",
+    "speed": 39.6,
+    "units": "N",
+    "status": "A",
+    "checksum": "*21"
+  },
+  {
+    "raw": "$WIMWV,84.3,R,33.4,N,A,*28",
+    "angle": 84.3,
+    "reference": "R",
+    "speed": 33.4,
+    "units": "N",
+    "status": "A",
+    "checksum": "*28"
+  },
+  {
+    "raw": "$WIMWV,90.9,R,39.6,N,A,*2F",
+    "angle": 90.9,
+    "reference": "R",
+    "speed": 39.6,
+    "units": "N",
+    "status": "A",
+    "checksum": "*2F"
+  },
+  {
+    "raw": "$WIMWV,96.3,R,39.1,N,A,*24",
+    "angle": 96.3,
+    "reference": "R",
+    "speed": 39.1,
+    "units": "N",
+    "status": "A",
+    "checksum": "*24"
+  },
+  {
+    "raw": "$WIMWV,89.4,R,33.0,N,A,*26",
+    "angle": 89.4,
+    "reference": "R",
+    "speed": 33.0,
+    "units": "N",
+    "status": "A",
+    "checksum": "*26"
+  },
+  {
+    "raw": "$WIMWV,96.2,R,39.1,N,A,*25",
+    "angle": 96.2,
+    "reference": "R",
+    "speed": 39.1,
+    "units": "N",
+    "status": "A",
+    "checksum": "*25"
+  },
+  {
+    "raw": "$WIMWV,89.6,R,33.0,N,A,*24",
+    "angle": 89.6,
+    "reference": "R",
+    "speed": 33.0,
+    "units": "N",
+    "status": "A",
+    "checksum": "*24"
+  },
+  {
+    "raw": "$WIMWV,96.0,R,39.1,N,A,*27",
+    "angle": 96.0,
+    "reference": "R",
+    "speed": 39.1,
+    "units": "N",
+    "status": "A",
+    "checksum": "*27"
+  },
+  {
+    "raw": "$WIMWV,89.2,R,33.0,N,A,*20",
+    "angle": 89.2,
+    "reference": "R",
+    "speed": 33.0,
+    "units": "N",
+    "status": "A",
+    "checksum": "*20"
+  },
+  {
+    "raw": "$WIMWV,82.3,R,28.0,N,A,*20",
+    "angle": 82.3,
+    "reference": "R",
+    "speed": 28.0,
+    "units": "N",
+    "status": "A",
+    "checksum": "*20"
+  },
+  {
+    "raw": "$WIMWV,89.2,R,33.0,N,A,*20",
+    "angle": 89.2,
+    "reference": "R",
+    "speed": 33.0,
+    "units": "N",
+    "status": "A",
+    "checksum": "*20"
+  },
+  {
+    "raw": "$WIMWV,86.1,R,40.0,N,A,*28",
+    "angle": 86.1,
+    "reference": "R",
+    "speed": 40.0,
+    "units": "N",
+    "status": "A",
+    "checksum": "*28"
+  },
+  {
+    "raw": "$WIMWV,81.7,R,40.4,N,A,*2D",
+    "angle": 81.7,
+    "reference": "R",
+    "speed": 40.4,
+    "units": "N",
+    "status": "A",
+    "checksum": "*2D"
+  },
+  {
+    "raw": "$WIMWV,76.0,R,34.2,N,A,*27",
+    "angle": 76.0,
+    "reference": "R",
+    "speed": 34.2,
+    "units": "N",
+    "status": "A",
+    "checksum": "*27"
+  },
+  {
+    "raw": "$WIMWV,70.3,R,29.1,N,A,*2D",
+    "angle": 70.3,
+    "reference": "R",
+    "speed": 29.1,
+    "units": "N",
+    "status": "A",
+    "checksum": "*2D"
+  },
+  {
+    "raw": "$WIMWV,64.4,R,24.9,N,A,*2A",
+    "angle": 64.4,
+    "reference": "R",
+    "speed": 24.9,
+    "units": "N",
+    "status": "A",
+    "checksum": "*2A"
+  },
+  {
+    "raw": "$WIMWV,70.3,R,29.1,N,A,*2D",
+    "angle": 70.3,
+    "reference": "R",
+    "speed": 29.1,
+    "units": "N",
+    "status": "A",
+    "checksum": "*2D"
+  },
+  {
+    "raw": "$WIMWV,64.9,R,24.9,N,A,*27",
+    "angle": 64.9,
+    "reference": "R",
+    "speed": 24.9,
+    "units": "N",
+    "status": "A",
+    "checksum": "*27"
+  },
+  {
+    "raw": "$WIMWV,70.8,R,29.0,N,A,*27",
+    "angle": 70.8,
+    "reference": "R",
+    "speed": 29.0,
+    "units": "N",
+    "status": "A",
+    "checksum": "*27"
+  },
+  {
+    "raw": "$WIMWV,68.8,R,34.8,N,A,*2A",
+    "angle": 68.8,
+    "reference": "R",
+    "speed": 34.8,
+    "units": "N",
+    "status": "A",
+    "checksum": "*2A"
+  },
+  {
+    "raw": "$WIMWV,71.1,R,29.0,N,A,*2F",
+    "angle": 71.1,
+    "reference": "R",
+    "speed": 29.0,
+    "units": "N",
+    "status": "A",
+    "checksum": "*2F"
+  },
+  {
+    "raw": "$WIMWV,76.9,R,34.1,N,A,*2D",
+    "angle": 76.9,
+    "reference": "R",
+    "speed": 34.1,
+    "units": "N",
+    "status": "A",
+    "checksum": "*2D"
+  },
+  {
+    "raw": "$WIMWV,74.2,R,41.1,N,A,*26",
+    "angle": 74.2,
+    "reference": "R",
+    "speed": 41.1,
+    "units": "N",
+    "status": "A",
+    "checksum": "*26"
+  },
+  {
+    "raw": "$WIMWV,77.1,R,34.1,N,A,*24",
+    "angle": 77.1,
+    "reference": "R",
+    "speed": 34.1,
+    "units": "N",
+    "status": "A",
+    "checksum": "*24"
+  },
+  {
+    "raw": "$WIMWV,79.8,R,28.2,N,A,*2D",
+    "angle": 79.8,
+    "reference": "R",
+    "speed": 28.2,
+    "units": "N",
+    "status": "A",
+    "checksum": "*2D"
+  },
+  {
+    "raw": "$WIMWV,73.8,R,24.0,N,A,*29",
+    "angle": 73.8,
+    "reference": "R",
+    "speed": 24.0,
+    "units": "N",
+    "status": "A",
+    "checksum": "*29"
+  },
+  {
+    "raw": "$WIMWV,75.6,R,19.9,N,A,*26",
+    "angle": 75.6,
+    "reference": "R",
+    "speed": 19.9,
+    "units": "N",
+    "status": "A",
+    "checksum": "*26"
+  },
+  {
+    "raw": "$WIMWV,69.1,R,17.2,N,A,*29",
+    "angle": 69.1,
+    "reference": "R",
+    "speed": 17.2,
+    "units": "N",
+    "status": "A",
+    "checksum": "*29"
+  },
+  {
+    "raw": "$WIMWV,62.7,R,14.9,N,A,*2C",
+    "angle": 62.7,
+    "reference": "R",
+    "speed": 14.9,
+    "units": "N",
+    "status": "A",
+    "checksum": "*2C"
+  },
+  {
+    "raw": "$WIMWV,62.4,R,17.8,N,A,*2D",
+    "angle": 62.4,
+    "reference": "R",
+    "speed": 17.8,
+    "units": "N",
+    "status": "A",
+    "checksum": "*2D"
+  },
+  {
+    "raw": "$WIMWV,56.4,R,15.5,N,A,*25",
+    "angle": 56.4,
+    "reference": "R",
+    "speed": 15.5,
+    "units": "N",
+    "status": "A",
+    "checksum": "*25"
+  },
+  {
+    "raw": "$WIMWV,55.9,R,18.3,N,A,*20",
+    "angle": 55.9,
+    "reference": "R",
+    "speed": 18.3,
+    "units": "N",
+    "status": "A",
+    "checksum": "*20"
+  },
+  {
+    "raw": "$WIMWV,56.5,R,15.4,N,A,*25",
+    "angle": 56.5,
+    "reference": "R",
+    "speed": 15.4,
+    "units": "N",
+    "status": "A",
+    "checksum": "*25"
+  },
+  {
+    "raw": "$WIMWV,56.0,R,18.3,N,A,*2A",
+    "angle": 56.0,
+    "reference": "R",
+    "speed": 18.3,
+    "units": "N",
+    "status": "A",
+    "checksum": "*2A"
+  },
+  {
+    "raw": "$WIMWV,56.6,R,15.4,N,A,*26",
+    "angle": 56.6,
+    "reference": "R",
+    "speed": 15.4,
+    "units": "N",
+    "status": "A",
+    "checksum": "*26"
+  },
+  {
+    "raw": "$WIMWV,56.3,R,18.2,N,A,*28",
+    "angle": 56.3,
+    "reference": "R",
+    "speed": 18.2,
+    "units": "N",
+    "status": "A",
+    "checksum": "*28"
+  },
+  {
+    "raw": "$WIMWV,51.2,R,15.8,N,A,*29",
+    "angle": 51.2,
+    "reference": "R",
+    "speed": 15.8,
+    "units": "N",
+    "status": "A",
+    "checksum": "*29"
+  },
+  {
+    "raw": "$WIMWV,56.3,R,18.2,N,A,*28",
+    "angle": 56.3,
+    "reference": "R",
+    "speed": 18.2,
+    "units": "N",
+    "status": "A",
+    "checksum": "*28"
+  },
+  {
+    "raw": "$WIMWV,56.6,R,15.4,N,A,*26",
+    "angle": 56.6,
+    "reference": "R",
+    "speed": 15.4,
+    "units": "N",
+    "status": "A",
+    "checksum": "*26"
+  },
+  {
+    "raw": "$WIMWV,50.7,R,13.6,N,A,*25",
+    "angle": 50.7,
+    "reference": "R",
+    "speed": 13.6,
+    "units": "N",
+    "status": "A",
+    "checksum": "*25"
+  },
+  {
+    "raw": "$WIMWV,45.2,R,12.0,N,A,*23",
+    "angle": 45.2,
+    "reference": "R",
+    "speed": 12.0,
+    "units": "N",
+    "status": "A",
+    "checksum": "*23"
+  },
+  {
+    "raw": "$WIMWV,45.5,R,14.0,N,A,*22",
+    "angle": 45.5,
+    "reference": "R",
+    "speed": 14.0,
+    "units": "N",
+    "status": "A",
+    "checksum": "*22"
+  },
+  {
+    "raw": "$WIMWV,50.3,R,16.0,N,A,*22",
+    "angle": 50.3,
+    "reference": "R",
+    "speed": 16.0,
+    "units": "N",
+    "status": "A",
+    "checksum": "*22"
+  },
+  {
+    "raw": "$WIMWV,50.4,R,13.6,N,A,*26",
+    "angle": 50.4,
+    "reference": "R",
+    "speed": 13.6,
+    "units": "N",
+    "status": "A",
+    "checksum": "*26"
+  },
+  {
+    "raw": "$WIMWV,56.1,R,15.5,N,A,*20",
+    "angle": 56.1,
+    "reference": "R",
+    "speed": 15.5,
+    "units": "N",
+    "status": "A",
+    "checksum": "*20"
+  },
+  {
+    "raw": "$WIMWV,62.0,R,17.8,N,A,*29",
+    "angle": 62.0,
+    "reference": "R",
+    "speed": 17.8,
+    "units": "N",
+    "status": "A",
+    "checksum": "*29"
+  },
+  {
+    "raw": "$WIMWV,62.9,R,14.9,N,A,*22",
+    "angle": 62.9,
+    "reference": "R",
+    "speed": 14.9,
+    "units": "N",
+    "status": "A",
+    "checksum": "*22"
+  },
+  {
+    "raw": "$WIMWV,56.7,R,13.1,N,A,*24",
+    "angle": 56.7,
+    "reference": "R",
+    "speed": 13.1,
+    "units": "N",
+    "status": "A",
+    "checksum": "*24"
+  },
+  {
+    "raw": "$WIMWV,56.5,R,15.4,N,A,*25",
+    "angle": 56.5,
+    "reference": "R",
+    "speed": 15.4,
+    "units": "N",
+    "status": "A",
+    "checksum": "*25"
+  },
+  {
+    "raw": "$WIMWV,62.2,R,17.8,N,A,*2B",
+    "angle": 62.2,
+    "reference": "R",
+    "speed": 17.8,
+    "units": "N",
+    "status": "A",
+    "checksum": "*2B"
+  },
+  {
+    "raw": "$WIMWV,68.4,R,20.5,N,A,*2E",
+    "angle": 68.4,
+    "reference": "R",
+    "speed": 20.5,
+    "units": "N",
+    "status": "A",
+    "checksum": "*2E"
+  },
+  {
+    "raw": "$WIMWV,74.7,R,23.9,N,A,*2F",
+    "angle": 74.7,
+    "reference": "R",
+    "speed": 23.9,
+    "units": "N",
+    "status": "A",
+    "checksum": "*2F"
+  },
+  {
+    "raw": "$WIMWV,72.3,R,28.9,N,A,*26",
+    "angle": 72.3,
+    "reference": "R",
+    "speed": 28.9,
+    "units": "N",
+    "status": "A",
+    "checksum": "*26"
+  },
+  {
+    "raw": "$WIMWV,70.2,R,34.7,N,A,*26",
+    "angle": 70.2,
+    "reference": "R",
+    "speed": 34.7,
+    "units": "N",
+    "status": "A",
+    "checksum": "*26"
+  },
+  {
+    "raw": "$WIMWV,75.4,R,40.9,N,A,*28",
+    "angle": 75.4,
+    "reference": "R",
+    "speed": 40.9,
+    "units": "N",
+    "status": "A",
+    "checksum": "*28"
+  },
+  {
+    "raw": "$WIMWV,78.2,R,34.0,N,A,*29",
+    "angle": 78.2,
+    "reference": "R",
+    "speed": 34.0,
+    "units": "N",
+    "status": "A",
+    "checksum": "*29"
+  },
+  {
+    "raw": "$WIMWV,83.8,R,40.2,N,A,*26",
+    "angle": 83.8,
+    "reference": "R",
+    "speed": 40.2,
+    "units": "N",
+    "status": "A",
+    "checksum": "*26"
+  },
+  {
+    "raw": "$WIMWV,88.4,R,39.8,N,A,*25",
+    "angle": 88.4,
+    "reference": "R",
+    "speed": 39.8,
+    "units": "N",
+    "status": "A",
+    "checksum": "*25"
+  },
+  {
+    "raw": "$WIMWV,93.3,R,39.4,N,A,*24",
+    "angle": 93.3,
+    "reference": "R",
+    "speed": 39.4,
+    "units": "N",
+    "status": "A",
+    "checksum": "*24"
+  },
+  {
+    "raw": "$WIMWV,93.5,R,39.4,N,A,*22",
+    "angle": 93.5,
+    "reference": "R",
+    "speed": 39.4,
+    "units": "N",
+    "status": "A",
+    "checksum": "*22"
+  },
+  {
+    "raw": "$WIMWV,88.7,R,39.8,N,A,*26",
+    "angle": 88.7,
+    "reference": "R",
+    "speed": 39.8,
+    "units": "N",
+    "status": "A",
+    "checksum": "*26"
+  },
+  {
+    "raw": "$WIMWV,82.8,R,33.6,N,A,*27",
+    "angle": 82.8,
+    "reference": "R",
+    "speed": 33.6,
+    "units": "N",
+    "status": "A",
+    "checksum": "*27"
+  },
+  {
+    "raw": "$WIMWV,88.7,R,39.8,N,A,*26",
+    "angle": 88.7,
+    "reference": "R",
+    "speed": 39.8,
+    "units": "N",
+    "status": "A",
+    "checksum": "*26"
+  },
+  {
+    "raw": "$WIMWV,84.0,R,40.2,N,A,*29",
+    "angle": 84.0,
+    "reference": "R",
+    "speed": 40.2,
+    "units": "N",
+    "status": "A",
+    "checksum": "*29"
+  },
+  {
+    "raw": "$WIMWV,79.5,R,40.6,N,A,*2A",
+    "angle": 79.5,
+    "reference": "R",
+    "speed": 40.6,
+    "units": "N",
+    "status": "A",
+    "checksum": "*2A"
+  },
+  {
+    "raw": "$WIMWV,74.2,R,34.3,N,A,*26",
+    "angle": 74.2,
+    "reference": "R",
+    "speed": 34.3,
+    "units": "N",
+    "status": "A",
+    "checksum": "*26"
+  },
+  {
+    "raw": "$WIMWV,79.6,R,40.6,N,A,*29",
+    "angle": 79.6,
+    "reference": "R",
+    "speed": 40.6,
+    "units": "N",
+    "status": "A",
+    "checksum": "*29"
+  },
+  {
+    "raw": "$WIMWV,84.0,R,40.2,N,A,*29",
+    "angle": 84.0,
+    "reference": "R",
+    "speed": 40.2,
+    "units": "N",
+    "status": "A",
+    "checksum": "*29"
+  },
+  {
+    "raw": "$WIMWV,87.2,R,33.2,N,A,*2C",
+    "angle": 87.2,
+    "reference": "R",
+    "speed": 33.2,
+    "units": "N",
+    "status": "A",
+    "checksum": "*2C"
+  },
+  {
+    "raw": "$WIMWV,90.2,R,27.4,N,A,*29",
+    "angle": 90.2,
+    "reference": "R",
+    "speed": 27.4,
+    "units": "N",
+    "status": "A",
+    "checksum": "*29"
+  },
+  {
+    "raw": "$WIMWV,87.0,R,33.2,N,A,*2E",
+    "angle": 87.0,
+    "reference": "R",
+    "speed": 33.2,
+    "units": "N",
+    "status": "A",
+    "checksum": "*2E"
+  },
+  {
+    "raw": "$WIMWV,81.0,R,28.1,N,A,*21",
+    "angle": 81.0,
+    "reference": "R",
+    "speed": 28.1,
+    "units": "N",
+    "status": "A",
+    "checksum": "*21"
+  },
+  {
+    "raw": "$WIMWV,74.9,R,23.9,N,A,*21",
+    "angle": 74.9,
+    "reference": "R",
+    "speed": 23.9,
+    "units": "N",
+    "status": "A",
+    "checksum": "*21"
+  },
+  {
+    "raw": "$WIMWV,68.9,R,20.5,N,A,*23",
+    "angle": 68.9,
+    "reference": "R",
+    "speed": 20.5,
+    "units": "N",
+    "status": "A",
+    "checksum": "*23"
+  },
+  {
+    "raw": "$WIMWV,74.9,R,23.9,N,A,*21",
+    "angle": 74.9,
+    "reference": "R",
+    "speed": 23.9,
+    "units": "N",
+    "status": "A",
+    "checksum": "*21"
+  },
+  {
+    "raw": "$WIMWV,76.9,R,19.8,N,A,*2B",
+    "angle": 76.9,
+    "reference": "R",
+    "speed": 19.8,
+    "units": "N",
+    "status": "A",
+    "checksum": "*2B"
+  },
+  {
+    "raw": "$WIMWV,83.4,R,23.2,N,A,*2F",
+    "angle": 83.4,
+    "reference": "R",
+    "speed": 23.2,
+    "units": "N",
+    "status": "A",
+    "checksum": "*2F"
+  },
+  {
+    "raw": "$WIMWV,85.8,R,19.0,N,A,*2E",
+    "angle": 85.8,
+    "reference": "R",
+    "speed": 19.0,
+    "units": "N",
+    "status": "A",
+    "checksum": "*2E"
+  },
+  {
+    "raw": "$WIMWV,78.3,R,16.3,N,A,*2B",
+    "angle": 78.3,
+    "reference": "R",
+    "speed": 16.3,
+    "units": "N",
+    "status": "A",
+    "checksum": "*2B"
+  },
+  {
+    "raw": "$WIMWV,70.6,R,14.2,N,A,*25",
+    "angle": 70.6,
+    "reference": "R",
+    "speed": 14.2,
+    "units": "N",
+    "status": "A",
+    "checksum": "*25"
+  },
+  {
+    "raw": "$WIMWV,77.7,R,16.4,N,A,*27",
+    "angle": 77.7,
+    "reference": "R",
+    "speed": 16.4,
+    "units": "N",
+    "status": "A",
+    "checksum": "*27"
+  },
+  {
+    "raw": "$WIMWV,79.0,R,13.4,N,A,*2B",
+    "angle": 79.0,
+    "reference": "R",
+    "speed": 13.4,
+    "units": "N",
+    "status": "A",
+    "checksum": "*2B"
+  },
+  {
+    "raw": "$WIMWV,71.1,R,11.8,N,A,*2C",
+    "angle": 71.1,
+    "reference": "R",
+    "speed": 11.8,
+    "units": "N",
+    "status": "A",
+    "checksum": "*2C"
+  },
+  {
+    "raw": "$WIMWV,79.2,R,13.4,N,A,*29",
+    "angle": 79.2,
+    "reference": "R",
+    "speed": 13.4,
+    "units": "N",
+    "status": "A",
+    "checksum": "*29"
+  },
+  {
+    "raw": "$WIMWV,87.9,R,15.5,N,A,*24",
+    "angle": 87.9,
+    "reference": "R",
+    "speed": 15.5,
+    "units": "N",
+    "status": "A",
+    "checksum": "*24"
+  },
+  {
+    "raw": "$WIMWV,96.4,R,18.2,N,A,*23",
+    "angle": 96.4,
+    "reference": "R",
+    "speed": 18.2,
+    "units": "N",
+    "status": "A",
+    "checksum": "*23"
+  },
+  {
+    "raw": "$WIMWV,93.3,R,22.4,N,A,*2E",
+    "angle": 93.3,
+    "reference": "R",
+    "speed": 22.4,
+    "units": "N",
+    "status": "A",
+    "checksum": "*2E"
+  },
+  {
+    "raw": "$WIMWV,101.1,R,26.5,N,A,*13",
+    "angle": 101.1,
+    "reference": "R",
+    "speed": 26.5,
+    "units": "N",
+    "status": "A",
+    "checksum": "*13"
+  },
+  {
+    "raw": "$WIMWV,105.2,R,21.5,N,A,*13",
+    "angle": 105.2,
+    "reference": "R",
+    "speed": 21.5,
+    "units": "N",
+    "status": "A",
+    "checksum": "*13"
+  },
+  {
+    "raw": "$WIMWV,101.1,R,26.5,N,A,*13",
+    "angle": 101.1,
+    "reference": "R",
+    "speed": 26.5,
+    "units": "N",
+    "status": "A",
+    "checksum": "*13"
+  },
+  {
+    "raw": "$WIMWV,108.5,R,31.6,N,A,*1B",
+    "angle": 108.5,
+    "reference": "R",
+    "speed": 31.6,
+    "units": "N",
+    "status": "A",
+    "checksum": "*1B"
+  },
+  {
+    "raw": "$WIMWV,113.0,R,25.6,N,A,*11",
+    "angle": 113.0,
+    "reference": "R",
+    "speed": 25.6,
+    "units": "N",
+    "status": "A",
+    "checksum": "*11"
+  },
+  {
+    "raw": "$WIMWV,105.0,R,21.5,N,A,*11",
+    "angle": 105.0,
+    "reference": "R",
+    "speed": 21.5,
+    "units": "N",
+    "status": "A",
+    "checksum": "*11"
+  },
+  {
+    "raw": "$WIMWV,101.3,R,26.5,N,A,*11",
+    "angle": 101.3,
+    "reference": "R",
+    "speed": 26.5,
+    "units": "N",
+    "status": "A",
+    "checksum": "*11"
+  },
+  {
+    "raw": "$WIMWV,105.4,R,21.5,N,A,*15",
+    "angle": 105.4,
+    "reference": "R",
+    "speed": 21.5,
+    "units": "N",
+    "status": "A",
+    "checksum": "*15"
+  },
+  {
+    "raw": "$WIMWV,109.4,R,17.3,N,A,*1A",
+    "angle": 109.4,
+    "reference": "R",
+    "speed": 17.3,
+    "units": "N",
+    "status": "A",
+    "checksum": "*1A"
+  },
+  {
+    "raw": "$WIMWV,100.4,R,14.6,N,A,*15",
+    "angle": 100.4,
+    "reference": "R",
+    "speed": 14.6,
+    "units": "N",
+    "status": "A",
+    "checksum": "*15"
+  },
+  {
+    "raw": "$WIMWV,103.3,R,11.6,N,A,*14",
+    "angle": 103.3,
+    "reference": "R",
+    "speed": 11.6,
+    "units": "N",
+    "status": "A",
+    "checksum": "*14"
+  },
+  {
+    "raw": "$WIMWV,100.8,R,14.6,N,A,*19",
+    "angle": 100.8,
+    "reference": "R",
+    "speed": 14.6,
+    "units": "N",
+    "status": "A",
+    "checksum": "*19"
+  },
+  {
+    "raw": "$WIMWV,109.7,R,17.3,N,A,*19",
+    "angle": 109.7,
+    "reference": "R",
+    "speed": 17.3,
+    "units": "N",
+    "status": "A",
+    "checksum": "*19"
+  },
+  {
+    "raw": "$WIMWV,119.0,R,20.7,N,A,*1F",
+    "angle": 119.0,
+    "reference": "R",
+    "speed": 20.7,
+    "units": "N",
+    "status": "A",
+    "checksum": "*1F"
+  },
+  {
+    "raw": "$WIMWV,127.7,R,24.8,N,A,*1E",
+    "angle": 127.7,
+    "reference": "R",
+    "speed": 24.8,
+    "units": "N",
+    "status": "A",
+    "checksum": "*1E"
+  },
+  {
+    "raw": "$WIMWV,136.6,R,30.0,N,A,*12",
+    "angle": 136.6,
+    "reference": "R",
+    "speed": 30.0,
+    "units": "N",
+    "status": "A",
+    "checksum": "*12"
+  },
+  {
+    "raw": "$WIMWV,143.6,R,24.0,N,A,*15",
+    "angle": 143.6,
+    "reference": "R",
+    "speed": 24.0,
+    "units": "N",
+    "status": "A",
+    "checksum": "*15"
+  },
+  {
+    "raw": "$WIMWV,151.4,R,19.1,N,A,*1B",
+    "angle": 151.4,
+    "reference": "R",
+    "speed": 19.1,
+    "units": "N",
+    "status": "A",
+    "checksum": "*1B"
+  },
+  {
+    "raw": "$WIMWV,161.9,R,23.5,N,A,*18",
+    "angle": 161.9,
+    "reference": "R",
+    "speed": 23.5,
+    "units": "N",
+    "status": "A",
+    "checksum": "*18"
+  },
+  {
+    "raw": "$WIMWV,153.3,R,29.2,N,A,*1E",
+    "angle": 153.3,
+    "reference": "R",
+    "speed": 29.2,
+    "units": "N",
+    "status": "A",
+    "checksum": "*1E"
+  },
+  {
+    "raw": "$WIMWV,145.7,R,36.2,N,A,*13",
+    "angle": 145.7,
+    "reference": "R",
+    "speed": 36.2,
+    "units": "N",
+    "status": "A",
+    "checksum": "*13"
+  },
+  {
+    "raw": "$WIMWV,154.0,R,36.0,N,A,*16",
+    "angle": 154.0,
+    "reference": "R",
+    "speed": 36.0,
+    "units": "N",
+    "status": "A",
+    "checksum": "*16"
+  },
+  {
+    "raw": "$WIMWV,162.9,R,35.8,N,A,*11",
+    "angle": 162.9,
+    "reference": "R",
+    "speed": 35.8,
+    "units": "N",
+    "status": "A",
+    "checksum": "*11"
+  },
+  {
+    "raw": "$WIMWV,172.2,R,35.6,N,A,*15",
+    "angle": 172.2,
+    "reference": "R",
+    "speed": 35.6,
+    "units": "N",
+    "status": "A",
+    "checksum": "*15"
+  },
+  {
+    "raw": "$WIMWV,162.3,R,29.1,N,A,*1F",
+    "angle": 162.3,
+    "reference": "R",
+    "speed": 29.1,
+    "units": "N",
+    "status": "A",
+    "checksum": "*1F"
+  },
+  {
+    "raw": "$WIMWV,171.5,R,23.5,N,A,*15",
+    "angle": 171.5,
+    "reference": "R",
+    "speed": 23.5,
+    "units": "N",
+    "status": "A",
+    "checksum": "*15"
+  },
+  {
+    "raw": "$WIMWV,181.8,R,18.8,N,A,*12",
+    "angle": 181.8,
+    "reference": "R",
+    "speed": 18.8,
+    "units": "N",
+    "status": "A",
+    "checksum": "*12"
+  },
+  {
+    "raw": "$WIMWV,171.3,R,23.6,N,A,*10",
+    "angle": 171.3,
+    "reference": "R",
+    "speed": 23.6,
+    "units": "N",
+    "status": "A",
+    "checksum": "*10"
+  },
+  {
+    "raw": "$WIMWV,159.4,R,12.1,N,A,*18",
+    "angle": 159.4,
+    "reference": "R",
+    "speed": 12.1,
+    "units": "N",
+    "status": "A",
+    "checksum": "*18"
+  },
+  {
+    "raw": "$WIMWV,169.9,R,9.3,N,A,*2E",
+    "angle": 169.9,
+    "reference": "R",
+    "speed": 9.3,
+    "units": "N",
+    "status": "A",
+    "checksum": "*2E"
+  },
+  {
+    "raw": "$WIMWV,183.0,R,6.9,N,A,*26",
+    "angle": 183.0,
+    "reference": "R",
+    "speed": 6.9,
+    "units": "N",
+    "status": "A",
+    "checksum": "*26"
+  },
+  {
+    "raw": "$WIMWV,167.7,R,5.2,N,A,*23",
+    "angle": 167.7,
+    "reference": "R",
+    "speed": 5.2,
+    "units": "N",
+    "status": "A",
+    "checksum": "*23"
+  },
+  {
+    "raw": "$WIMWV,184.5,R,3.5,N,A,*2D",
+    "angle": 184.5,
+    "reference": "R",
+    "speed": 3.5,
+    "units": "N",
+    "status": "A",
+    "checksum": "*2D"
+  },
+  {
+    "raw": "$WIMWV,200.6,R,5.2,N,A,*20",
+    "angle": 200.6,
+    "reference": "R",
+    "speed": 5.2,
+    "units": "N",
+    "status": "A",
+    "checksum": "*20"
+  },
+  {
+    "raw": "$WIMWV,184.8,R,3.5,N,A,*20",
+    "angle": 184.8,
+    "reference": "R",
+    "speed": 3.5,
+    "units": "N",
+    "status": "A",
+    "checksum": "*20"
+  }
+]
