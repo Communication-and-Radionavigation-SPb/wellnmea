@@ -6,6 +6,7 @@ init_target(test_instructions)
 build_test(${TARGET_NAME} ${SOURCE_FILES} ${HEADER_FILES})
 
 link_gtest()
+link_json()
 final_target()
 
 set_target_properties(${TARGET_NAME} PROPERTIES FOLDER "test")

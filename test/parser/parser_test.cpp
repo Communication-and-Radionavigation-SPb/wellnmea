@@ -48,8 +48,8 @@ TEST(Suite, assigns_checksum_of_payload)
   wellnmea::Sentence sentence;
 
   parser.parseInto(sentence, "$GPHDT,127.0*49");
-
-  EXPECT_EQ(sentence.payloadChecksum, (uint8_t)wellnmea::util::toInt("49", 16));
+  std::string chk = "49";
+  EXPECT_EQ(sentence.payloadChecksum, (uint8_t)wellnmea::util::toInt(chk, 16));
 }
 
 TEST(Suite, assigns_talker) {
@@ -130,8 +130,8 @@ TEST(Suite, recognized_checksum) {
   wellnmea::Sentence sentence;
 
   parser.parseInto(sentence, "$GPHDT,127.0,T*31");
-
-  EXPECT_EQ(sentence.parsedChecksum, (uint32_t)wellnmea::util::toInt("31", 16));
+  std::string chk = "31";
+  EXPECT_EQ(sentence.parsedChecksum, (uint32_t)wellnmea::util::toInt(chk, 16));
 }
 
 TEST(Suite, final_sentence_is_vaid) {
