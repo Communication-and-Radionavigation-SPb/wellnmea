@@ -19,6 +19,12 @@ class DateValue : public NullValue {
   DateValue(const std::string& name) : NullValue(name) {}
 
  public:
+  void accept(visitor_base& v) const noexcept {
+    using value_visitor = visitor<DateValue>;
+    if (value_visitor* ev = dynamic_cast<value_visitor*>(&v)) {
+      ev->visit(this);
+    }
+  }
   void set(std::optional<int32_t> day, std::optional<int32_t> month,
            std::optional<int32_t> year) {
     if (day.has_value() && month.has_value() && year.has_value()) {
