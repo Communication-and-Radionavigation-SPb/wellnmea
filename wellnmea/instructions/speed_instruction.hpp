@@ -50,17 +50,21 @@ class SpeedInstruction : public Instruction {
   NumberInstruction* num;
   SymbolInstruction* units;
 
+  std::optional<char> unitOverride_;
+
  public:
-  SpeedInstruction(const std::string& name)
+  SpeedInstruction(const std::string& name,
+                   std::optional<char> unitsOverride = std::nullopt)
       : Instruction(name),
         num(new NumberInstruction("value")),
-        units(new SymbolInstruction("units", {'N', 'K', 'M'})) {}
+        units(new SymbolInstruction("units", {'N', 'K', 'M'})),
+        unitOverride_(unitsOverride) {}
 
  public:
   std::string which() const noexcept override { return "speed"; }
 
   Instruction* clone(const std::string& name) const override {
-    return new SpeedInstruction(name);
+    return new SpeedInstruction(name, unitOverride_);
   }
 
   value* extract(position it, const_position end) override {
@@ -68,9 +72,16 @@ class SpeedInstruction : public Instruction {
     auto value = new SpeedValue(name());
 
     auto number = num->extract(it, end)->as<NumberValue>();
-    auto unit = units->extract(it, end)->as<CharacterValue>();
 
-    value->set(unit->symbol(), number->getValue());
+    std::optional<char> unit;
+    if (!unitOverride_.has_value()) {
+      unit = units->extract(it, end)->as<CharacterValue>()->symbol();
+    }
+    else {
+      unit = unitOverride_;
+    }
+
+    value->set(unit, number->getValue());
 
     return value;
   }
