@@ -59,7 +59,7 @@ TEST(Suite, extract_returns_non_nullable_address)
 
 TEST(Suite, extracted_value_has_correct_name)
 {
-  wellnmea::instructions::UtcInstruction instr("");
+  wellnmea::instructions::UtcInstruction instr("time");
 
   wellnmea::Sentence sentence;
   sentence.fields.push_back("123200.00");
@@ -69,7 +69,7 @@ TEST(Suite, extracted_value_has_correct_name)
 
   auto value = instr.extract(it, end);
 
-  EXPECT_EQ(value->name(), "utc");
+  EXPECT_EQ(value->name(), "time");
 }
 
 TEST(Suite, extracts_correct_value_from_sentence)
