@@ -18,6 +18,13 @@ class SpeedValue : public NullValue {
   SpeedValue(const std::string& name) : NullValue(name) {}
 
  public:
+
+  void accept(visitor_base& v) const noexcept {
+    using value_visitor = visitor<SpeedValue>;
+    if (value_visitor* ev = dynamic_cast<value_visitor*>(&v)) {
+      ev->visit(this);
+    }
+  }
   void set(std::optional<char> u, std::optional<double> s) noexcept {
     if (u.has_value() && s.has_value()) {
       units_ = u;
