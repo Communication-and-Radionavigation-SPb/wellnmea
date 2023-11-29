@@ -3,3 +3,7 @@ configure_file(${CMAKE_CURRENT_LIST_DIR}/gll_data.json ${WELLNMEA_BIN}/gll_data.
 configure_file(${CMAKE_CURRENT_LIST_DIR}/mwv_data.json ${WELLNMEA_BIN}/mwv_data.json COPYONLY)
 configure_file(${CMAKE_CURRENT_LIST_DIR}/rmc_data.json ${WELLNMEA_BIN}/rmc_data.json COPYONLY)
 configure_file(${CMAKE_CURRENT_LIST_DIR}/date_instruction_data.json ${WELLNMEA_BIN}/date_instruction_data.json COPYONLY)
+configure_file(${CMAKE_CURRENT_LIST_DIR}/dpt_data.json ${WELLNMEA_BIN}/dpt_data.json COPYONLY)
+configure_file(${CMAKE_CURRENT_LIST_DIR}/dbs_data.json ${WELLNMEA_BIN}/dbs_data.json COPYONLY)
+configure_file(${CMAKE_CURRENT_LIST_DIR}/dbt_data.json ${WELLNMEA_BIN}/dbt_data.json COPYONLY)
+configure_file(${CMAKE_CURRENT_LIST_DIR}/dbk_data.json ${WELLNMEA_BIN}/dbk_data.json COPYONLY)
