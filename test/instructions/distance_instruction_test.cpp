@@ -90,7 +90,8 @@ TEST_F(Suite, returns_correct_value_for_feets) {
   ASSERT_NE(value, nullptr);
   EXPECT_THAT(value->raw().value(), ::testing::DoubleNear(56.0, 0.01));
   EXPECT_THAT(value->units().value(), ::testing::Eq('f'));
-  EXPECT_THAT(value->converted().value(), ::testing::DoubleNear(56.0 * 0.3048, 0.0001));
+  EXPECT_THAT(value->converted().value(),
+              ::testing::DoubleNear(56.0 * 0.3048, 0.0001));
 }
 
 TEST_F(Suite, returns_correct_value_for_meters) {
@@ -128,5 +129,28 @@ TEST_F(Suite, returns_correct_value_for_fathoms) {
   ASSERT_NE(value, nullptr);
   EXPECT_THAT(value->raw().value(), ::testing::DoubleNear(56.0, 0.01));
   EXPECT_THAT(value->units().value(), ::testing::Eq('F'));
-  EXPECT_THAT(value->converted().value(), ::testing::DoubleNear(56.0 * 1.8288, 0.00001));
+  EXPECT_THAT(value->converted().value(),
+              ::testing::DoubleNear(56.0 * 1.8288, 0.00001));
+}
+
+TEST_F(Suite, works_with_predefined_units) {
+  wellnmea::Sentence sentence;
+
+  sentence.fields.push_back("3.6");
+
+  auto it = sentence.fields.begin();
+  auto end = sentence.fields.end();
+
+  delete instr;
+  instr = new wellnmea::instructions::DistanceInstruction("predef", 'M');
+
+  auto value =
+      instr->extract(it, end)->as<wellnmea::instructions::DistanceValue>();
+
+  ASSERT_NE(value, nullptr);
+  ASSERT_TRUE(*value);
+  EXPECT_THAT(value->raw().value(), ::testing::DoubleNear(3.6, 0.01));
+  EXPECT_THAT(value->units().value(), ::testing::Eq('M'));
+
+  EXPECT_THAT(value->converted().value(), ::testing::DoubleNear(3.6, 0.01));
 }

@@ -66,11 +66,11 @@ TEST_P(Suite, extracts_correct_values) {
 
   ASSERT_NE(meters, nullptr);
   EXPECT_THAT(
-      meters->as<wellnmea::instructions::NumberValue>()->getValue().value(),
+      meters->as<wellnmea::instructions::DistanceValue>()->raw().value(),
       ::testing::DoubleNear(param["depth"], 0.01));
   ASSERT_NE(offset, nullptr);
   EXPECT_THAT(
-      offset->as<wellnmea::instructions::NumberValue>()->getValue().value(),
+      offset->as<wellnmea::instructions::DistanceValue>()->raw().value(),
       ::testing::DoubleNear(param["offset"], 0.01));
 }
 
