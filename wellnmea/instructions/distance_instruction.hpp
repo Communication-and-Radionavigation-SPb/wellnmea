@@ -62,27 +62,44 @@ class DistanceInstruction : public Instruction {
   NumberInstruction* num;
   SymbolInstruction* units;
 
+  std::optional<char> unitOverride_;
+
+ public:
  public:
   DistanceInstruction(const std::string& name,
                       std::optional<char> unitsOverride = std::nullopt)
       : Instruction(name),
         num(new NumberInstruction("value")),
-        units(new SymbolInstruction("units", {'f', 'M', 'F'})) {}
+        units(new SymbolInstruction("units", {'f', 'M', 'F'})),
+        unitOverride_(unitsOverride) {
+    if (unitOverride_.has_value()) {
+      const std::list<char> units = {'f', 'M', 'F'};
+      auto pos = std::find(units.begin(), units.end(), unitOverride_.value());
+      assert(pos != units.end());
+    }
+  }
 
  public:
   std::string which() const noexcept override { return "distance"; }
 
   Instruction* clone(const std::string& name) const override {
-    return new DistanceInstruction(name);
+    return new DistanceInstruction(name, unitOverride_);
   }
 
   value* extract(position it, const_position end) override {
 
     auto value = new DistanceValue(name());
     auto number = num->extract(it, end)->as<NumberValue>();
-    auto unit = units->extract(it, end)->as<CharacterValue>();
 
-    value->set(unit->symbol(), number->getValue());
+    std::optional<char> unit;
+    if (unitOverride_.has_value()) {
+      unit = unitOverride_;
+    }
+    else {
+      unit = units->extract(it, end)->as<CharacterValue>()->symbol();
+    }
+
+    value->set(unit, number->getValue());
 
     return value;
   }
