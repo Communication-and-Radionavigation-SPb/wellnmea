@@ -61,4 +61,7 @@ namespace wellnmea
       }
     };
   }
+
+  using FmtValue = formats::Format::ValuePtr;
+  using FmtValues = std::list<formats::Format::ValuePtr>;
 } // namespace wellnmea

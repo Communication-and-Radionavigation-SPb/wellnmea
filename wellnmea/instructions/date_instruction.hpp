@@ -1,5 +1,6 @@
 #pragma once
 
+#include <chrono>
 #include <string>
 #include <wellnmea/instructions/instruction.hpp>
 #include <wellnmea/util/number_utils.hpp>
@@ -34,7 +35,7 @@ class DateValue : public NullValue {
       return;
     }
 
-    day = month = year = std::nullopt;
+    day_ = month_ = year_ = std::nullopt;
   }
 
   bool has_value() const noexcept {
