@@ -29,6 +29,9 @@ class NumberValue : public NullValue {
 
   std::optional<double> getValue() const noexcept { return value_; }
 
+  /**
+   * @brief checks if value is empty
+   */
   bool empty() const noexcept { return !value_.has_value(); }
 };
 

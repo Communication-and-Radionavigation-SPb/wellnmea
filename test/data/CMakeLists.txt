@@ -7,3 +7,5 @@ configure_file(${CMAKE_CURRENT_LIST_DIR}/dpt_data.json ${WELLNMEA_BIN}/dpt_data.
 configure_file(${CMAKE_CURRENT_LIST_DIR}/dbs_data.json ${WELLNMEA_BIN}/dbs_data.json COPYONLY)
 configure_file(${CMAKE_CURRENT_LIST_DIR}/dbt_data.json ${WELLNMEA_BIN}/dbt_data.json COPYONLY)
 configure_file(${CMAKE_CURRENT_LIST_DIR}/dbk_data.json ${WELLNMEA_BIN}/dbk_data.json COPYONLY)
+configure_file(${CMAKE_CURRENT_LIST_DIR}/hrm_data.json ${WELLNMEA_BIN}/hrm_data.json COPYONLY)
+configure_file(${CMAKE_CURRENT_LIST_DIR}/hpm_data.json ${WELLNMEA_BIN}/hpm_data.json COPYONLY)
