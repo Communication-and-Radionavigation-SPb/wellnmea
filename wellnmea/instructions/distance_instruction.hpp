@@ -43,11 +43,11 @@ class DistanceValue : public NullValue {
     if (!units_.has_value())
       return std::nullopt;
 
-    if (units_.value() == 'f') {
+    if (units_.value() == 'f') { // fathoms to meters
       return distance_.value() * 0.3048;
     }
 
-    if (units_.value() == 'F') {
+    if (units_.value() == 'F') { // feet to meters
       return distance_.value() * 1.8288;
     }
 
