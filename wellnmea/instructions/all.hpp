@@ -1,7 +1,7 @@
 #if !defined(WELLNMEA_INSTRUCTIONS_ALL_HPP)
 #define WELLNMEA_INSTRUCTIONS_ALL_HPP
 
-#include <wellnmea/instrucitons/utc_instruction.hpp>
+#include <wellnmea/instructions/utc_instruction.hpp>
 #include <wellnmea/instructions/as_is_instruction.hpp>
 #include <wellnmea/instructions/coordinate_instruction.hpp>
 #include <wellnmea/instructions/date_instruction.hpp>
