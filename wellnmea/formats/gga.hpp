@@ -59,4 +59,5 @@ class GGA : public wellnmea::formats::Format {
             // horizontal delution of position
             new wa::NumberInstruction("hdop"),
         }){};
+  virtual ~GGA() = default;
 };

@@ -48,4 +48,5 @@ class RMC : public wellnmea::formats::Format {
         new wa::DegreesInstruction("track"),
         new wa::DateInstruction("date"),
       }) {}
+virtual ~RMC() = default;
 };

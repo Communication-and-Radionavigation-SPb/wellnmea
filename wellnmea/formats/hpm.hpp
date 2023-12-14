@@ -42,4 +42,5 @@ class HPM : public wellnmea::formats::Format {
                 new wa::SymbolInstruction("status", {'A'}),
                 new wa::SkipInstruction(6), new wa::NumberInstruction("heel"),
                 new wa::SymbolInstruction("status")}) {}
+  virtual ~HPM() = default;
 };
