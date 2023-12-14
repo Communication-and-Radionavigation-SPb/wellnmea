@@ -8,7 +8,7 @@ namespace instructions {
 
 class SkipInstruction : public Instruction {
  public:
-  SkipInstruction(int fields) : Instruction(""), size(fields) {}
+  SkipInstruction(size_t fields) : Instruction(""), size(fields) {}
 
  public:
   std::string which() const noexcept override { return "skip"; }
@@ -32,7 +32,7 @@ class SkipInstruction : public Instruction {
   }
 
  private:
-  int size;
+  size_t size;
 };
 
 }  // namespace instructions

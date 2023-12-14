@@ -18,4 +18,5 @@ class XDR : public wellnmea::formats::Format {
                             new wa::NumberInstruction("value"),
                             new wa::SymbolInstruction("units"),
                             new wa::AsIsInstruction("transduser")})}) {}
+  virtual ~XDR() = default;
 };

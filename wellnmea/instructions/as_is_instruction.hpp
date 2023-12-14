@@ -43,7 +43,7 @@ class AsIsInstruction : public Instruction {
     auto value = new AsIsValue(name());
 
     if (!it->empty()) {
-      value->set(std::move(std::string{it->begin(), it->end()}));
+      value->set(std::string{it->begin(), it->end()});
     }
 
     ++it;
