@@ -77,7 +77,7 @@ namespace wellnmea
      * @param fmt_name Name of format
      * @return FmtPtr Shared pointer to format rules object
      */
-    FmtPtr getFormat(std::string fmt_name)
+    FmtPtr getFormat(std::string fmt_name) const
     {
       if (!contains(fmt_name))
       {
@@ -129,7 +129,7 @@ namespace wellnmea
      * @param source Source string containing
      * @return NmeaMessage Parsed message
      */
-    std::shared_ptr<Message> parse(Sentence &source)
+    std::shared_ptr<Message> parse(Sentence &source) const
     {
       auto formatter =
           util::to_lower(std::string{source.formatter.begin(), source.formatter.end()});
