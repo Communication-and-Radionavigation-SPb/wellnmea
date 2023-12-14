@@ -14,4 +14,5 @@ class DBK : public wellnmea::formats::Format {
       : Format({new wa::DistanceInstruction("feet"),
                 new wa::DistanceInstruction("meters"),
                 new wa::DistanceInstruction("fathoms")}) {}
+  virtual ~DBK() = default;
 };

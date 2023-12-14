@@ -32,4 +32,5 @@ class MWV : public wellnmea::formats::Format {
             new wa::SpeedInstruction("speed"),
             new wa::SymbolInstruction("status"),
         }) {}
+  virtual ~MWV() = default;
 };

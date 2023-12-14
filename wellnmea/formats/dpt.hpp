@@ -26,4 +26,5 @@ class DPT : public wellnmea::formats::Format {
             new wa::DistanceInstruction("depth", 'M'),
             new wa::DistanceInstruction("offset", 'M'),
         }) {}
+  virtual ~DPT() = default;
 };

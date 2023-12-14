@@ -41,4 +41,5 @@ class GLL : public formats::Format {
 
                 new instructions::SymbolInstruction(
                     "mode", {'A', 'D', 'E', 'M', 'S', 'N'})}){};
+  virtual ~GLL() = default;
 };

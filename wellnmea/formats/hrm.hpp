@@ -42,4 +42,5 @@ class HRM : public wellnmea::formats::Format {
                 new wa::SymbolInstruction("status", {'A'}),
                 new wa::SkipInstruction(6), new wa::NumberInstruction("heel"),
                 new wa::SymbolInstruction("status")}) {}
+  virtual ~HRM() = default;
 };
