@@ -43,11 +43,11 @@ class DistanceValue : public NullValue {
     if (!units_.has_value())
       return std::nullopt;
 
-    if (units_.value() == 'f') { // fathoms to meters
+    if (units_.value() == 'f') {  // fathoms to meters
       return distance_.value() * 0.3048;
     }
 
-    if (units_.value() == 'F') { // feet to meters
+    if (units_.value() == 'F') {  // feet to meters
       return distance_.value() * 1.8288;
     }
 
@@ -73,9 +73,10 @@ class DistanceInstruction : public Instruction {
         units(new SymbolInstruction("units", {'f', 'M', 'F'})),
         unitOverride_(unitsOverride) {
     if (unitOverride_.has_value()) {
-      const std::list<char> units = {'f', 'M', 'F'};
-      auto pos = std::find(units.begin(), units.end(), unitOverride_.value());
-      assert(pos != units.end());
+      const std::list<char> allowed_units = {'f', 'M', 'F'};
+      auto pos = std::find(allowed_units.begin(), allowed_units.end(),
+                           unitOverride_.value());
+      assert(pos != allowed_units.end());
     }
   }
 
