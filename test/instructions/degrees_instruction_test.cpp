@@ -81,7 +81,7 @@ TEST(Suite, extracted_value_has_correct_name)
 
   auto value = instr.extract(it, sentence.fields.end());
 
-  EXPECT_EQ(value->name(), "degrees");
+  EXPECT_EQ(value->name(), "name");
 }
 
 TEST(Suite, extracts_correct_value_from_sentence)
