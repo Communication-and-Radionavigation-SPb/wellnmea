@@ -91,14 +91,14 @@ TEST(Suite, extracts_correct_value_from_sentence)
   wellnmea::Sentence sentence;
   wellnmea::Parser parser;
 
-  parser.parseInto(sentence, "$GPHDT,127.0");
+  parser.parseInto(sentence, "$GPHDT,234.4");
 
   auto it = sentence.fields.begin();
 
   auto value = instr.extract(it, sentence.fields.end());
 
   EXPECT_EQ(value->as<wellnmea::instructions::DegreesValue>()->value.has_value(), true) << "Instruction do not fills resulting value";
-  EXPECT_EQ(value->as<wellnmea::instructions::DegreesValue>()->value.value(), 127.0) << "Instruction do not fills resulting value";
+  EXPECT_EQ(value->as<wellnmea::instructions::DegreesValue>()->value.value(), 234.4) << "Instruction do not fills resulting value";
 }
 
 TEST(Suite, throws_on_invalid_field_content)

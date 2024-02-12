@@ -76,10 +76,10 @@ include (CMakeHelpers)
 ############  Build customization
 
 # Override from command line "CMake -D<OPTION>=TRUE/FALSE/0/1/ON/OFF"
-option (BUILD_EXAMPLES "Build wellnmea examples." FALSE)
-option (BUILD_TESTS "Build wellnmea tests." FALSE)
+option (WELLNMEA_BUILD_EXAMPLES "Build wellnmea examples." FALSE)
+option (WELLNMEA_BUILD_TESTS "Build wellnmea tests." FALSE)
 
-if (BUILD_TESTS OR BUILD_EXAMPLES)
+if (WELLNMEA_BUILD_TESTS OR WELLNMEA_BUILD_EXAMPLES)
     enable_testing ()
 
     include(FetchContent)
@@ -94,7 +94,7 @@ if (BUILD_TESTS OR BUILD_EXAMPLES)
     find_package(benchmark CONFIG REQUIRED)
 endif()
 
-if(BUILD_TESTS)
+if(WELLNMEA_BUILD_TESTS)
   include(FetchContent)
   FetchContent_Declare(
     json
@@ -102,7 +102,7 @@ if(BUILD_TESTS)
     GIT_TAG v3.11.2
   )
   FetchContent_MakeAvailable(json)
-endif(BUILD_TESTS)
+endif(WELLNMEA_BUILD_TESTS)
 
 
 ############ Add projects
@@ -111,12 +111,12 @@ endif(BUILD_TESTS)
 add_subdirectory (wellnmea)
 
 # Add examples
-if (BUILD_EXAMPLES)
+if (WELLNMEA_BUILD_EXAMPLES)
     include_subdirs ("examples")
 endif ()
 
 # Add tests
-if (BUILD_TESTS)
+if (WELLNMEA_BUILD_TESTS)
     include_subdirs ("test")
     include_subdirs ("benchmark")
 endif ()

@@ -1150,5 +1150,14 @@
     "units": "N",
     "status": "A",
     "checksum": "*20"
+  },
+  {
+    "raw": "$WIMWV,234.4,R,10,N,A*0D",
+    "angle": 234.4,
+    "reference": "R",
+    "speed": 10.0,
+    "units": "N",
+    "status": "A",
+    "checksum": "0D"
   }
 ]
