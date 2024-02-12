@@ -2,12 +2,12 @@
 # Print build configuration
 macro (print_used_build_config)
     message (STATUS "\n=========== Used Build Configuration =============\n")
-    message (STATUS "BUILD_EXAMPLES      = " ${BUILD_EXAMPLES})
-    message (STATUS "BUILD_TESTS         = " ${BUILD_TESTS})
-    message (STATUS "WELLNMEA_ROOT    = " ${WELLNMEA_ROOT})
-    message (STATUS "WELLNMEA_BIN     = " ${WELLNMEA_BIN})
-    message (STATUS "WELLNMEA_LIB     = " ${WELLNMEA_LIB})
-    message (STATUS "Install prefix      = " ${CMAKE_INSTALL_PREFIX})
+    message (STATUS "WELLNMEA_BUILD_EXAMPLES      = " ${WELLNMEA_BUILD_EXAMPLES})
+    message (STATUS "WELLNMEA_BUILD_TESTS         = " ${WELLNMEA_BUILD_TESTS})
+    message (STATUS "WELLNMEA_ROOT                = " ${WELLNMEA_ROOT})
+    message (STATUS "WELLNMEA_BIN                 = " ${WELLNMEA_BIN})
+    message (STATUS "WELLNMEA_LIB                 = " ${WELLNMEA_LIB})
+    message (STATUS "Install prefix               = " ${CMAKE_INSTALL_PREFIX})
 endmacro ()
 
 # Adds the given folder_name into the source files of the current project.
