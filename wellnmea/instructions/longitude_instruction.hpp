@@ -100,16 +100,16 @@ class LongitudeInstruction : public Instruction {
   }
 
   value* extract(position it, const_position end) override {
-    auto value = new LongitudeValue(name());
+    auto result = new LongitudeValue(name());
 
     auto coordinate = coord->extract(it, end);
     auto dir = direction->extract(it, end);
 
-    *value = *coordinate->as<CoordinateValue>();
+    *result = *coordinate->as<CoordinateValue>();
 
-    value->setDirection(dir->as<CharacterValue>()->symbol());
+    result->setDirection(dir->as<CharacterValue>()->symbol());
 
-    return value;
+    return result;
   }
 };
 }  // namespace instructions

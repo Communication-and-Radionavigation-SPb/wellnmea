@@ -112,16 +112,16 @@ namespace wellnmea
 
       value *extract(position it, const_position end) override
       {
-        auto value = new UtcValue(name());
+        auto result = new UtcValue(name());
 
         if (!it->empty())
         {
           double timestamp = util::toDouble(*it);
-          value->setTimestamp(timestamp);
+          result->setTimestamp(timestamp);
         }
 
         it++;
-        return value;
+        return result;
       }
 
       Instruction *clone(const std::string &name) const override

@@ -65,7 +65,7 @@ class DateInstruction : public Instruction {
 
  public:
   value* extract(position it, const_position end) override {
-    auto value = new DateValue(name());
+    auto result = new DateValue(name());
 
     if (!it->empty()) {
       auto field = std::string(it->begin(), it->end());
@@ -74,11 +74,11 @@ class DateInstruction : public Instruction {
       int32_t month = (int32_t)trunc((raw_date - day * 10000) / 100.0);
       int32_t year = raw_date - 10000 * day - 100 * month;
 
-      value->set(day, month, year);
+      result->set(day, month, year);
     }
 
     ++it;
-    return value;
+    return result;
   }
 };
 }  // namespace instructions

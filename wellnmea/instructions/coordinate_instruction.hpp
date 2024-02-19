@@ -78,8 +78,8 @@ class CoordinateInstruction : public Instruction {
     auto coordinate = new CoordinateValue(name());
     if (!it->empty()) {
       try {
-        double value = util::toDouble(*it);
-        coordinate->setBase(value);
+        double point = util::toDouble(*it);
+        coordinate->setBase(point);
       } catch (const NumberDecodeError& e) {
         std::stringstream ss;
         ss << "Could not decode coordinate from " << (*it) << " : "
