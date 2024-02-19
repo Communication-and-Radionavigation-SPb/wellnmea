@@ -85,12 +85,12 @@ class RangeNumberInstruction : public NumberInstruction {
   }
 
   virtual value* extract(position it, const_position end) override {
-    auto value = NumberInstruction::extract(it, end)->as<NumberValue>();
+    auto num = NumberInstruction::extract(it, end)->as<NumberValue>();
 
-    if (value->empty())
-      return value;
+    if (num->empty())
+      return num;
 
-    auto digit = value->getValue().value();
+    auto digit = num->getValue().value();
     auto left = std::get<0>(range_);
     auto right = std::get<1>(range_);
     if (digit < left || digit > right) {
@@ -104,7 +104,7 @@ class RangeNumberInstruction : public NumberInstruction {
       throw NumberRangeError(ss.str());
     }
 
-    return value;
+    return num;
   }
 };
 
