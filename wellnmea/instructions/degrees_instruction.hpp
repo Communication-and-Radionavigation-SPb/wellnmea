@@ -40,14 +40,14 @@ class DegreesInstruction : public Instruction {
   std::string which() const noexcept override { return "degrees"; }
 
   value* extract(position it, const_position end) override {
-    auto value = new DegreesValue(name());
+    auto result = new DegreesValue(name());
 
     // Assign degrees value
-    value->value = util::toDouble(std::string{it->begin(), it->end()});
+    result->value = util::toDouble(std::string{it->begin(), it->end()});
 
     // Move iterator forward
     it++;
-    return value;
+    return result;
   }
 
   Instruction* clone(const std::string& name) const override {

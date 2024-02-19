@@ -89,7 +89,7 @@ class DistanceInstruction : public Instruction {
 
   value* extract(position it, const_position end) override {
 
-    auto value = new DistanceValue(name());
+    auto result = new DistanceValue(name());
     auto number = num->extract(it, end)->as<NumberValue>();
 
     std::optional<char> unit;
@@ -100,9 +100,9 @@ class DistanceInstruction : public Instruction {
       unit = units->extract(it, end)->as<CharacterValue>()->symbol();
     }
 
-    value->set(unit, number->getValue());
+    result->set(unit, number->getValue());
 
-    return value;
+    return result;
   }
 };
 }  // namespace instructions

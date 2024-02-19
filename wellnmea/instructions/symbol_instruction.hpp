@@ -48,7 +48,7 @@ class SymbolInstruction : public Instruction {
   std::string which() const noexcept override { return "char"; }
 
   value* extract(position it, const_position end) override {
-    auto value = new CharacterValue(name());
+    auto result = new CharacterValue(name());
 
     if (it->size() > 1 || util::hasNonAlpha(*it)) {
       std::stringstream ss;
@@ -68,11 +68,11 @@ class SymbolInstruction : public Instruction {
         throw extraction_error(ss.str());
       }
 
-      value->setSymbol(c);
+      result->setSymbol(c);
     }
 
     ++it;
-    return value;
+    return result;
   }
 
   virtual Instruction* clone(const std::string& name) const override {

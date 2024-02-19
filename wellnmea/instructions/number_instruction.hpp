@@ -51,12 +51,12 @@ class NumberInstruction : public Instruction {
   }
 
   virtual value* extract(position it, const_position end) override {
-    auto value = new NumberValue(name());
+    auto result = new NumberValue(name());
 
     if (!it->empty()) {
       try {
         auto num = util::toDouble(*it);
-        value->setValue(num);
+        result->setValue(num);
       } catch (const std::exception& e) {
         std::stringstream ss;
         ss << "Could not decode number field" << *it << ": " << e.what();
@@ -65,7 +65,7 @@ class NumberInstruction : public Instruction {
     }
 
     ++it;
-    return value;
+    return result;
   }
 };
 

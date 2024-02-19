@@ -1,6 +1,7 @@
 #pragma once
 
 #include <list>
+#include <cassert>
 #include <map>
 #include <memory>
 #include <wellnmea/instructions/instruction.hpp>

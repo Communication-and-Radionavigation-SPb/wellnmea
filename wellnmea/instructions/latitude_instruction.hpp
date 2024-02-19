@@ -93,15 +93,15 @@ namespace wellnmea
 
       value *extract(position it, const_position end) override
       {
-        auto value = new LatitudeValue(name());
+        auto result = new LatitudeValue(name());
 
         auto coordinate = coord->extract(it, end);
         auto dir = direction->extract(it, end)->as<CharacterValue>();
 
-        *value = *coordinate->as<CoordinateValue>();
-        value->setDirection(dir->symbol());
+        *result = *coordinate->as<CoordinateValue>();
+        result->setDirection(dir->symbol());
 
-        return value;
+        return result;
       }
     };
   } // namespace instructions

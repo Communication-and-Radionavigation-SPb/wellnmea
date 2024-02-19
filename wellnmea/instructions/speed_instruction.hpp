@@ -76,7 +76,7 @@ class SpeedInstruction : public Instruction {
 
   value* extract(position it, const_position end) override {
 
-    auto value = new SpeedValue(name());
+    auto result = new SpeedValue(name());
 
     auto number = num->extract(it, end)->as<NumberValue>();
 
@@ -88,9 +88,9 @@ class SpeedInstruction : public Instruction {
       unit = unitOverride_;
     }
 
-    value->set(unit, number->getValue());
+    result->set(unit, number->getValue());
 
-    return value;
+    return result;
   }
 };
 }  // namespace instructions

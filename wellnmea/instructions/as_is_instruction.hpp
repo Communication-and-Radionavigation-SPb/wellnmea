@@ -40,14 +40,14 @@ class AsIsInstruction : public Instruction {
   std::string which() const noexcept override { return "as_is"; }
 
   value* extract(position it, const_position end) override {
-    auto value = new AsIsValue(name());
+    auto result = new AsIsValue(name());
 
     if (!it->empty()) {
-      value->set(std::string{it->begin(), it->end()});
+      result->set(std::string{it->begin(), it->end()});
     }
 
     ++it;
-    return value;
+    return result;
   }
 
   virtual Instruction* clone(const std::string& name) const override {
