@@ -1,7 +1,7 @@
 file (GLOB SOURCE_FILES *.cpp)
 file (GLOB HEADER_FILES *.hpp)
 
-init_target(test_instructions)
+init_target(instruction_test)
 
 build_test(${TARGET_NAME} ${SOURCE_FILES} ${HEADER_FILES})
 
