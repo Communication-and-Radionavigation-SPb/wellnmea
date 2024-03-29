@@ -1,0 +1,198 @@
+[
+    {
+        "raw": "$HEROT,-080.0,A*0E",
+        "value": -80.0
+    },
+    {
+        "raw": "$HEROT,-080.0,A*0E",
+        "value": -80.0
+    },
+    {
+        "raw": "$HEROT,-008.9,A*07",
+        "value": -8.9
+    },
+    {
+        "raw": "$HEROT,-008.9,A*07",
+        "value": -8.9
+    },
+    {
+        "raw": "$HEROT,-001.0,A*07",
+        "value": -1.0
+    },
+    {
+        "raw": "$HEROT,-001.0,A*07",
+        "value": -1.0
+    },
+    {
+        "raw": "$HEROT, 026.7,A*08",
+        "value": 26.7
+    },
+    {
+        "raw": "$HEROT, 026.7,A*08",
+        "value": 26.7
+    },
+    {
+        "raw": "$HEROT, 003.0,A*08",
+        "value": 3.0
+    },
+    {
+        "raw": "$HEROT, 003.0,A*08",
+        "value": 3.0
+    },
+    {
+        "raw": "$HEROT,-026.7,A*05",
+        "value": -26.7
+    },
+    {
+        "raw": "$HEROT,-026.7,A*05",
+        "value": -26.7
+    },
+    {
+        "raw": "$HEROT,-003.0,A*05",
+        "value": -3.0
+    },
+    {
+        "raw": "$HEROT,-003.0,A*05",
+        "value": -3.0
+    },
+    {
+        "raw": "$HEROT,-026.7,A*05",
+        "value": -26.7
+    },
+    {
+        "raw": "$HEROT,-026.7,A*05",
+        "value": -26.7
+    },
+    {
+        "raw": "$HEROT,-003.0,A*05",
+        "value": -3.0
+    },
+    {
+        "raw": "$HEROT,-003.0,A*05",
+        "value": -3.0
+    },
+    {
+        "raw": "$HEROT, 026.7,A*08",
+        "value": 26.7
+    },
+    {
+        "raw": "$HEROT, 026.7,A*08",
+        "value": 26.7
+    },
+    {
+        "raw": "$HEROT, 003.0,A*08",
+        "value": 3.0
+    },
+    {
+        "raw": "$HEROT, 003.0,A*08",
+        "value": 3.0
+    },
+    {
+        "raw": "$HEROT,-013.3,A*07",
+        "value": -13.3
+    },
+    {
+        "raw": "$HEROT,-013.3,A*07",
+        "value": -13.3
+    },
+    {
+        "raw": "$HEROT,-001.5,A*02",
+        "value": -1.5
+    },
+    {
+        "raw": "$HEROT,-001.5,A*02",
+        "value": -1.5
+    },
+    {
+        "raw": "$HEROT, 080.0,A*03",
+        "value": 80.0
+    },
+    {
+        "raw": "$HEROT, 080.0,A*03",
+        "value": 80.0
+    },
+    {
+        "raw": "$HEROT, 008.9,A*0A",
+        "value": 8.9
+    },
+    {
+        "raw": "$HEROT, 008.9,A*0A",
+        "value": 8.9
+    },
+    {
+        "raw": "$HEROT, 001.0,A*0A",
+        "value": 1.0
+    },
+    {
+        "raw": "$HEROT, 001.0,A*0A",
+        "value": 1.0
+    },
+    {
+        "raw": "$HEROT,-026.7,A*05",
+        "value": -26.7
+    },
+    {
+        "raw": "$HEROT,-026.7,A*05",
+        "value": -26.7
+    },
+    {
+        "raw": "$HEROT, 010.4,A*0E",
+        "value": 10.4
+    },
+    {
+        "raw": "$HEROT, 010.4,A*0E",
+        "value": 10.4
+    },
+    {
+        "raw": "$HEROT, 001.2,A*08",
+        "value": 1.2
+    },
+    {
+        "raw": "$HEROT, 001.2,A*08",
+        "value": 1.2
+    },
+    {
+        "raw": "$HEROT,-013.3,A*07",
+        "value": -13.3
+    },
+    {
+        "raw": "$HEROT,-013.3,A*07",
+        "value": -13.3
+    },
+    {
+        "raw": "$HEROT,-001.5,A*02",
+        "value": -1.5
+    },
+    {
+        "raw": "$HEROT,-001.5,A*02",
+        "value": -1.5
+    },
+    {
+        "raw": "$HEROT,-026.7,A*05",
+        "value": -26.7
+    },
+    {
+        "raw": "$HEROT,-026.7,A*05",
+        "value": -26.7
+    },
+    {
+        "raw": "$HEROT,-003.0,A*05",
+        "value": -3.0
+    },
+    {
+        "raw": "$HEROT,-003.0,A*05",
+        "value": -3.0
+    },
+    {
+        "raw": "$HEROT, 026.7,A*08",
+        "value": 26.7
+    },
+    {
+        "raw": "$HEROT, 026.7,A*08",
+        "value": 26.7
+    },
+    {
+        "raw": "$HEROT, 003.0,A*08",
+        "value": 3.0
+    }
+]

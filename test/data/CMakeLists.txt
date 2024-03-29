@@ -11,3 +11,4 @@ configure_file(${CMAKE_CURRENT_LIST_DIR}/hrm_data.json ${WELLNMEA_BIN}/hrm_data.
 configure_file(${CMAKE_CURRENT_LIST_DIR}/hpm_data.json ${WELLNMEA_BIN}/hpm_data.json COPYONLY)
 configure_file(${CMAKE_CURRENT_LIST_DIR}/xdr_data.json ${WELLNMEA_BIN}/xdr_data.json COPYONLY)
 configure_file(${CMAKE_CURRENT_LIST_DIR}/did_data.json ${WELLNMEA_BIN}/did_data.json COPYONLY)
+configure_file(${CMAKE_CURRENT_LIST_DIR}/rot_data.json ${WELLNMEA_BIN}/rot_data.json COPYONLY)

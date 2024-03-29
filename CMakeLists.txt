@@ -79,10 +79,10 @@ include (CMakeHelpers)
 option (WELLNMEA_BUILD_EXAMPLES "Build wellnmea examples." FALSE)
 option (WELLNMEA_BUILD_TESTS "Build wellnmea tests." FALSE)
 
+include(FetchContent)
 if (WELLNMEA_BUILD_TESTS OR WELLNMEA_BUILD_EXAMPLES)
     enable_testing ()
 
-    include(FetchContent)
     FetchContent_Declare(
         googletest
         GIT_REPOSITORY https://github.com/google/googletest.git
@@ -95,7 +95,6 @@ if (WELLNMEA_BUILD_TESTS OR WELLNMEA_BUILD_EXAMPLES)
 endif()
 
 if(WELLNMEA_BUILD_TESTS)
-  include(FetchContent)
   FetchContent_Declare(
     json
     GIT_REPOSITORY https://github.com/nlohmann/json.git
