@@ -1,0 +1,66 @@
+{
+  "version": 3,
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 22,
+    "patch": 0
+  },
+  "configurePresets": [
+    {
+      "name": "generator",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build",
+      "hidden": true
+    },
+    {
+      "name": "dev",
+      "displayName": "Development",
+      "inherits": "generator",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "WELLNMEA_BUILD_TESTS": "ON",
+        "WELLNMEA_BUILD_EXAMPLES": "OFF"
+      }
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "debug",
+      "displayName": "Debug",
+      "description": "Compiles with debug information",
+      "configuration": "Debug",
+      "configurePreset": "dev"
+    },
+    {
+      "name": "release",
+      "displayName": "Release",
+      "description": "Compiles with optimization enabled",
+      "configuration": "Release",
+      "configurePreset": "dev"
+    }
+  ],
+  "testPresets": [
+    {
+      "name": "default-tests",
+      "hidden": true,
+      "output": {
+        "outputOnFailure": true
+      },
+      "execution": {
+        "noTestsAction": "error"
+      }
+    },
+    {
+      "name": "debug",
+      "inherits": "default-tests",
+      "configuration": "Debug",
+      "configurePreset": "dev"
+    },
+    {
+      "name": "release",
+      "inherits": "default-tests",
+      "configuration": "Release",
+      "configurePreset": "dev"
+    }
+  ]
+}
