@@ -1,91 +1,102 @@
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
 
-#include <wellnmea/token.hpp>
-#include <wellnmea/formats/longitude_instruction.hpp>
-#include <wellnmea/nmea0183_lexing.hpp>
-#include <wellnmea/values/longitude.hpp>
+#include "helpers.hpp"
 
-#define Suite LongitudeInstructionTest
+#include <wellnmea/sentence.hpp>
+#include <wellnmea/instructions/longitude_instruction.hpp>
 
-using wellnmea::Token;
-using namespace wellnmea::formats;
-using namespace wellnmea::values;
+#define LongitudeInstructionTests
 
-TEST(Suite, CanBeInstantiatedWithoutExceptions)
+TEST(Suite, can_be_instantiated)
 {
-  LongitudeInstruction instr("name");
+  EXPECT_NO_THROW({
+    wellnmea::instructions::LongitudeInstruction instr("");
+  });
 }
 
-TEST(Suite, CorrectlyStoresName)
+TEST(Suite, can_be_cloned)
 {
-  LongitudeInstruction instr("name");
-  EXPECT_EQ(instr.name(), "name");
+  test_clonable<wellnmea::instructions::LongitudeInstruction>();
 }
 
-TEST(Suite, CanBeCorrecylyCloned)
+TEST(Suite, which_expected_to_be_correct)
 {
-  LongitudeInstruction *instr = new LongitudeInstruction("name");
+  wellnmea::instructions::LongitudeInstruction instr("");
 
-  auto n_instr = instr->clone("other");
-
-  EXPECT_EQ(n_instr->name(), "other");
-  EXPECT_NE(n_instr, instr) << "Clone method should return new allocated object";
-
-  delete instr;
+  EXPECT_EQ(instr.which(), "longitude");
 }
 
-TEST(Suite, MovesIteratorForwardWhenExtractCalled)
+TEST(Suite, moves_iterator_two_positions_forward)
 {
-  const std::string source = "$TERMB,4917.24,W";
-  wellnmea::Nmea0183Lexing lex;
+  wellnmea::instructions::LongitudeInstruction instr("");
 
-  std::list<Token> tokens = lex.splitTokens(source);
-  auto pos = tokens.begin();
-auto end = tokens.end();
-  pos++;
+  wellnmea::Sentence sentence;
 
-  LongitudeInstruction instr("name");
-  instr.extract(pos,end);
-  EXPECT_EQ(pos, tokens.end());
+  sentence.fields.push_back("");
+  sentence.fields.push_back("");
+
+  auto it = sentence.fields.begin();
+  auto end = sentence.fields.end();
+
+  instr.extract(it, end);
+  EXPECT_EQ(it, end);
 }
 
-TEST(Suite, ReturnsLongitudeParamWhenExtracted)
+TEST(Suite, returns_non_null_value)
 {
-  const std::string source = "$TERMB,12309.57,W";
-  wellnmea::Nmea0183Lexing lex;
+  wellnmea::instructions::LongitudeInstruction instr("");
 
-  std::list<Token> tokens = lex.splitTokens(source);
-  auto pos = tokens.begin();
-auto end = tokens.end();
-  pos++;
+  wellnmea::Sentence sentence;
 
-  LongitudeInstruction instr("name");
-  auto value = instr.extract(pos,end)->as<_LongitudeValue>();
+  sentence.fields.push_back("");
+  sentence.fields.push_back("");
 
-  EXPECT_EQ(value->name(), "name");
-  EXPECT_THAT(value->as<LongitudeValue>(), ::testing::NotNull());
+  auto it = sentence.fields.begin();
+  auto end = sentence.fields.end();
 
-  EXPECT_EQ(value->position(), 12309.57);
-  EXPECT_EQ(value->direction(), LongitudeValue::West);
+  auto value = instr.extract(it, end);
+
+  EXPECT_NE(value, nullptr);
 }
 
-TEST(Suite, DoReturnsNullValueOnEmptyField)
+TEST(Suite, returns_correct_value)
 {
-  const std::string source = "$TERMB,,W";
-  wellnmea::Nmea0183Lexing lex;
+  wellnmea::instructions::LongitudeInstruction instr("");
 
-  std::list<Token> tokens = lex.splitTokens(source);
-  auto pos = tokens.begin();
-auto end = tokens.end();
-  pos++;
+  wellnmea::Sentence sentence;
 
-  LongitudeInstruction instr("name");
-  auto value = instr.extract(pos,end)->as<_LongitudeValue>();
+  sentence.fields.push_back("4807.038");
+  sentence.fields.push_back("E");
 
-  EXPECT_EQ(value->name(), "name");
-  EXPECT_THAT(value->as<NullLongitudeValue>(), ::testing::NotNull());
+  auto it = sentence.fields.begin();
+  auto end = sentence.fields.end();
 
-  EXPECT_EQ(value->direction(), std::nullopt);
-  EXPECT_EQ(value->position(), std::nullopt);
+  auto value = instr.extract(it, end)->as<wellnmea::instructions::LongitudeValue>();
+
+  EXPECT_EQ(value->direction(), 'E');
+  EXPECT_EQ(value->degrees(), 48.0);
+  EXPECT_THAT(value->minutes().value(), ::testing::DoubleNear(7.038, 0.001));
+}
+
+TEST(Suite, latitude_value_correctly_accepts_south_direction)
+{
+
+  wellnmea::instructions::LongitudeValue value("");
+
+  value.setDirection('W');
+  value.setBase(4807.035);
+
+  EXPECT_EQ(value.direction(), 'W');
+  EXPECT_THAT(value.degrees(), ::testing::Lt(0));
+  EXPECT_THAT(value.minutes(), ::testing::Lt(0));
+
+  value.reset();
+
+  value.setBase(4807.035);
+  value.setDirection('W');
+
+  EXPECT_EQ(value.direction(), 'W');
+  EXPECT_THAT(value.degrees(), ::testing::Lt(0));
+  EXPECT_THAT(value.minutes(), ::testing::Lt(0));
 }

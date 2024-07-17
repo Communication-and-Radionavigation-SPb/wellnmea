@@ -1,99 +1,150 @@
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
 
-#include <wellnmea/token.hpp>
-#include <wellnmea/formats/utc_instruction.hpp>
-#include <wellnmea/nmea0183_lexing.hpp>
-#include <wellnmea/values/utc.hpp>
+#include <wellnmea/parser.hpp>
+#include <wellnmea/sentence.hpp>
+#include <wellnmea/instructions/utc_instruction.hpp>
+
+#include "helpers.hpp"
 
 #define Suite UtcInstructionTest
 
-using wellnmea::Token;
-using namespace wellnmea::formats;
-using namespace wellnmea::values;
-
-TEST(Suite, CanBeInstantiatedWithoutExceptions)
+TEST(Suite, can_be_instantiated)
 {
-  UTCInstruction utc("name");
+  EXPECT_NO_THROW({
+    wellnmea::instructions::UtcInstruction instr("");
+  });
 }
 
-TEST(Suite, CorrectlyStoresName)
+TEST(Suite, can_be_cloned)
 {
-  UTCInstruction instr("name");
-  EXPECT_EQ(instr.name(), "name");
+  test_clonable<wellnmea::instructions::UtcInstruction>();
 }
 
-TEST(Suite, CanBeCorrecylyCloned)
+TEST(Suite, which_expects_to_be_correct)
 {
-  UTCInstruction *instr = new UTCInstruction("name");
-
-  auto n_instr = instr->clone("other");
-
-  EXPECT_EQ(n_instr->name(), "other");
-  EXPECT_NE(n_instr, instr) << "Clone method should return new allocated object";
-
-  delete instr;
+  wellnmea::instructions::UtcInstruction instr("");
+  EXPECT_EQ(instr.which(), "utc");
 }
 
-TEST(Suite, MovesIteratorForwardWhenExtractCalled)
+TEST(Suite, moves_iterator_forward)
 {
-  const std::string source = "$TERMC,240000";
-  wellnmea::Nmea0183Lexing lex;
+  wellnmea::instructions::UtcInstruction instr("");
 
-  std::list<Token> tokens = lex.splitTokens(source);
-  auto pos = tokens.begin();
-  auto end = tokens.end();
-  pos++;
+  wellnmea::Sentence sentence;
+  sentence.fields.push_back("123200.00");
 
-  UTCInstruction instr("name");
-  instr.extract(pos, end);
-  EXPECT_EQ(pos, tokens.end());
+  auto it = sentence.fields.begin();
+  auto end = sentence.fields.end();
+
+  instr.extract(it, end);
+
+  EXPECT_EQ(it, end);
 }
 
-TEST(Suite, ReturnsUtcParamWhenExtracted)
+TEST(Suite, extract_returns_non_nullable_address)
 {
-  const std::string source = "$TERMC,010203";
-  wellnmea::Nmea0183Lexing lex;
+  wellnmea::instructions::UtcInstruction instr("");
 
-  std::list<Token> tokens = lex.splitTokens(source);
-  auto pos = tokens.begin();
-  auto end = tokens.end();
-  pos++;
+  wellnmea::Sentence sentence;
+  sentence.fields.push_back("123200.00");
 
-  UTCInstruction instr("name");
-  auto value = instr.extract(pos, end)->as<_UTCValue>();
+  auto it = sentence.fields.begin();
+  auto end = sentence.fields.end();
 
-  EXPECT_EQ(value->name(), "name");
-
-  EXPECT_THAT(value->hours(), ::testing::Eq(1));
-  EXPECT_THAT(value->minutes(), ::testing::Eq(2));
-  EXPECT_THAT(value->seconds(), ::testing::Eq(3));
-  EXPECT_THAT(value->milliseconds(), ::testing::Eq(0));
+  auto value = instr.extract(it, end);
+  EXPECT_NE(value, nullptr);
+  delete value;
 }
 
-TEST(Suite, TestOtherUTCTimestampExtracted)
+TEST(Suite, extracted_value_has_correct_name)
 {
-  const std::string source = "$TERMC,123456.999,113000.26";
-  wellnmea::Nmea0183Lexing lex;
+  wellnmea::instructions::UtcInstruction instr("time");
 
-  std::list<Token> tokens = lex.splitTokens(source);
-  auto pos = tokens.begin();
-  auto end = tokens.end();
-  pos++;
+  wellnmea::Sentence sentence;
+  sentence.fields.push_back("123200.00");
 
-  UTCInstruction instr("name");
-  auto value = instr.extract(pos, end)->as<_UTCValue>();
-  auto nextvalue = instr.extract(pos, end)->as<_UTCValue>();
+  auto it = sentence.fields.begin();
+  auto end = sentence.fields.end();
 
-  EXPECT_EQ(value->name(), "name");
-  EXPECT_THAT(value->as<UTCValue>(), ::testing::NotNull());
-  EXPECT_THAT(value->hours(), ::testing::Eq(12));
-  EXPECT_THAT(value->minutes(), ::testing::Eq(34));
-  EXPECT_THAT(value->seconds(), ::testing::Eq(56));
-  EXPECT_THAT(value->milliseconds(), ::testing::Eq(999));
+  auto value = instr.extract(it, end);
 
-  EXPECT_EQ(nextvalue->hours(), 11);
-  EXPECT_EQ(nextvalue->minutes(), 30);
-  EXPECT_EQ(nextvalue->seconds(), 0);
-  EXPECT_EQ(nextvalue->milliseconds(), 260);
+  EXPECT_EQ(value->name(), "time");
+}
+
+TEST(Suite, extracts_correct_value_from_sentence)
+{
+  wellnmea::instructions::UtcInstruction instr("name");
+
+  wellnmea::Sentence sentence;
+
+  sentence.fields.push_back("132311.623");
+
+  auto it = sentence.fields.begin();
+  auto end = sentence.fields.end();
+
+  auto value = instr.extract(it, end);
+
+  EXPECT_EQ(value->as<wellnmea::instructions::UtcValue>()->getTimestamp().value(), 132311.623);
+}
+
+TEST(Suite, utc_value_returns_nullopt_when_do_not_have_timestamp)
+{
+  wellnmea::instructions::UtcValue value("");
+
+  EXPECT_EQ(value.getHours(), std::nullopt);
+  EXPECT_EQ(value.getSeconds(), std::nullopt);
+  EXPECT_EQ(value.getMinutes(), std::nullopt);
+  EXPECT_EQ(value.getMilliseconds(), std::nullopt);
+}
+
+TEST(Suite, utc_value_returns_hours)
+{
+  wellnmea::instructions::UtcValue value("");
+
+  value.setTimestamp(123211.623);
+  EXPECT_EQ(value.getHours(), 12);
+
+
+  value.setTimestamp(3020.623);
+  EXPECT_EQ(value.getHours(), 0);
+}
+
+TEST(Suite, utc_value_returns_minutes)
+{
+  wellnmea::instructions::UtcValue value("");
+
+  value.setTimestamp(3211.623);
+  EXPECT_EQ(value.getMinutes(), 32);
+
+  value.setTimestamp(2000.0);
+  EXPECT_EQ(value.getMinutes(), 20);
+
+  value.setTimestamp(10.0);
+  EXPECT_EQ(value.getMinutes(), 0);
+
+  value.setTimestamp(120010.0);
+  EXPECT_EQ(value.getMinutes(), 0);
+}
+
+TEST(Suite, utc_value_returns_seconds) {
+  wellnmea::instructions::UtcValue value("");
+
+  value.setTimestamp(11.623);
+  EXPECT_EQ(value.getSeconds(), 11);
+
+  value.setTimestamp(30.623);
+  EXPECT_EQ(value.getSeconds(), 30);
+
+  value.setTimestamp(0.625);
+  EXPECT_EQ(value.getSeconds(), 0);
+}
+
+TEST(Suite, utc_value_returns_milliseconds) {
+  wellnmea::instructions::UtcValue value("");
+
+  value.setTimestamp(0.625);
+
+  EXPECT_EQ(value.getMilliseconds(), 625);
+
 }

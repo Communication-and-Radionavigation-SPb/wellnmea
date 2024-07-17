@@ -1,44 +1,56 @@
 #pragma once
 
-#include <memory>
 #include <list>
+#include <cassert>
 #include <map>
-#include <wellnmea/formats/instruction.hpp>
+#include <memory>
+#include <wellnmea/instructions/instruction.hpp>
+#include <wellnmea/sentence.hpp>
 
-namespace wellnmea
-{
-  namespace formats
-  {
-    class Format
-    {
-    public:
-      using ItemPtr = std::shared_ptr<Instruction>;
-      using Items = std::list<ItemPtr>;
-      using ValuePtr = std::shared_ptr<values::NullValue>;
+namespace wellnmea {
+namespace formats {
+using namespace wellnmea::instructions;
+class Format {
+ public:
+  using ItemPtr = Instruction*;
+  using Items = std::list<ItemPtr>;
+  using ValuePtr = std::shared_ptr<NullValue>;
 
-    private:
-      Items m_items;
+ private:
+  Items m_items;
 
-    public:
-      Format(const Items &items) : m_items(items) {}
+ public:
+  Format(const Items& items) : m_items(items) { assert(!m_items.empty()); }
 
-    public:
-      std::list<ValuePtr>
-      parse(std::list<Token>::iterator it, std::list<Token>::iterator end) const
-      {
-        std::list<ValuePtr> result;
-        for (auto &&instr : m_items)
-        {
-          auto value = instr->extract(it, end);
-          result.emplace_back(value);
-        }
-        return result;
-      }
+  ~Format() {
+    if (m_items.size() == 0)
+      return;
 
-      size_t count() const
-      {
-        return m_items.size();
-      }
-    };
+    for (ItemPtr item : m_items) {
+      delete item;
+    }
   }
-} // namespace wellnmea
+
+ public:
+  virtual std::list<ValuePtr> parse(Sentence& s) const {
+    std::list<ValuePtr> result;
+
+    auto it = s.fields.begin();
+    auto end = s.fields.end();
+
+    for (auto&& instr : m_items) {
+      auto value = instr->extract(it, end);
+      if (value == nullptr)
+        continue;
+      result.emplace_back(value);
+    }
+    return result;
+  }
+
+  size_t count() const { return m_items.size(); }
+};
+}  // namespace formats
+
+using FmtValue = formats::Format::ValuePtr;
+using FmtValues = std::list<formats::Format::ValuePtr>;
+}  // namespace wellnmea

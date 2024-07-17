@@ -1,0 +1,16 @@
+[
+  {
+    "raw": "$SDDBS,3.9,f,6.8,M,9.8,F*04",
+    "meters": 6.8,
+    "feets": 3.9,
+    "fathoms": 9.8,
+    "checksum": "04"
+  },
+  {
+    "raw": "$SDDBS,4.9,f,0005.8,M,10.8,F*04",
+    "meters": 5.8,
+    "feets": 4.9,
+    "fathoms": 10.8,
+    "checksum": "04"
+  }
+]

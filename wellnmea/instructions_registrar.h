@@ -3,14 +3,14 @@
 #include <memory>
 #include <type_traits>
 
-#include <wellnmea/formats/instruction.hpp>
+#include <wellnmea/instructions/instruction.hpp>
 #include <wellnmea/formats/instructions_registry.hpp>
 
 
 namespace wellnmea
 {
   using namespace std;
-  using namespace wellnmea::formats;
+  using namespace wellnmea::instructions;
 
   template<class... IList>
   struct InstructionsRegistrar;

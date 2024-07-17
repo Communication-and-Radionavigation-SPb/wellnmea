@@ -1,129 +1,123 @@
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
 
-#include <wellnmea/token.hpp>
-#include <wellnmea/formats/latitude_instruction.hpp>
-#include <wellnmea/values/latitude.hpp>
-#include <wellnmea/nmea0183_lexing.hpp>
+#include "helpers.hpp"
 
-#define Suite LatitudeInstructionTest
+#include <wellnmea/sentence.hpp>
+#include <wellnmea/instructions/latitude_instruction.hpp>
 
-using wellnmea::Token;
-using namespace wellnmea::formats;
-using namespace wellnmea::values;
+#define Suite LatitudeInstructionTests
 
-TEST(Suite, CanBeInstantiatedWithoutExceptions)
+TEST(Suite, can_be_instantiated)
 {
-  LatitudeInstruction instr("name");
+  EXPECT_NO_THROW({
+    wellnmea::instructions::LatitudeInstruction instr("");
+  });
 }
 
-TEST(Suite, CorrectlyStoresName)
+TEST(Suite, can_be_cloned)
 {
-  LatitudeInstruction instr("name");
-  EXPECT_EQ(instr.name(), "name");
+  test_clonable<wellnmea::instructions::LatitudeInstruction>();
 }
 
-TEST(Suite, CanBeCorrecylyCloned)
+TEST(Suite, which_expected_to_be_correct)
 {
-  LatitudeInstruction *instr = new LatitudeInstruction("name");
+  wellnmea::instructions::LatitudeInstruction instr("");
 
-  auto n_instr = instr->clone("other");
-
-  EXPECT_EQ(n_instr->name(), "other");
-  EXPECT_NE(n_instr, instr) << "Clone method should return new allocated object";
-
-  delete instr;
+  EXPECT_EQ(instr.which(), "latitude");
 }
 
-TEST(Suite, MovesIteratorForwardWhenExtractCalled)
+TEST(Suite, moves_iterator_two_positions_forward)
 {
-  const std::string source = "$TERMB,4917.24,N";
-  wellnmea::Nmea0183Lexing lex;
+  wellnmea::instructions::LatitudeInstruction instr("");
 
-  std::list<Token> tokens = lex.splitTokens(source);
-  auto pos = tokens.begin();
-  auto end = tokens.end();
-  pos++;
+  wellnmea::Sentence sentence;
 
-  LatitudeInstruction instr("name");
-  instr.extract(pos, end);
-  EXPECT_EQ(pos, tokens.end());
-}
-TEST(Suite, ReturnsLongitudeParamWhenExtracted)
-{
-  const std::string source = "$TERMB,4917.24,N";
-  wellnmea::Nmea0183Lexing lex;
+  sentence.fields.push_back("");
+  sentence.fields.push_back("");
 
-  std::list<Token> tokens = lex.splitTokens(source);
-  auto pos = tokens.begin();
-  auto end = tokens.end();
-  pos++;
+  auto it = sentence.fields.begin();
+  auto end = sentence.fields.end();
 
-  LatitudeInstruction instr("name");
-  auto value = instr.extract(pos, end)->as<LatitudeValue>();
-
-  EXPECT_EQ(value->name(), "name");
-  EXPECT_THAT(value, ::testing::A<LatitudeValue *>());
-
-  EXPECT_EQ(value->position(), 4917.24);
-  EXPECT_EQ(value->direction(), LatitudeValue::North);
+  instr.extract(it, end);
+  EXPECT_EQ(it, end);
 }
 
-TEST(Suite, CanRecognizeSouthDirection)
+TEST(Suite, returns_non_null_value)
 {
-  const std::string source = "$TERMB,4917.24,S";
-  wellnmea::Nmea0183Lexing lex;
+  wellnmea::instructions::LatitudeInstruction instr("");
 
-  std::list<Token> tokens = lex.splitTokens(source);
-  auto pos = tokens.begin();
-  auto end = tokens.end();
-  pos++;
+  wellnmea::Sentence sentence;
 
-  LatitudeInstruction instr("name");
-  auto value = instr.extract(pos, end)->as<LatitudeValue>();
+  sentence.fields.push_back("");
+  sentence.fields.push_back("");
 
-  EXPECT_EQ(value->name(), "name");
-  EXPECT_THAT(value, ::testing::A<LatitudeValue *>());
+  auto it = sentence.fields.begin();
+  auto end = sentence.fields.end();
 
-  EXPECT_EQ(value->position(), 4917.24);
-  EXPECT_EQ(value->direction(), LatitudeValue::South);
+  auto value = instr.extract(it, end);
+
+  EXPECT_NE(value, nullptr);
 }
 
-TEST(Suite, DoNotFailsOnInvalidDirectionSymbol)
+TEST(Suite, returns_correct_value)
 {
-  const std::string source = "$TERMB,4917.24,u";
-  //                              invalid <-|
-  wellnmea::Nmea0183Lexing lex;
+  wellnmea::instructions::LatitudeInstruction instr("");
 
-  std::list<Token> tokens = lex.splitTokens(source);
-  auto pos = tokens.begin();
-  auto end = tokens.end();
-  pos++;
+  wellnmea::Sentence sentence;
 
-  LatitudeInstruction instr("name");
-  auto value = instr.extract(pos, end)->as<LatitudeValue>();
+  sentence.fields.push_back("4807.038");
+  sentence.fields.push_back("N");
 
-  EXPECT_EQ(value->name(), "name");
-  EXPECT_THAT(value, ::testing::A<LatitudeValue *>());
+  auto it = sentence.fields.begin();
+  auto end = sentence.fields.end();
 
-  EXPECT_EQ(value->position(), 4917.24);
-  EXPECT_EQ(value->direction(), LatitudeValue::Unknown);
+  auto value = instr.extract(it, end)->as<wellnmea::instructions::LatitudeValue>();
+
+  EXPECT_EQ(value->degrees(), 48.0);
+  EXPECT_THAT(value->minutes().value(), ::testing::DoubleNear(7.038, 0.001));
+  EXPECT_EQ(value->direction(), 'N');
 }
 
-TEST(Suite, DoReturnsNullValueWhenTokenIsEmpty)
+TEST(Suite, latitude_value_correctly_accepts_noth_direction)
 {
-  const std::string source = "$TERMB,,S";
-  wellnmea::Nmea0183Lexing lex;
+  wellnmea::instructions::LatitudeValue value("");
 
-  std::list<Token> tokens = lex.splitTokens(source);
-  auto pos = tokens.begin();
-  auto end = tokens.end();
-  pos++;
+  value.setDirection('N');
+  value.setBase(4807.035);
 
-  LatitudeInstruction instr("name");
-  auto value = instr.extract(pos, end)->as<_LatitudeValue>();
+  EXPECT_EQ(value.direction(), 'N');
+  EXPECT_THAT(value.degrees(), ::testing::Gt(0));
+  EXPECT_THAT(value.minutes(), ::testing::Gt(0));
 
-  EXPECT_THAT(value->as<NullLatitudeValue>(), ::testing::NotNull());
-  EXPECT_EQ(value->as<NullLatitudeValue>()->direction(), std::nullopt);
-  EXPECT_EQ(value->as<NullLatitudeValue>()->position(), std::nullopt);
+  value.reset();
+
+  value.setBase(4807.035);
+  value.setDirection('N');
+
+  EXPECT_EQ(value.direction(), 'N');
+  EXPECT_THAT(value.degrees(), ::testing::Gt(0));
+  EXPECT_THAT(value.minutes(), ::testing::Gt(0));
+}
+
+TEST(Suite, latitude_value_correctly_accepts_south_direction)
+{
+
+  wellnmea::instructions::LatitudeValue value("");
+
+  value.setDirection('S');
+  value.setBase(4807.035);
+
+  EXPECT_EQ(value.direction(), 'S');
+  EXPECT_THAT(value.degrees(), ::testing::Lt(0));
+  EXPECT_THAT(value.minutes(), ::testing::Lt(0));
+
+  value.reset();
+
+  value.setBase(4807.035);
+  value.setDirection('S');
+
+  EXPECT_EQ(value.direction(), 'S');
+  EXPECT_THAT(value.degrees(), ::testing::Lt(0));
+  EXPECT_THAT(value.minutes(), ::testing::Lt(0));
 }

@@ -1,0 +1,72 @@
+[
+  { "raw": "$SDDPT,6.9,0.3*5B", "depth": 6.9, "offset": 0.3, "checksum": "5B" },
+  { "raw": "$SDDPT,7.3,0.3*50", "depth": 7.3, "offset": 0.3, "checksum": "50" },
+  { "raw": "$SDDPT,6.9,0.3*5B", "depth": 6.9, "offset": 0.3, "checksum": "5B" },
+  { "raw": "$SDDPT,7.3,0.3*50", "depth": 7.3, "offset": 0.3, "checksum": "50" },
+  { "raw": "$SDDPT,7.6,0.3*55", "depth": 7.6, "offset": 0.3, "checksum": "55" },
+  { "raw": "$SDDPT,8.0,0.3*5C", "depth": 8.0, "offset": 0.3, "checksum": "5C" },
+  { "raw": "$SDDPT,7.6,0.3*55", "depth": 7.6, "offset": 0.3, "checksum": "55" },
+  { "raw": "$SDDPT,7.3,0.3*50", "depth": 7.3, "offset": 0.3, "checksum": "50" },
+  { "raw": "$SDDPT,6.9,0.3*5B", "depth": 6.9, "offset": 0.3, "checksum": "5B" },
+  { "raw": "$SDDPT,6.6,0.3*54", "depth": 6.6, "offset": 0.3, "checksum": "54" },
+  { "raw": "$SDDPT,6.9,0.3*5B", "depth": 6.9, "offset": 0.3, "checksum": "5B" },
+  { "raw": "$SDDPT,8.3,0.3*51", "depth": 8.3, "offset": 0.3, "checksum": "51" },
+  { "raw": "$SDDPT,7.6,0.3*55", "depth": 7.6, "offset": 0.3, "checksum": "55" },
+  { "raw": "$SDDPT,8.0,0.3*5C", "depth": 8.0, "offset": 0.3, "checksum": "5C" },
+  { "raw": "$SDDPT,8.4,0.3*58", "depth": 8.4, "offset": 0.3, "checksum": "58" },
+  { "raw": "$SDDPT,8.8,0.3*54", "depth": 8.8, "offset": 0.3, "checksum": "54" },
+  { "raw": "$SDDPT,8.4,0.3*58", "depth": 8.4, "offset": 0.3, "checksum": "58" },
+  { "raw": "$SDDPT,8.8,0.3*54", "depth": 8.8, "offset": 0.3, "checksum": "54" },
+  { "raw": "$SDDPT,9.3,0.3*5E", "depth": 9.3, "offset": 0.3, "checksum": "5E" },
+  { "raw": "$SDDPT,9.7,0.3*5A", "depth": 9.7, "offset": 0.3, "checksum": "5A" },
+  { "raw": "$SDDPT,9.3,0.3*5E", "depth": 9.3, "offset": 0.3, "checksum": "5E" },
+  { "raw": "$SDDPT,8.8,0.3*54", "depth": 8.8, "offset": 0.3, "checksum": "54" },
+  { "raw": "$SDDPT,8.4,0.3*58", "depth": 8.4, "offset": 0.3, "checksum": "58" },
+  { "raw": "$SDDPT,8.0,0.3*5C", "depth": 8.0, "offset": 0.3, "checksum": "5C" },
+  { "raw": "$SDDPT,8.4,0.3*58", "depth": 8.4, "offset": 0.3, "checksum": "58" },
+  { "raw": "$SDDPT,8.8,0.3*54", "depth": 8.8, "offset": 0.3, "checksum": "54" },
+  { "raw": "$SDDPT,9.3,0.3*5E", "depth": 9.3, "offset": 0.3, "checksum": "5E" },
+  { "raw": "$SDDPT,9.7,0.3*5A", "depth": 9.7, "offset": 0.3, "checksum": "5A" },
+  {
+    "raw": "$SDDPT,10.2,0.3*67",
+    "depth": 10.2,
+    "offset": 0.3,
+    "checksum": "67"
+  },
+  {
+    "raw": "$SDDPT,10.7,0.3*62",
+    "depth": 10.7,
+    "offset": 0.3,
+    "checksum": "62"
+  },
+  {
+    "raw": "$SDDPT,10.2,0.3*67",
+    "depth": 10.2,
+    "offset": 0.3,
+    "checksum": "67"
+  },
+  {
+    "raw": "$SDDPT,10.7,0.3*62",
+    "depth": 10.7,
+    "offset": 0.3,
+    "checksum": "62"
+  },
+  {
+    "raw": "$SDDPT,11.3,0.3*67",
+    "depth": 11.3,
+    "offset": 0.3,
+    "checksum": "67"
+  },
+  {
+    "raw": "$SDDPT,10.7,0.3*62",
+    "depth": 10.7,
+    "offset": 0.3,
+    "checksum": "62"
+  },
+  {
+    "raw": "$SDDPT,11.3,0.3*67",
+    "depth": 11.3,
+    "offset": 0.3,
+    "checksum": "67"
+  }
+]

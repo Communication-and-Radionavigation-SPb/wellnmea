@@ -1,0 +1,50 @@
+[
+  {
+    "name": "one_measurement",
+    "raw": "$INXDR,C,23.15,C,WTHI*70",
+    "fields": [
+      {
+        "value": 23.15,
+        "type": "C",
+        "units": "C",
+        "name": "WTHI"
+      }
+    ]
+  },
+  {
+    "name": "5_measurements",
+    "raw": "$INXDR,A,171,D,PITCH,A,-37,D,ROLL,G,367,,MAGX,G,2420,,MAGY,G,-8984,,MAGZ*41",
+    "fields": [
+      {
+        "type": "A",
+        "value": 171,
+        "units": "D",
+        "name": "PITCH"
+      },
+      {
+        "type": "A",
+        "value": -37,
+        "units": "D",
+        "name": "ROLL"
+      },
+      {
+        "type": "G",
+        "value": 367,
+        "units": "",
+        "name": "MAGX"
+      },
+      {
+        "type": "G",
+        "value": 2420,
+        "units": "",
+        "name": "MAGY"
+      },
+      {
+        "type": "G",
+        "value": -8984,
+        "units": "",
+        "name": "MAGZ"
+      }
+    ]
+  }
+]

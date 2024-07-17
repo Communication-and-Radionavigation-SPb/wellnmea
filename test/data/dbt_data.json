@@ -1,0 +1,212 @@
+[
+  {
+    "raw": "$SDDBT,22.7,f,6.9,M,3.8,F*35",
+    "feet": 22.7,
+    "meters": 6.9,
+    "fathoms": 3.8
+  },
+  {
+    "raw": "$SDDBT,23.8,f,7.3,M,4.0,F*3F",
+    "feet": 23.8,
+    "meters": 7.3,
+    "fathoms": 4.0
+  },
+  {
+    "raw": "$SDDBT,22.7,f,6.9,M,3.8,F*35",
+    "feet": 22.7,
+    "meters": 6.9,
+    "fathoms": 3.8
+  },
+  {
+    "raw": "$SDDBT,23.8,f,7.3,M,4.0,F*3F",
+    "feet": 23.8,
+    "meters": 7.3,
+    "fathoms": 4.0
+  },
+  {
+    "raw": "$SDDBT,25.0,f,7.6,M,4.2,F*36",
+    "feet": 25.0,
+    "meters": 7.6,
+    "fathoms": 4.2
+  },
+  {
+    "raw": "$SDDBT,26.2,f,8.0,M,4.4,F*38",
+    "feet": 26.2,
+    "meters": 8.0,
+    "fathoms": 4.4
+  },
+  {
+    "raw": "$SDDBT,25.0,f,7.6,M,4.2,F*36",
+    "feet": 25.0,
+    "meters": 7.6,
+    "fathoms": 4.2
+  },
+  {
+    "raw": "$SDDBT,23.8,f,7.3,M,4.0,F*3F",
+    "feet": 23.8,
+    "meters": 7.3,
+    "fathoms": 4.0
+  },
+  {
+    "raw": "$SDDBT,22.7,f,6.9,M,3.8,F*35",
+    "feet": 22.7,
+    "meters": 6.9,
+    "fathoms": 3.8
+  },
+  {
+    "raw": "$SDDBT,21.6,f,6.6,M,3.6,F*36",
+    "feet": 21.6,
+    "meters": 6.6,
+    "fathoms": 3.6
+  },
+  {
+    "raw": "$SDDBT,22.7,f,6.9,M,3.8,F*35",
+    "feet": 22.7,
+    "meters": 6.9,
+    "fathoms": 3.8
+  },
+  {
+    "raw": "$SDDBT,23.8,f,7.3,M,4.0,F*3F",
+    "feet": 23.8,
+    "meters": 7.3,
+    "fathoms": 4.0
+  },
+  {
+    "raw": "$SDDBT,25.0,f,7.6,M,4.2,F*36",
+    "feet": 25.0,
+    "meters": 7.6,
+    "fathoms": 4.2
+  },
+  {
+    "raw": "$SDDBT,26.2,f,8.0,M,4.4,F*38",
+    "feet": 26.2,
+    "meters": 8.0,
+    "fathoms": 4.4
+  },
+  {
+    "raw": "$SDDBT,27.6,f,8.4,M,4.6,F*3B",
+    "feet": 27.6,
+    "meters": 8.4,
+    "fathoms": 4.6
+  },
+  {
+    "raw": "$SDDBT,28.9,f,8.8,M,4.8,F*39",
+    "feet": 28.9,
+    "meters": 8.8,
+    "fathoms": 4.8
+  },
+  {
+    "raw": "$SDDBT,27.6,f,8.4,M,4.6,F*3B",
+    "feet": 27.6,
+    "meters": 8.4,
+    "fathoms": 4.6
+  },
+  {
+    "raw": "$SDDBT,28.9,f,8.8,M,4.8,F*39",
+    "feet": 28.9,
+    "meters": 8.8,
+    "fathoms": 4.8
+  },
+  {
+    "raw": "$SDDBT,30.4,f,9.3,M,5.1,F*3F",
+    "feet": 30.4,
+    "meters": 9.3,
+    "fathoms": 5.1
+  },
+  {
+    "raw": "$SDDBT,31.9,f,9.7,M,5.3,F*35",
+    "feet": 31.9,
+    "meters": 9.7,
+    "fathoms": 5.3
+  },
+  {
+    "raw": "$SDDBT,30.4,f,9.3,M,5.1,F*3F",
+    "feet": 30.4,
+    "meters": 9.3,
+    "fathoms": 5.1
+  },
+  {
+    "raw": "$SDDBT,28.9,f,8.8,M,4.8,F*39",
+    "feet": 28.9,
+    "meters": 8.8,
+    "fathoms": 4.8
+  },
+  {
+    "raw": "$SDDBT,27.6,f,8.4,M,4.6,F*3B",
+    "feet": 27.6,
+    "meters": 8.4,
+    "fathoms": 4.6
+  },
+  {
+    "raw": "$SDDBT,26.2,f,8.0,M,4.4,F*38",
+    "feet": 26.2,
+    "meters": 8.0,
+    "fathoms": 4.4
+  },
+  {
+    "raw": "$SDDBT,27.6,f,8.4,M,4.6,F*3B",
+    "feet": 27.6,
+    "meters": 8.4,
+    "fathoms": 4.6
+  },
+  {
+    "raw": "$SDDBT,28.9,f,8.8,M,4.8,F*39",
+    "feet": 28.9,
+    "meters": 8.8,
+    "fathoms": 4.8
+  },
+  {
+    "raw": "$SDDBT,30.4,f,9.3,M,5.1,F*3F",
+    "feet": 30.4,
+    "meters": 9.3,
+    "fathoms": 5.1
+  },
+  {
+    "raw": "$SDDBT,31.9,f,9.7,M,5.3,F*35",
+    "feet": 31.9,
+    "meters": 9.7,
+    "fathoms": 5.3
+  },
+  {
+    "raw": "$SDDBT,33.5,f,10.2,M,5.6,F*03",
+    "feet": 33.5,
+    "meters": 10.2,
+    "fathoms": 5.6
+  },
+  {
+    "raw": "$SDDBT,35.2,f,10.7,M,5.9,F*08",
+    "feet": 35.2,
+    "meters": 10.7,
+    "fathoms": 5.9
+  },
+  {
+    "raw": "$SDDBT,33.5,f,10.2,M,5.6,F*03",
+    "feet": 33.5,
+    "meters": 10.2,
+    "fathoms": 5.6
+  },
+  {
+    "raw": "$SDDBT,35.2,f,10.7,M,5.9,F*08",
+    "feet": 35.2,
+    "meters": 10.7,
+    "fathoms": 5.9
+  },
+  {
+    "raw": "$SDDBT,36.9,f,11.3,M,6.2,F*0D",
+    "feet": 36.9,
+    "meters": 11.3,
+    "fathoms": 6.2
+  },
+  {
+    "raw": "$SDDBT,35.2,f,10.7,M,5.9,F*08",
+    "feet": 35.2,
+    "meters": 10.7,
+    "fathoms": 5.9
+  },
+  {
+    "raw": "$SDDBT,36.9,f,11.3,M,6.2,F*0D",
+    "feet": 36.9,
+    "meters": 11.3,
+    "fathoms": 6.2
+  }
+]

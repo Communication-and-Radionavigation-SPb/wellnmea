@@ -2,12 +2,12 @@
 # Print build configuration
 macro (print_used_build_config)
     message (STATUS "\n=========== Used Build Configuration =============\n")
-    message (STATUS "BUILD_EXAMPLES      = " ${BUILD_EXAMPLES})
-    message (STATUS "BUILD_TESTS         = " ${BUILD_TESTS})
-    message (STATUS "WELLNMEA_ROOT    = " ${WELLNMEA_ROOT})
-    message (STATUS "WELLNMEA_BIN     = " ${WELLNMEA_BIN})
-    message (STATUS "WELLNMEA_LIB     = " ${WELLNMEA_LIB})
-    message (STATUS "Install prefix      = " ${CMAKE_INSTALL_PREFIX})
+    message (STATUS "WELLNMEA_BUILD_EXAMPLES      = " ${WELLNMEA_BUILD_EXAMPLES})
+    message (STATUS "WELLNMEA_BUILD_TESTS         = " ${WELLNMEA_BUILD_TESTS})
+    message (STATUS "WELLNMEA_ROOT                = " ${WELLNMEA_ROOT})
+    message (STATUS "WELLNMEA_BIN                 = " ${WELLNMEA_BIN})
+    message (STATUS "WELLNMEA_LIB                 = " ${WELLNMEA_LIB})
+    message (STATUS "Install prefix               = " ${CMAKE_INSTALL_PREFIX})
 endmacro ()
 
 # Adds the given folder_name into the source files of the current project.
@@ -57,7 +57,6 @@ macro (build_test TARGET_NAME)
         message(WARNING "CMake too old to register ${TARGET_NAME} as a test")
     else ()
         include(GoogleTest)
-        gtest_discover_tests(${TARGET_NAME})
     endif ()
 endmacro ()
 
@@ -77,6 +76,14 @@ endmacro ()
 macro (link_gtest)
     target_link_libraries(${TARGET_NAME} PUBLIC GTest::gtest_main GTest::gmock_main)
 endmacro ()
+
+macro(link_json)
+    target_link_libraries(${TARGET_NAME} PUBLIC nlohmann_json::nlohmann_json)
+endmacro()
+
+macro(link_benchmark)
+    target_link_libraries(${TARGET_NAME} PUBLIC benchmark::benchmark benchmark::benchmark_main)
+endmacro(link_benchmark)
 
 macro (link_openssl)
     target_link_libraries (${TARGET_NAME} ${OPENSSL_SSL_LIBRARY} ${OPENSSL_CRYPTO_LIBRARY})

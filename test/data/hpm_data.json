@@ -1,0 +1,20 @@
+[
+  {
+    "raw": "$INHPM,60.0,0.5,5.6,,A,,,,,,,1.2,A*63",
+    "pitch": {
+      "value": 60.0,
+      "period": 0.5,
+      "amplitude": 5.6,
+      "heel": 1.2
+    }
+  }, 
+  {
+    "raw": "$INHPM,25.32,0.5,5.6,,A,,,,,,,2.3,A*63",
+    "pitch": {
+      "value": 25.32,
+      "period": 0.5,
+      "amplitude": 5.6,
+      "heel": 2.3
+    }
+  }
+]
