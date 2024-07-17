@@ -116,7 +116,7 @@ class Transpiler {
      * @param source Source string containing
      * @return NmeaMessage Parsed message
      */
-  std::shared_ptr<Message> parse(Sentence const& source) const {
+  std::shared_ptr<Message> parse(Sentence& source) const {
     auto formatter = util::to_lower(
         std::string{source.formatter.begin(), source.formatter.end()});
 
