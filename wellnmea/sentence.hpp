@@ -45,7 +45,10 @@ class Sentence {
   /**
      * @brief Verifies that calculated payload checksum is equal to parsed one
      */
-  bool integrity() const { return payloadChecksum == parsedChecksum; }
+  bool integrity() const {
+    return (payloadChecksum + parsedChecksum) > 0 &&
+           payloadChecksum == parsedChecksum;
+  }
 
   bool isValid() const { return isValid_; }
 };
