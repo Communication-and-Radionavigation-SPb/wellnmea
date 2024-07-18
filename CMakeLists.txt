@@ -1,9 +1,14 @@
-# ########### Setup project and cmake Minimum cmake requirement. We should
+# Setup project and cmake Minimum cmake requirement. We should
 # require a quite recent cmake for the dependency find macros etc. to be up to
 # date.
 cmake_minimum_required(VERSION 3.16)
 
-# ########### Paths
+# Configure CMake modules location
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
+# --------------------------------- Includes ---------------------------------
+include(CMakeHelpers)
+include(CMakePackageConfigHelpers)
+# ---------------------------------- Paths --------------------------------
 
 set(WELLNMEA_ROOT ${CMAKE_CURRENT_SOURCE_DIR})
 set(WELLNMEA_INCLUDE ${WELLNMEA_ROOT}/wellnmea)
@@ -21,7 +26,7 @@ if(WIN32)
       CACHE PATH "")
 endif()
 
-# ########### Project name and version
+# ------------------------- Project name and version -------------------------
 set(WELLNMEA_MAJOR_VERSION 0)
 set(WELLNMEA_MINOR_VERSION 8)
 set(WELLNMEA_PATCH_VERSION 2)
@@ -48,6 +53,7 @@ set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 set(INSTALL_INCLUDE_DIR
     include
     CACHE PATH "Installation directory for header files")
+
 if(WIN32 AND NOT CYGWIN)
   set(DEF_INSTALL_CMAKE_DIR cmake)
 else()
@@ -76,40 +82,14 @@ set(CMAKE_CONFIGURATION_TYPES
     "Release;RelWithDebInfo;Debug"
     CACHE STRING "Configurations" FORCE)
 
-# Include our cmake macros
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
-include(CMakeHelpers)
 
-# ###########  Build customization
+# --------------------------- Build customization -------------------------
 
 # Override from command line "CMake -D<OPTION>=TRUE/FALSE/0/1/ON/OFF"
 option(WELLNMEA_BUILD_EXAMPLES "Build wellnmea examples." FALSE)
 option(WELLNMEA_BUILD_TESTS "Build wellnmea tests." FALSE)
 
-include(FetchContent)
-if(WELLNMEA_BUILD_TESTS OR WELLNMEA_BUILD_EXAMPLES)
-  enable_testing()
-
-  FetchContent_Declare(
-    googletest
-    GIT_REPOSITORY https://github.com/google/googletest.git
-    GIT_TAG release-1.12.1)
-  set(gtest_force_shared_crt
-      ON
-      CACHE BOOL "" FORCE)
-  FetchContent_MakeAvailable(googletest)
-
-  find_package(benchmark CONFIG REQUIRED)
-endif()
-
-if(WELLNMEA_BUILD_TESTS)
-  FetchContent_Declare(
-    json
-    URL https://github.com/nlohmann/json/releases/download/v3.11.3/json.tar.xz)
-  FetchContent_MakeAvailable(json)
-endif(WELLNMEA_BUILD_TESTS)
-
-# ########### Add projects
+# ------------------------------- Add targets -----------------------------
 
 # Add main library
 add_subdirectory(wellnmea)
@@ -121,6 +101,9 @@ endif()
 
 # Add tests
 if(WELLNMEA_BUILD_TESTS)
+  enable_testing()
+  find_package(benchmark CONFIG REQUIRED)
+  find_package(GTest CONFIG REQUIRED)
   include_subdirs("test")
   include_subdirs("benchmark")
 endif()
@@ -129,7 +112,6 @@ print_used_build_config()
 
 export(PACKAGE wellnmea)
 
-include(CMakePackageConfigHelpers)
 configure_package_config_file(
   wellnmea-config.cmake.in
   "${PROJECT_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/wellnmea-config.cmake"

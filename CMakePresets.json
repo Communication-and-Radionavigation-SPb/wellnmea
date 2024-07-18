@@ -19,7 +19,8 @@
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Debug",
         "WELLNMEA_BUILD_TESTS": "ON",
-        "WELLNMEA_BUILD_EXAMPLES": "OFF"
+        "WELLNMEA_BUILD_EXAMPLES": "OFF",
+        "CMAKE_EXPORT_COMPILE_COMMANDS": "ON"
       }
     }
   ],
