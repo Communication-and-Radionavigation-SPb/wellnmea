@@ -1,10 +1,7 @@
 #pragma once
 
 /* ----------------------------------- STL ---------------------------------- */
-#include <algorithm>
 #include <list>
-#include <optional>
-#include <stdexcept>
 #include <string>
 
 namespace wellnmea {

@@ -1,36 +1,30 @@
-#include <gtest/gtest.h>
 #include <gmock/gmock.h>
+#include <gtest/gtest.h>
 
 #include <memory>
 
+#include <wellnmea/formats/format.hpp>
 #include <wellnmea/instructions/instruction.hpp>
 #include <wellnmea/transpiler.hpp>
-#include <wellnmea/formats/format.hpp>
 
 #include "mocked_format.hpp"
 
-#define Suite TranspilerTest
-
-TEST(Suite, can_be_intantiated)
-{
-  EXPECT_NO_THROW({
-    wellnmea::Transpiler transpiler;
-  });
+TEST(TranspilerTest, can_be_intantiated) {
+  EXPECT_NO_THROW({ wellnmea::Transpiler transpiler; });
 }
 
-TEST(Suite, can_register_format)
-{
+TEST(TranspilerTest, can_register_format) {
   wellnmea::Transpiler transpiler;
 
-  wellnmea::Transpiler::FmtPtr fmt = wellnmea::Transpiler::FmtPtr(new MockedFormat());
+  wellnmea::Transpiler::FmtPtr fmt =
+      wellnmea::Transpiler::FmtPtr(new MockedFormat());
 
   transpiler.connect("som", fmt);
 
   EXPECT_TRUE(transpiler.contains("som"));
 }
 
-TEST(Suite, understands_both_uppercase_and_lowercase_formatters)
-{
+TEST(TranspilerTest, understands_both_uppercase_and_lowercase_formatters) {
   wellnmea::Transpiler transpiler;
   auto fmt_ptr = new MockedFormat();
   auto fmt = wellnmea::Transpiler::FmtPtr(fmt_ptr);
@@ -50,10 +44,10 @@ TEST(Suite, understands_both_uppercase_and_lowercase_formatters)
   transpiler.parse(sentence);
 }
 
-TEST(Suite, returns_message_pointer)
-{
+TEST(TranspilerTest, returns_message_pointer) {
   wellnmea::Transpiler transpiler;
-  wellnmea::Transpiler::FmtPtr fmt = wellnmea::Transpiler::FmtPtr(new MockedFormat());
+  wellnmea::Transpiler::FmtPtr fmt =
+      wellnmea::Transpiler::FmtPtr(new MockedFormat());
   transpiler.connect("som", fmt);
 
   wellnmea::Sentence sentence;
@@ -64,8 +58,7 @@ TEST(Suite, returns_message_pointer)
   EXPECT_THAT(msg, ::testing::Not(::testing::Eq(nullptr)));
 }
 
-TEST(Suite, returns_message_with_correct_values)
-{
+TEST(TranspilerTest, returns_message_with_correct_values) {
   wellnmea::Transpiler transpiler;
   auto fmt_ptr = new MockedFormat();
   auto fmt = wellnmea::Transpiler::FmtPtr(fmt_ptr);

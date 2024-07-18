@@ -2,6 +2,7 @@
 
 #include <algorithm>
 #include <list>
+#include <optional>
 #include <sstream>
 
 #include <wellnmea/instructions/instruction.hpp>
@@ -62,9 +63,8 @@ class SymbolInstruction : public Instruction {
           std::find(allowed_chars.begin(), allowed_chars.end(), c) ==
               allowed_chars.end()) {
         std::stringstream ss;
-        ss << "Disallowed character"
-           << "`" << c << "` "
-           << "met in field `" << (*it) << "`";
+        ss << "Disallowed character" << "`" << c << "` " << "met in field `"
+           << (*it) << "`";
         throw extraction_error(ss.str());
       }
 

@@ -1,5 +1,6 @@
 #pragma once
 
+#include <optional>
 #include <wellnmea/instructions/instruction.hpp>
 #include <wellnmea/util/number_utils.hpp>
 #include <wellnmea/util/string_utils.hpp>

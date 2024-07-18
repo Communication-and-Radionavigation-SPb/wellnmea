@@ -20,7 +20,15 @@
         "CMAKE_BUILD_TYPE": "Debug",
         "WELLNMEA_BUILD_TESTS": "ON",
         "WELLNMEA_BUILD_EXAMPLES": "OFF",
-        "CMAKE_EXPORT_COMPILE_COMMANDS": "ON"
+        "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
+        "CMAKE_TOOLCHAIN_FILE": {
+          "type": "FILEPATH",
+          "value": "$env{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake"
+        },
+        "VCPKG_INSTALLED_DIR": {
+          "type": "FILEPATH",
+          "value": "${sourceDir}/vcpkg_installed"
+        }
       }
     }
   ],

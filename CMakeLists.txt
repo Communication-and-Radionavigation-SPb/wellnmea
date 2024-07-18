@@ -86,8 +86,8 @@ set(CMAKE_CONFIGURATION_TYPES
 # --------------------------- Build customization -------------------------
 
 # Override from command line "CMake -D<OPTION>=TRUE/FALSE/0/1/ON/OFF"
-option(WELLNMEA_BUILD_EXAMPLES "Build wellnmea examples." FALSE)
-option(WELLNMEA_BUILD_TESTS "Build wellnmea tests." FALSE)
+option(WELLNMEA_BUILD_EXAMPLES "Build wellnmea examples." OFF)
+option(WELLNMEA_BUILD_TESTS "Build wellnmea tests." OFF)
 
 # ------------------------------- Add targets -----------------------------
 
@@ -102,6 +102,7 @@ endif()
 # Add tests
 if(WELLNMEA_BUILD_TESTS)
   enable_testing()
+  find_package(nlohmann_json CONFIG REQUIRED)
   find_package(benchmark CONFIG REQUIRED)
   find_package(GTest CONFIG REQUIRED)
   include_subdirs("test")
