@@ -123,6 +123,19 @@ TEST(ParserTests, recognized_checksum) {
   EXPECT_EQ(sentence.parsedChecksum, (uint32_t)wellnmea::util::toInt(chk, 16));
 }
 
+TEST(ParserTests, works_with_exclamation_sign) {
+  wellnmea::Parser parser;
+  wellnmea::Sentence sentence;
+
+  parser.parseInto(
+      sentence,
+      "!GPGSV,2,1,08,02,74,042,45,04,18,190,36,07,67,279,42,12,29,323,36*77");
+
+  EXPECT_EQ(sentence.fields.size(), 19);
+  EXPECT_TRUE(sentence.integrity());
+  EXPECT_TRUE(sentence.isValid());
+}
+
 TEST(ParserTests, final_sentence_is_vaid) {
   wellnmea::Parser parser;
   wellnmea::Sentence sentence;
