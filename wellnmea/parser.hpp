@@ -1,7 +1,7 @@
 #pragma once
 
+#include <cstring>
 #include <functional>
-#include <iostream>
 #include <string>
 #include <unordered_map>
 #include <wellnmea/sentence.hpp>
@@ -46,8 +46,8 @@ class Parser {
       return;
     }
     // Create the working string window without allocating much memory
-    std::string_view workwindow{sentence.text.c_str() + dollarpos + 1,
-                                source.size()};
+    const char* s_contents = sentence.text.c_str() + dollarpos + 1;
+    std::string_view workwindow{s_contents, std::strlen(s_contents)};
 
     // When there is no payload
     if (workwindow.empty()) {
