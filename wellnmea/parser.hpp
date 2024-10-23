@@ -13,11 +13,11 @@ namespace wellnmea {
 class Parser {
  private:
   std::unordered_map<std::string, std::function<void(Sentence)>> handlingTable;
+  const char removable[4] = {'\t', ' ', '\r', '\n'};
 
  protected:
   void sanitize(std::string& source) {
-    char removable[] = {'\t', ' ', '\r', '\n'};
-    for (const char i : removable) {
+    for (const char& i : removable) {
       source.erase(std::remove(source.begin(), source.end(), i), source.end());
     }
   }
@@ -40,13 +40,13 @@ class Parser {
     // Assign
     sentence.text = source;
     // Remove dollar sign
-    size_t dollarpos = source.find_last_of("$!");
+    size_t dollar_pos = source.find_last_of("$!");
     // Return on no dollar sign
-    if (dollarpos == std::string::npos) {
+    if (dollar_pos == std::string::npos) {
       return;
     }
     // Create the working string window without allocating much memory
-    const char* s_contents = sentence.text.c_str() + dollarpos + 1;
+    const char* s_contents = sentence.text.c_str() + dollar_pos + 1;
     std::string_view workwindow{s_contents, std::strlen(s_contents)};
 
     // When there is no payload
@@ -54,49 +54,50 @@ class Parser {
       return;
     }
     // Look for checksum
-    size_t starsympos = workwindow.find_last_of('*');
-    if (starsympos != std::string::npos) {
+    size_t asterisk_pos = workwindow.find_last_of('*');
+    if (asterisk_pos != std::string::npos) {
 
       std::string_view checksum(workwindow);
-      checksum.remove_prefix(starsympos + 1);
+      checksum.remove_prefix(asterisk_pos + 1);
       sentence.checksumField = checksum;
       sentence.parsedChecksum = (uint8_t)util::toInt(
           std::string{checksum.begin(), checksum.end()}, 16);
 
-      workwindow.remove_suffix(workwindow.size() - starsympos);
+      workwindow.remove_suffix(workwindow.size() - asterisk_pos);
       sentence.payloadChecksum = calculateChecksum(workwindow);
     }
 
-    size_t commapos = workwindow.find(',');
+    size_t comma_pos = workwindow.find(',');
     // Returns if name is not presented
-    if (commapos == 0) {
+    if (comma_pos == 0) {
       return;
     }
     // When there is no fields, but name is presented
     // Return if name is not valid
-    if (commapos == std::string::npos && util::hasNonAlphaNumeric(workwindow)) {
+    if (comma_pos == std::string::npos &&
+        util::hasNonAlphaNumeric(workwindow)) {
       return;
     }
     sentence.talker =
-        std::string_view{sentence.text.c_str() + dollarpos + 1, 2};
+        std::string_view{sentence.text.c_str() + dollar_pos + 1, 2};
     sentence.formatter =
-        std::string_view{sentence.text.c_str() + dollarpos + 3, 3};
+        std::string_view{sentence.text.c_str() + dollar_pos + 3, 3};
 
     // When comma is the only presented symbol in fields
     // Example: $HEHDT,*79
-    if (commapos + 1 == workwindow.size()) {
+    if (comma_pos + 1 == workwindow.size()) {
       sentence.fields.push_back(std::string_view{sentence.text.c_str(), 0});
       sentence.markValid();
       return;
     }
 
     // Adjust workwindow to the position of first comma
-    workwindow.remove_prefix(commapos + 1);
+    workwindow.remove_prefix(comma_pos + 1);
     do {
       // find next comma position
-      commapos = workwindow.find(',');
+      comma_pos = workwindow.find(',');
 
-      if (commapos == std::string::npos) {
+      if (comma_pos == std::string::npos) {
         std::string_view field(workwindow);
         sentence.fields.push_back(field);
         break;
@@ -104,13 +105,13 @@ class Parser {
 
       // create field view and add it into fields
       std::string_view field(workwindow);
-      field.remove_suffix(workwindow.size() - commapos);
+      field.remove_suffix(workwindow.size() - comma_pos);
 
       sentence.fields.push_back(field);
       // move left border to the position of found comma
       // excluding that comma
-      workwindow.remove_prefix(commapos + 1);
-    } while (commapos != std::string::npos);
+      workwindow.remove_prefix(comma_pos + 1);
+    } while (comma_pos != std::string::npos);
 
     // Validate parsed fields
     bool foundInvalid = false;
