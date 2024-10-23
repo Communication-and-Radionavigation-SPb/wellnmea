@@ -15,14 +15,15 @@ namespace wellnmea
   {
   private:
     std::unordered_map<std::string, std::function<void(Sentence)>> handlingTable;
+    const char removable[4] = {'\t', ' ', '\r', '\n'};
 
   protected:
     void sanitize(std::string &source)
     {
-      char removable[] = {'\t', ' ', '\r', '\n'};
-      for (const char i : removable)
+      for (auto& i : this->removable)
       {
-        source.erase(std::remove(source.begin(), source.end(), i), source.end());
+        auto it = std::remove(source.begin(), source.end(), i);   
+        source.erase(it, source.end());
       }
     }
 
@@ -66,7 +67,6 @@ namespace wellnmea
       size_t starsympos = workwindow.find_last_of('*');
       if (starsympos != std::string::npos)
       {
-
         std::string_view checksum(workwindow);
         checksum.remove_prefix(starsympos + 1);
         sentence.checksumField = checksum;
